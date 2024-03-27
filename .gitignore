@@ -1,0 +1,9 @@
+
+AI_Learns_To_Climb/venv/
+
+**/Library/
+**/Logs/
+**/obj/
+**/Temp/
+**/.idea/
+ml-agents-develop/
