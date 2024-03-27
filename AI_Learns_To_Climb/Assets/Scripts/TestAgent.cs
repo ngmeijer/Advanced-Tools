@@ -12,7 +12,7 @@ public class TestAgent : Agent
 
      public override void OnEpisodeBegin()
      {
-          transform.position = Vector3.zero;
+          transform.position = new Vector3(0, 1,0);
      }
      
      public override void CollectObservations(VectorSensor sensor)
@@ -32,7 +32,9 @@ public class TestAgent : Agent
 
      public override void Heuristic(in ActionBuffers actionsOut)
      {
-          
+          ActionSegment<float> continuousActions = actionsOut.ContinuousActions;
+          continuousActions[0] = Input.GetAxis("Horizontal");
+          continuousActions[1] = Input.GetAxis("Vertical");
      }
 
      private void OnTriggerEnter(Collider other)
