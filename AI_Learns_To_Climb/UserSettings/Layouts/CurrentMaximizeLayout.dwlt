@@ -23,7 +23,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 50}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 9123
+  controlID: 21782
 --- !u!114 &2
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -146,7 +146,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 50}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 9124
+  controlID: 21783
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -237,7 +237,7 @@ MonoBehaviour:
       floating: 0
       collapsed: 0
       displayed: 1
-      snapOffset: {x: 0, y: 0}
+      snapOffset: {x: 0, y: 25}
       snapOffsetDelta: {x: 0, y: 0}
       snapCorner: 0
       id: unity-scene-view-toolbar
@@ -490,9 +490,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 21.278572, y: 7.3753867, z: 50.368385}
+    m_Target: {x: 7.022724, y: 6.119974, z: 50.58796}
     speed: 2
-    m_Value: {x: 21.278572, y: 7.3753867, z: 50.368385}
+    m_Value: {x: 7.022724, y: 6.119974, z: 50.58796}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -538,13 +538,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: -0.0035983205, y: 0.043486025, z: 0.00015722564, w: 0.9990492}
+    m_Target: {x: 0.12034406, y: 0.39198926, z: -0.05180468, w: 0.9105931}
     speed: 2
-    m_Value: {x: -0.003598315, y: 0.043485958, z: 0.0001572254, w: 0.99904764}
+    m_Value: {x: 0.12034396, y: 0.39198893, z: -0.051804636, w: 0.9105923}
   m_Size:
-    m_Target: 18.113115
+    m_Target: 20.622177
     speed: 2
-    m_Value: 18.113115
+    m_Value: 20.622177
   m_Ortho:
     m_Target: 0
     speed: 2

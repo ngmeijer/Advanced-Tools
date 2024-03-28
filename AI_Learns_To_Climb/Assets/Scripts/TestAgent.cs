@@ -22,17 +22,17 @@ public class TestAgent : Agent
 
      private void Update()
      {
-          if (StepCount >= MaxStep)
+          if (StepCount >= MaxStep - 1)
           {
-               SetReward(-0.5f);
                _floorRenderer.material = _tookTooLongMat;
-               EpisodeInterrupted();
+               OnFinishedEpisode.Invoke();
+               EndEpisode();
           }
      }
 
      public override void OnEpisodeBegin()
      {
-          transform.localPosition = new Vector3(Random.Range(-3f, 1.5f), 1f, Random.Range(-3.5f, 3.5f));
+          transform.localPosition = new Vector3(Random.Range(-3f, 3f), 4.5f, Random.Range(-3.5f, 3.5f));
           _targetTransform.localPosition = new Vector3(Random.Range(-3.5f, 3.5f), 1f, Random.Range(-3.75f, 3.75f));
      }
      
@@ -47,7 +47,7 @@ public class TestAgent : Agent
           float moveX = actions.ContinuousActions[0];
           float moveZ = actions.ContinuousActions[1];
 
-          float moveSpeed = 1f;
+          float moveSpeed = 1.2f;
           transform.localPosition += new Vector3(moveX, 0, moveZ) * Time.deltaTime * moveSpeed;
      }
 
@@ -60,11 +60,12 @@ public class TestAgent : Agent
 
      private void OnTriggerEnter(Collider other)
      {
-          float reward = 1f;
           if (other.CompareTag("Wall"))
           {
                SetReward(-1f);
                _floorRenderer.material = _loseMat;
+               OnFinishedEpisode.Invoke();
+               EndEpisode();
           }
 
           if (other.CompareTag("Target"))
@@ -72,9 +73,9 @@ public class TestAgent : Agent
                SetReward(+1f);
                _floorRenderer.material = _winMat;
                OnSucceededEpisode.Invoke();
+               OnFinishedEpisode.Invoke();
+               EndEpisode();
           }
-
-          EndEpisode();
-          OnFinishedEpisode.Invoke();
      }
+     
 }

@@ -366,7 +366,7 @@ GameObject:
   - component: {fileID: 3903199212457054309}
   - component: {fileID: 9200094053019163667}
   - component: {fileID: 7761774377328360647}
-  - component: {fileID: 4484563007662344475}
+  - component: {fileID: 7830656672269797927}
   m_Layer: 0
   m_Name: Agent
   m_TagString: Untagged
@@ -532,7 +532,7 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 50000
+  MaxStep: 5000
   _targetTransform: {fileID: 2826565944261064109}
   _winMat: {fileID: 2100000, guid: ec3581f3bd396464da0dd7de16760861, type: 2}
   _loseMat: {fileID: 2100000, guid: 3ce59e56904467a4b8ec54be1230dc5b, type: 2}
@@ -541,7 +541,10 @@ MonoBehaviour:
   OnFinishedEpisode:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &4484563007662344475
+  OnSucceededEpisode:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &7830656672269797927
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
