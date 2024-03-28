@@ -5,20 +5,41 @@ using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
 using UnityEngine;
+using UnityEngine.Events;
+using Random = UnityEngine.Random;
 
 public class TestAgent : Agent
 {
      [SerializeField] private Transform _targetTransform;
+     [SerializeField] private Material _winMat;
+     [SerializeField] private Material _loseMat;
+     [SerializeField] private Material _tookTooLongMat;
+     [SerializeField] private MeshRenderer _floorRenderer = null;
+     private Vector3 _startPos;
+
+     public UnityEvent OnFinishedEpisode = new UnityEvent();
+     public UnityEvent OnSucceededEpisode = new UnityEvent();
+
+     private void Update()
+     {
+          if (StepCount >= MaxStep)
+          {
+               SetReward(-0.5f);
+               _floorRenderer.material = _tookTooLongMat;
+               EpisodeInterrupted();
+          }
+     }
 
      public override void OnEpisodeBegin()
      {
-          transform.position = new Vector3(0, 1,0);
+          transform.localPosition = new Vector3(Random.Range(-3f, 1.5f), 1f, Random.Range(-3.5f, 3.5f));
+          _targetTransform.localPosition = new Vector3(Random.Range(-3.5f, 3.5f), 1f, Random.Range(-3.75f, 3.75f));
      }
      
      public override void CollectObservations(VectorSensor sensor)
      {
-          sensor.AddObservation(transform.position);
-          sensor.AddObservation(_targetTransform.position);
+          sensor.AddObservation(transform.localPosition);
+          sensor.AddObservation(_targetTransform.localPosition);
      }
      
      public override void OnActionReceived(ActionBuffers actions)
@@ -27,7 +48,7 @@ public class TestAgent : Agent
           float moveZ = actions.ContinuousActions[1];
 
           float moveSpeed = 1f;
-          transform.position += new Vector3(moveX, 0, moveZ) * Time.deltaTime * moveSpeed;
+          transform.localPosition += new Vector3(moveX, 0, moveZ) * Time.deltaTime * moveSpeed;
      }
 
      public override void Heuristic(in ActionBuffers actionsOut)
@@ -39,14 +60,21 @@ public class TestAgent : Agent
 
      private void OnTriggerEnter(Collider other)
      {
-          float reward = 0f;
+          float reward = 1f;
           if (other.CompareTag("Wall"))
-               reward = -1f;
+          {
+               SetReward(-1f);
+               _floorRenderer.material = _loseMat;
+          }
 
           if (other.CompareTag("Target"))
-               reward = 1f;
-          
-          SetReward(reward);
+          {
+               SetReward(+1f);
+               _floorRenderer.material = _winMat;
+               OnSucceededEpisode.Invoke();
+          }
+
           EndEpisode();
+          OnFinishedEpisode.Invoke();
      }
 }

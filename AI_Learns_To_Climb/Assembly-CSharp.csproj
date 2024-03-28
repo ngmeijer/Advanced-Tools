@@ -45,8 +45,9 @@
     <Analyzer Include="C:\Program Files\Unity\Installs\2022.3.6f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\UIManager.cs" />
+     <Compile Include="Assets\Scripts\TrainingManager.cs" />
      <Compile Include="Assets\Scripts\TestAgent.cs" />
+     <Compile Include="Assets\Scripts\UIManager.cs" />
      <Folder Include="Assets" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
@@ -59,6 +60,7 @@
      <Folder Include="Assets\TextMesh Pro\Resources" />
      <None Include="Assets\ML-Agents\Timers\SampleScene_timers.json" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
+     <Folder Include="Assets\Prefabs" />
      <Folder Include="Assets\TextMesh Pro" />
      <Folder Include="Assets\ML-Agents" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
