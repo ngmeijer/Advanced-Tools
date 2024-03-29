@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class TrainingManager : MonoBehaviour
 {
+    [SerializeField] private bool _runTest;
     [SerializeField] private bool _massTesting;
     [SerializeField] private int _maxTrainingEnvironments = 50;
     [SerializeField] private GameObject _environmentPrefab;
@@ -15,6 +16,9 @@ public class TrainingManager : MonoBehaviour
     
     private void Awake()
     {
+        if (!_runTest)
+            return;
+        
         if (!_massTesting)
         {
             GameObject environment = Instantiate(_environmentPrefab, Vector3.zero, Quaternion.identity, this.transform);

@@ -220,6 +220,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d00ebf4deee55994d80810ea0df42a6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _runTest: 0
   _massTesting: 1
   _maxTrainingEnvironments: 16
   _environmentPrefab: {fileID: 4733273297718751062, guid: 5bff3175a15e3574ab99f514cdbe3b74, type: 3}
