@@ -14,19 +14,35 @@ public class RagdollController : Agent
 
     [SerializeField] private List<BodyPartController> _bodyParts = new List<BodyPartController>();
 
+    [SerializeField] private float _episodeMaxTime = 5;
+
     private void Start()
     {
         _startPos = transform.localPosition;
         foreach(BodyPartController part in _bodyParts)
         {
-            part.OnGiveReward = receiveRewardForLimb;
+            part.onGiveReward += receiveRewardForLimb;
+            part.onEndEpisode += triggerEndEpisode;
         }
+
+        StartCoroutine(episodeCountdown());
     }
 
-    private void receiveRewardForLimb(BodyPart pPart, float pReward)
+    private IEnumerator episodeCountdown()
+    {
+        yield return new WaitForSeconds(_episodeMaxTime);
+
+        triggerEndEpisode();
+    }
+
+    private void triggerEndEpisode()
+    {
+        EndEpisode();
+    }
+
+    private void receiveRewardForLimb(float pReward)
     {
         AddReward(pReward);
-        EndEpisode();
     }
 
     public override void OnEpisodeBegin()
@@ -38,8 +54,10 @@ public class RagdollController : Agent
         transform.localPosition = _startPos;
         foreach (BodyPartController part in _bodyParts)
         {
-            //part.ResetLimb();
+            part.ResetLimb();
         }
+
+        //StartCoroutine(episodeCountdown());
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -48,21 +66,29 @@ public class RagdollController : Agent
         {
             sensor.AddObservation(part.transform.position);
             sensor.AddObservation(part.TouchingGround);
+            sensor.AddObservation(part.PunishAgentOnGroundTouch());
+            sensor.AddObservation(part.ForceMultiplier());
+            sensor.AddObservation(part.GetVelocity());
+            sensor.AddObservation(part.GetAngularVelocity());
         }
     }
 
     public override void Heuristic(in ActionBuffers actionsOut)
     {
-        ActionSegment<float> continuousActions = actionsOut.ContinuousActions;
-        continuousActions[0] = Input.GetAxis("Horizontal");
-        continuousActions[1] = Input.GetAxis("Vertical");
+        //ActionSegment<float> continuousActions = actionsOut.ContinuousActions;
+        //continuousActions[0] = Input.GetAxis("Horizontal");
+        //continuousActions[1] = Input.GetAxis("Vertical");
     }
 
     public override void OnActionReceived(ActionBuffers actions)
     {
-        for(int i = 0; i < _bodyParts.Count; i++) 
+        int outputIndex = -1;
+        for(int limbIndex = 0; limbIndex < _bodyParts.Count; limbIndex++) 
         {
-            _bodyParts[i].AddForceToLimb(new Vector3(0, actions.ContinuousActions[0], 0));
+            _bodyParts[limbIndex].AddForceToLimb(new Vector3(
+                actions.ContinuousActions[++outputIndex], 
+                actions.ContinuousActions[++outputIndex], 
+                actions.ContinuousActions[++outputIndex]));
         }
     }
 }

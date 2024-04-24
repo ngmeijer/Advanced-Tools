@@ -15,7 +15,7 @@ public class UIManager : MonoBehaviour
     
     private void Awake()
     {
-        _trainer = FindObjectOfType<TrainingManager>();
+        _trainer = FindFirstObjectByType<TrainingManager>();
     }
 
     private void Start()

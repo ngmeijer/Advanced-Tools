@@ -2,11 +2,12 @@
 
 public class FeetController : BodyPartController
 {
-    protected override void OnCollisionStay(Collision collision)
+    protected void OnCollisionStay(Collision collision)
     {
         if (TouchingGround)
         {
-            OnGiveReward(part, 0.1f);
+            Debug.Log("Rewarding being grounded.");
+            onGiveReward?.Invoke(0.1f);
         }
     }
 }

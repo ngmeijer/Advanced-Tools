@@ -1,3 +1,4 @@
+using Google.Protobuf.WellKnownTypes;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,38 +9,60 @@ public enum BodyPart
     HEAD,
     TORSO,
     HIPS,
-    LEFT_UPPER_LEG,
-    LEFT_LOWER_LEG,
-    LEFT_FOOT,
 
-    RIGHT_UPPER_LEG,
-    RIGHT_LOWER_LEG,
-    RIGHT_FOOT,
+    UPPER_LEG,
+    LOWER_LEG,
+    FOOT,
 
-    LEFT_SHOULDER,
-    LEFT_UPPER_ARM,
-    LEFT_LOWER_ARM,
-    LEFT_HAND,
-
-    RIGHT_SHOULDER,
-    RIGHT_UPPER_ARM,
-    RIGHT_LOWER_ARM,
-    RIGHT_HAND,
+    UPPER_ARM,
+    LOWER_ARM,
+    HAND,
 }
+
+public enum PUNISH_OR_REWARD 
+{ 
+    PUNISH, 
+    REWARD
+}
+
 
 public class BodyPartController : MonoBehaviour
 {
-    [SerializeField] protected BodyPart part;
     [SerializeField] protected Rigidbody rb;
-    [SerializeField] private float _forceMultiplier = 1500f;
+    [SerializeField] private RagdollSettings _ragdollSettings;
+    [SerializeField] private BodyPart _bodyPart;
 
-    public Action<BodyPart, float> OnGiveReward;
+    public float ForceMultiplier()
+    {
+        float forceMultiplier = 0f;
+        if (_ragdollSettings.forceMultiplierOnLimbs.TryGetValue(_bodyPart, out float _forceMultiplier))
+        {
+            forceMultiplier = _forceMultiplier;
+        }
+        return forceMultiplier;
+    }
+
+    public delegate void OnGiveReward(float pReward);
+    public OnGiveReward onGiveReward;
+
+    public delegate void OnEndEpisode();
+    public OnEndEpisode onEndEpisode;
 
     protected Vector3 _startPos;
     protected Quaternion _startRot;
 
-    [SerializeField] private float _penalty;
-    [SerializeField] private float _reward;
+    public bool PunishAgentOnGroundTouch() {
+        _ragdollSettings.rewardsOnGroundHit.TryGetValue(_bodyPart, out CustomKeyValuePair data);
+        if (data.Type == PUNISH_OR_REWARD.PUNISH)
+            return true;
+
+        return false;
+    }
+    [SerializeField] private bool _endEpisodeOnGroundTouch;
+
+    [SerializeField] private bool _rewardAgentOnHeightCheck = true;
+    [SerializeField][Range(0f, 1f)] private float _rewardHeightCheck;
+
     [SerializeField] private bool _touchingGround;
     public bool TouchingGround => _touchingGround;
 
@@ -47,7 +70,7 @@ public class BodyPartController : MonoBehaviour
     {
         if (rb == null)
         {
-            Debug.Log($"A Rigidbody has not been referenced for {gameObject.name} of type {part}.");
+            Debug.Log($"A Rigidbody has not been referenced for {gameObject.name}.");
             rb = GetComponent<Rigidbody>();
         }
 
@@ -57,13 +80,27 @@ public class BodyPartController : MonoBehaviour
 
     public void AddForceToLimb(Vector3 pForce)
     {
-        rb.AddForce(pForce * _forceMultiplier);
+        _ragdollSettings.forceMultiplierOnLimbs.TryGetValue(_bodyPart, out float _forceMultiplier);
+        rb.AddForce(pForce * 15);
     }
 
     public void ResetLimb()
     {
         transform.localPosition = _startPos;
         transform.localRotation = _startRot;
+
+        _touchingGround = false;
+    }
+
+    public Vector3 GetVelocity() => rb.velocity;
+    public Vector3 GetAngularVelocity() => rb.angularVelocity;
+
+    private void Update()
+    {
+        if (!TouchingGround && _rewardAgentOnHeightCheck)
+        {
+            onGiveReward?.Invoke(_rewardHeightCheck);
+        }
     }
 
     protected virtual void OnCollisionEnter(Collision collision)
@@ -71,22 +108,21 @@ public class BodyPartController : MonoBehaviour
         if (collision.collider.CompareTag("Ground"))
         {
             _touchingGround = true;
-        }
-    }
 
-    protected virtual void OnCollisionStay(Collision collision)
-    {
-        if(TouchingGround)
-        {
-            OnGiveReward(part, -0.1f);
+            _ragdollSettings.rewardsOnGroundHit.TryGetValue(_bodyPart, out CustomKeyValuePair groundHitReaction);
+            onGiveReward?.Invoke(groundHitReaction.Amount);
+
+            if (_endEpisodeOnGroundTouch)
+            {
+                Debug.Log($"Hit the ground with body part {_bodyPart}");
+                onEndEpisode?.Invoke();
+            }
         }
     }
 
     private void OnCollisionExit(Collision collision)
     {
         if (collision.collider.CompareTag("Ground"))
-        {
             _touchingGround = false;
-        }
     }
 }
