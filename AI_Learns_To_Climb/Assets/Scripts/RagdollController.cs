@@ -5,7 +5,6 @@ using UnityEngine;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
-using Random = UnityEngine.Random;
 using ProjectTools;
 using System.Linq;
 using Unity.Burst.CompilerServices;
@@ -18,8 +17,7 @@ public class RagdollController : MLAgent
     private Vector3 _startPos;
 
     [SerializeField] private SerializableDictionary<BodyPart, BodyPartController> _bodyParts = new SerializableDictionary<BodyPart, BodyPartController>();
-
-    public float BodyPartCount()
+    public float GetBodyPartCount()
     {
         return _bodyParts.Count;
     }
@@ -36,8 +34,6 @@ public class RagdollController : MLAgent
             part.Value.onEndEpisode += triggerEndEpisode;
         }
     }
-
-    
 
     private void triggerEndEpisode()
     {
@@ -78,9 +74,21 @@ public class RagdollController : MLAgent
         }
     }
 
+    /// <summary>
+    /// Limbs:
+    ///     - position
+    ///     - velocity
+    ///     - angular velocity
+    ///     - applied strength
+    ///     - rotation
+    /// Overall:
+    ///     -
+    ///     
+    /// </summary>
+    /// <param name="sensor"></param>
     public override void CollectObservations(VectorSensor sensor)
     {
-        sensor.AddObservation(_targetTransform.position);
+        //sensor.AddObservation(_targetTransform.position);
 
         List<BodyPartController> bodyParts = _bodyParts.Values.ToList();
         foreach (BodyPartController part in bodyParts)
@@ -91,10 +99,14 @@ public class RagdollController : MLAgent
                 return;
             }
 
+            sensor.AddObservation((int)part.BodyPart);
             sensor.AddObservation(part.transform.localPosition);
-            sensor.AddObservation(part.transform.rotation);
+            sensor.AddObservation(part.currentEulerJointRotation);
             sensor.AddObservation(part.TouchingGround);
             sensor.AddObservation(part.PunishAgentOnGroundTouch());
+            sensor.AddObservation(part.rb.velocity);
+            sensor.AddObservation(part.rb.angularVelocity);
+            sensor.AddObservation(part.currentStrength);
         }   
     }
 
@@ -110,12 +122,30 @@ public class RagdollController : MLAgent
         int outputIndex = -1;
         var continuousActions = actions.ContinuousActions;
 
+        _bodyParts[BodyPart.TORSO].SetJointTargetRotation(continuousActions[++outputIndex], continuousActions[++outputIndex], continuousActions[++outputIndex]);
+        _bodyParts[BodyPart.HIPS].SetJointTargetRotation(continuousActions[++outputIndex], continuousActions[++outputIndex], continuousActions[++outputIndex]);
+
+        _bodyParts[BodyPart.L_UPPER_LEG].SetJointTargetRotation(continuousActions[++outputIndex], continuousActions[++outputIndex], 0);
+        _bodyParts[BodyPart.R_UPPER_LEG].SetJointTargetRotation(continuousActions[++outputIndex], continuousActions[++outputIndex], 0);
+
+        _bodyParts[BodyPart.L_LOWER_LEG].SetJointTargetRotation(continuousActions[++outputIndex], 0, 0);
+        _bodyParts[BodyPart.R_LOWER_LEG].SetJointTargetRotation(continuousActions[++outputIndex], 0, 0);
+
+        _bodyParts[BodyPart.L_FOOT].SetJointTargetRotation(continuousActions[++outputIndex], continuousActions[++outputIndex], continuousActions[++outputIndex]);
+        _bodyParts[BodyPart.R_FOOT].SetJointTargetRotation(continuousActions[++outputIndex], continuousActions[++outputIndex], continuousActions[++outputIndex]);
+
+        _bodyParts[BodyPart.L_UPPER_ARM].SetJointTargetRotation(continuousActions[++outputIndex], continuousActions[++outputIndex], 0);
+        _bodyParts[BodyPart.R_UPPER_ARM].SetJointTargetRotation(continuousActions[++outputIndex], continuousActions[++outputIndex], 0);
+
+        _bodyParts[BodyPart.L_LOWER_ARM].SetJointTargetRotation(continuousActions[++outputIndex], 0, 0);
+        _bodyParts[BodyPart.R_LOWER_ARM].SetJointTargetRotation(continuousActions[++outputIndex], 0, 0);
+
+        _bodyParts[BodyPart.HEAD].SetJointTargetRotation(continuousActions[++outputIndex], continuousActions[++outputIndex], 0);
+
         List<BodyPartController> parts = _bodyParts.Values.ToList();
         for (int i = 0; i < parts.Count; i++)
         {
-            parts[i].SetJointTargetRotation(continuousActions[++outputIndex], continuousActions[++outputIndex], continuousActions[++outputIndex]);
             parts[i].SetJointStrength(continuousActions[++outputIndex]);
         }
-
     }
 }

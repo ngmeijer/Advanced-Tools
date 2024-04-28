@@ -311,7 +311,7 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.08
-  m_Height: 0.5
+  m_Height: 0.4
   m_Direction: 1
   m_Center: {x: 0, y: 0.3093477, z: 0}
 --- !u!54 &8786089572035380391
@@ -340,7 +340,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &8771234439318786733
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -355,12 +355,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 8786089572035380391}
   joint: {fileID: 3391125625505022064}
-  _ragdollSettings: {fileID: 0}
+  _ragdollSettings: {fileID: 11400000, guid: eb6959b4eb81e524692aec73d48b906f, type: 2}
   _bodyPart: 4
   currentXNormalizedRot: 0
   currentYNormalizedRot: 0
   currentZNormalizedRot: 0
-  currentEularJointRotation: {x: 0, y: 0, z: 0}
+  currentEulerJointRotation: {x: 0, y: 0, z: 0}
   _endEpisodeOnGroundTouch: 1
   _rewardAgentOnHeightCheck: 1
   _rewardHeightCheck: 0.023
@@ -377,10 +377,10 @@ ConfigurableJoint:
   m_ConnectedBody: {fileID: 3277707820987287598}
   m_ConnectedArticulationBody: {fileID: 0}
   m_Anchor: {x: 0, y: 0, z: 0}
-  m_Axis: {x: 1, y: 0, z: 0}
+  m_Axis: {x: -1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
   m_ConnectedAnchor: {x: 0, y: 0, z: 0}
-  m_SecondaryAxis: {x: 0, y: 1, z: 0}
+  m_SecondaryAxis: {x: 0, y: 0, z: -1}
   m_XMotion: 0
   m_YMotion: 0
   m_ZMotion: 0
@@ -402,7 +402,7 @@ ConfigurableJoint:
     bounciness: 0
     contactDistance: 0
   m_HighAngularXLimit:
-    limit: 177
+    limit: 120
     bounciness: 0
     contactDistance: 0
   m_AngularYZLimitSpring:
@@ -428,17 +428,17 @@ ConfigurableJoint:
     serializedVersion: 4
     positionSpring: 0
     positionDamper: 0
-    maximumForce: 3.4028233e+38
+    maximumForce: 3.402823e+38
     useAcceleration: 0
   m_ZDrive:
     serializedVersion: 4
     positionSpring: 0
     positionDamper: 0
-    maximumForce: 3.4028233e+38
+    maximumForce: 0
     useAcceleration: 0
   m_TargetRotation: {x: 0, y: 0, z: 0, w: 1}
   m_TargetAngularVelocity: {x: 0, y: 0, z: 0}
-  m_RotationDriveMode: 0
+  m_RotationDriveMode: 1
   m_AngularXDrive:
     serializedVersion: 4
     positionSpring: 0
@@ -453,11 +453,11 @@ ConfigurableJoint:
     useAcceleration: 0
   m_SlerpDrive:
     serializedVersion: 4
-    positionSpring: 0
-    positionDamper: 0
-    maximumForce: 0
+    positionSpring: 10000
+    positionDamper: 100
+    maximumForce: 25000
     useAcceleration: 0
-  m_ProjectionMode: 0
+  m_ProjectionMode: 1
   m_ProjectionDistance: 0.1
   m_ProjectionAngle: 180
   m_ConfiguredInWorldSpace: 0
@@ -1073,7 +1073,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2609117832667073071}
   serializedVersion: 2
-  m_LocalRotation: {x: -1.685705e-14, y: -0.000000005267974, z: -0.0000007022711, w: 1}
+  m_LocalRotation: {x: 0.00000040893806, y: 0.582308, z: -0.00000057092416, w: 0.81296825}
   m_LocalPosition: {x: 0.000013088757, y: 1.2338439, z: 0.006905788}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1084,7 +1084,7 @@ Transform:
   - {fileID: 3266086518274953226}
   - {fileID: 6197239530070611638}
   m_Father: {fileID: 7612272045043035494}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 71.226, z: 0}
 --- !u!65 &8384507660170538653
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1104,7 +1104,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.46283966, y: 0.09629583, z: 0.24184856}
+  m_Size: {x: 0.30622357, y: 0.066528164, z: 0.24184856}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &8161968314748049056
 Rigidbody:
@@ -1132,7 +1132,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!153 &2195180340781512950
 ConfigurableJoint:
   m_ObjectHideFlags: 0
@@ -1205,7 +1205,7 @@ ConfigurableJoint:
     useAcceleration: 0
   m_TargetRotation: {x: 0, y: 0, z: 0, w: 1}
   m_TargetAngularVelocity: {x: 0, y: 0, z: 0}
-  m_RotationDriveMode: 0
+  m_RotationDriveMode: 1
   m_AngularXDrive:
     serializedVersion: 4
     positionSpring: 0
@@ -1224,7 +1224,7 @@ ConfigurableJoint:
     positionDamper: 0
     maximumForce: 0
     useAcceleration: 0
-  m_ProjectionMode: 0
+  m_ProjectionMode: 1
   m_ProjectionDistance: 0.1
   m_ProjectionAngle: 180
   m_ConfiguredInWorldSpace: 0
@@ -1249,12 +1249,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 8161968314748049056}
   joint: {fileID: 2195180340781512950}
-  _ragdollSettings: {fileID: 0}
+  _ragdollSettings: {fileID: 11400000, guid: eb6959b4eb81e524692aec73d48b906f, type: 2}
   _bodyPart: 2
   currentXNormalizedRot: 0
   currentYNormalizedRot: 0
   currentZNormalizedRot: 0
-  currentEularJointRotation: {x: 0, y: 0, z: 0}
+  currentEulerJointRotation: {x: 0, y: 0, z: 0}
   _endEpisodeOnGroundTouch: 1
   _rewardAgentOnHeightCheck: 1
   _rewardHeightCheck: 0.023
@@ -1505,7 +1505,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &4191887063165841830
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1520,12 +1520,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 3982124997092703039}
   joint: {fileID: 2858755008927461697}
-  _ragdollSettings: {fileID: 0}
+  _ragdollSettings: {fileID: 11400000, guid: eb6959b4eb81e524692aec73d48b906f, type: 2}
   _bodyPart: 0
   currentXNormalizedRot: 0
   currentYNormalizedRot: 0
   currentZNormalizedRot: 0
-  currentEularJointRotation: {x: 0, y: 0, z: 0}
+  currentEulerJointRotation: {x: 0, y: 0, z: 0}
   _endEpisodeOnGroundTouch: 1
   _rewardAgentOnHeightCheck: 1
   _rewardHeightCheck: 0.023
@@ -1551,7 +1551,7 @@ ConfigurableJoint:
   m_ZMotion: 0
   m_AngularXMotion: 1
   m_AngularYMotion: 1
-  m_AngularZMotion: 1
+  m_AngularZMotion: 0
   m_LinearLimitSpring:
     spring: 0
     damper: 0
@@ -1563,22 +1563,22 @@ ConfigurableJoint:
     spring: 0
     damper: 0
   m_LowAngularXLimit:
-    limit: -47.70458
+    limit: -30
     bounciness: 0
     contactDistance: 0
   m_HighAngularXLimit:
-    limit: 38.96419
+    limit: 10
     bounciness: 0
     contactDistance: 0
   m_AngularYZLimitSpring:
     spring: 0
     damper: 0
   m_AngularYLimit:
-    limit: 74.00563
+    limit: 20
     bounciness: 0
     contactDistance: 0
   m_AngularZLimit:
-    limit: 58.24356
+    limit: 0
     bounciness: 0
     contactDistance: 0
   m_TargetPosition: {x: 0, y: 0, z: 0}
@@ -1603,7 +1603,7 @@ ConfigurableJoint:
     useAcceleration: 0
   m_TargetRotation: {x: 0, y: 0, z: 0, w: 1}
   m_TargetAngularVelocity: {x: 0, y: 0, z: 0}
-  m_RotationDriveMode: 0
+  m_RotationDriveMode: 1
   m_AngularXDrive:
     serializedVersion: 4
     positionSpring: 0
@@ -1618,11 +1618,11 @@ ConfigurableJoint:
     useAcceleration: 0
   m_SlerpDrive:
     serializedVersion: 4
-    positionSpring: 0
-    positionDamper: 0
-    maximumForce: 0
+    positionSpring: 10000
+    positionDamper: 100
+    maximumForce: 25000
     useAcceleration: 0
-  m_ProjectionMode: 0
+  m_ProjectionMode: 1
   m_ProjectionDistance: 0.1
   m_ProjectionAngle: 180
   m_ConfiguredInWorldSpace: 0
@@ -2051,7 +2051,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.17456584, y: 0.08375715, z: 0.35688797}
+  m_Size: {x: 0.17456584, y: 0.08375715, z: 0.5}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &8876243678058159826
 Rigidbody:
@@ -2079,7 +2079,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!153 &7551691192301031856
 ConfigurableJoint:
   m_ObjectHideFlags: 0
@@ -2099,8 +2099,8 @@ ConfigurableJoint:
   m_YMotion: 0
   m_ZMotion: 0
   m_AngularXMotion: 1
-  m_AngularYMotion: 0
-  m_AngularZMotion: 0
+  m_AngularYMotion: 1
+  m_AngularZMotion: 1
   m_LinearLimitSpring:
     spring: 0
     damper: 0
@@ -2112,22 +2112,22 @@ ConfigurableJoint:
     spring: 0
     damper: 0
   m_LowAngularXLimit:
-    limit: -47.203094
+    limit: -20
     bounciness: 0
     contactDistance: 0
   m_HighAngularXLimit:
-    limit: 32.50259
+    limit: 20
     bounciness: 0
     contactDistance: 0
   m_AngularYZLimitSpring:
     spring: 0
     damper: 0
   m_AngularYLimit:
-    limit: 0
+    limit: 20
     bounciness: 0
     contactDistance: 0
   m_AngularZLimit:
-    limit: 0
+    limit: 20
     bounciness: 0
     contactDistance: 0
   m_TargetPosition: {x: 0, y: 0, z: 0}
@@ -2152,7 +2152,7 @@ ConfigurableJoint:
     useAcceleration: 0
   m_TargetRotation: {x: 0, y: 0, z: 0, w: 1}
   m_TargetAngularVelocity: {x: 0, y: 0, z: 0}
-  m_RotationDriveMode: 0
+  m_RotationDriveMode: 1
   m_AngularXDrive:
     serializedVersion: 4
     positionSpring: 0
@@ -2167,11 +2167,11 @@ ConfigurableJoint:
     useAcceleration: 0
   m_SlerpDrive:
     serializedVersion: 4
-    positionSpring: 0
-    positionDamper: 0
-    maximumForce: 0
+    positionSpring: 10000
+    positionDamper: 100
+    maximumForce: 25000
     useAcceleration: 0
-  m_ProjectionMode: 0
+  m_ProjectionMode: 1
   m_ProjectionDistance: 0.1
   m_ProjectionAngle: 180
   m_ConfiguredInWorldSpace: 0
@@ -2196,12 +2196,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 8876243678058159826}
   joint: {fileID: 7551691192301031856}
-  _ragdollSettings: {fileID: 0}
+  _ragdollSettings: {fileID: 11400000, guid: eb6959b4eb81e524692aec73d48b906f, type: 2}
   _bodyPart: 5
   currentXNormalizedRot: 0
   currentYNormalizedRot: 0
   currentZNormalizedRot: 0
-  currentEularJointRotation: {x: 0, y: 0, z: 0}
+  currentEulerJointRotation: {x: 0, y: 0, z: 0}
   _endEpisodeOnGroundTouch: 0
   _rewardAgentOnHeightCheck: 1
   _rewardHeightCheck: 0
@@ -2323,7 +2323,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &4252099805053295769
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2338,12 +2338,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 3277707820987287598}
   joint: {fileID: 3894779301377921332}
-  _ragdollSettings: {fileID: 0}
+  _ragdollSettings: {fileID: 11400000, guid: eb6959b4eb81e524692aec73d48b906f, type: 2}
   _bodyPart: 3
   currentXNormalizedRot: 0
   currentYNormalizedRot: 0
   currentZNormalizedRot: 0
-  currentEularJointRotation: {x: 0, y: 0, z: 0}
+  currentEulerJointRotation: {x: 0, y: 0, z: 0}
   _endEpisodeOnGroundTouch: 1
   _rewardAgentOnHeightCheck: 1
   _rewardHeightCheck: 0.023
@@ -2360,16 +2360,16 @@ ConfigurableJoint:
   m_ConnectedBody: {fileID: 8161968314748049056}
   m_ConnectedArticulationBody: {fileID: 0}
   m_Anchor: {x: 0, y: 0, z: 0}
-  m_Axis: {x: 1, y: 0, z: 0}
+  m_Axis: {x: -1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
   m_ConnectedAnchor: {x: 0, y: 0, z: 0}
-  m_SecondaryAxis: {x: 0, y: 1, z: 0}
+  m_SecondaryAxis: {x: 0, y: 0, z: -1}
   m_XMotion: 0
   m_YMotion: 0
   m_ZMotion: 0
   m_AngularXMotion: 1
-  m_AngularYMotion: 0
-  m_AngularZMotion: 1
+  m_AngularYMotion: 1
+  m_AngularZMotion: 0
   m_LinearLimitSpring:
     spring: 0
     damper: 0
@@ -2381,22 +2381,22 @@ ConfigurableJoint:
     spring: 0
     damper: 0
   m_LowAngularXLimit:
-    limit: 0
+    limit: -90
     bounciness: 0
     contactDistance: 0
   m_HighAngularXLimit:
-    limit: 172.64755
+    limit: 60
     bounciness: 0
     contactDistance: 0
   m_AngularYZLimitSpring:
     spring: 0
     damper: 0
   m_AngularYLimit:
-    limit: 0
+    limit: 40
     bounciness: 0
     contactDistance: 0
   m_AngularZLimit:
-    limit: 88.49559
+    limit: 0
     bounciness: 0
     contactDistance: 0
   m_TargetPosition: {x: 0, y: 0, z: 0}
@@ -2421,7 +2421,7 @@ ConfigurableJoint:
     useAcceleration: 0
   m_TargetRotation: {x: 0, y: 0, z: 0, w: 1}
   m_TargetAngularVelocity: {x: 0, y: 0, z: 0}
-  m_RotationDriveMode: 0
+  m_RotationDriveMode: 1
   m_AngularXDrive:
     serializedVersion: 4
     positionSpring: 0
@@ -2436,11 +2436,11 @@ ConfigurableJoint:
     useAcceleration: 0
   m_SlerpDrive:
     serializedVersion: 4
-    positionSpring: 0
-    positionDamper: 0
-    maximumForce: 0
+    positionSpring: 10000
+    positionDamper: 100
+    maximumForce: 25000
     useAcceleration: 0
-  m_ProjectionMode: 0
+  m_ProjectionMode: 1
   m_ProjectionDistance: 0.1
   m_ProjectionAngle: 180
   m_ConfiguredInWorldSpace: 0
@@ -2572,7 +2572,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.17456584, y: 0.08375715, z: 0.35688797}
+  m_Size: {x: 0.17456584, y: 0.08375715, z: 0.5}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &3174268280594833404
 MonoBehaviour:
@@ -2588,12 +2588,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 7418296828899223265}
   joint: {fileID: 4223234495778607925}
-  _ragdollSettings: {fileID: 0}
+  _ragdollSettings: {fileID: 11400000, guid: eb6959b4eb81e524692aec73d48b906f, type: 2}
   _bodyPart: 11
   currentXNormalizedRot: 0
   currentYNormalizedRot: 0
   currentZNormalizedRot: 0
-  currentEularJointRotation: {x: 0, y: 0, z: 0}
+  currentEulerJointRotation: {x: 0, y: 0, z: 0}
   _endEpisodeOnGroundTouch: 0
   _rewardAgentOnHeightCheck: 1
   _rewardHeightCheck: 0
@@ -2625,7 +2625,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!153 &4223234495778607925
 ConfigurableJoint:
   m_ObjectHideFlags: 0
@@ -2645,8 +2645,8 @@ ConfigurableJoint:
   m_YMotion: 0
   m_ZMotion: 0
   m_AngularXMotion: 1
-  m_AngularYMotion: 0
-  m_AngularZMotion: 0
+  m_AngularYMotion: 1
+  m_AngularZMotion: 1
   m_LinearLimitSpring:
     spring: 0
     damper: 0
@@ -2658,22 +2658,22 @@ ConfigurableJoint:
     spring: 0
     damper: 0
   m_LowAngularXLimit:
-    limit: -47.203094
+    limit: -20
     bounciness: 0
     contactDistance: 0
   m_HighAngularXLimit:
-    limit: 32.50259
+    limit: 20
     bounciness: 0
     contactDistance: 0
   m_AngularYZLimitSpring:
     spring: 0
     damper: 0
   m_AngularYLimit:
-    limit: 0
+    limit: 20
     bounciness: 0
     contactDistance: 0
   m_AngularZLimit:
-    limit: 0
+    limit: 20
     bounciness: 0
     contactDistance: 0
   m_TargetPosition: {x: 0, y: 0, z: 0}
@@ -2698,7 +2698,7 @@ ConfigurableJoint:
     useAcceleration: 0
   m_TargetRotation: {x: 0, y: 0, z: 0, w: 1}
   m_TargetAngularVelocity: {x: 0, y: 0, z: 0}
-  m_RotationDriveMode: 0
+  m_RotationDriveMode: 1
   m_AngularXDrive:
     serializedVersion: 4
     positionSpring: 0
@@ -2713,11 +2713,11 @@ ConfigurableJoint:
     useAcceleration: 0
   m_SlerpDrive:
     serializedVersion: 4
-    positionSpring: 0
-    positionDamper: 0
-    maximumForce: 0
+    positionSpring: 10000
+    positionDamper: 100
+    maximumForce: 25000
     useAcceleration: 0
-  m_ProjectionMode: 0
+  m_ProjectionMode: 1
   m_ProjectionDistance: 0.1
   m_ProjectionAngle: 180
   m_ConfiguredInWorldSpace: 0
@@ -2817,7 +2817,7 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.08
-  m_Height: 0.5
+  m_Height: 0.4
   m_Direction: 1
   m_Center: {x: 0, y: 0.3093477, z: 0}
 --- !u!54 &6533341003803535026
@@ -2846,7 +2846,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &7301708506969718427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2861,12 +2861,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 6533341003803535026}
   joint: {fileID: 8174469692102096373}
-  _ragdollSettings: {fileID: 0}
+  _ragdollSettings: {fileID: 11400000, guid: eb6959b4eb81e524692aec73d48b906f, type: 2}
   _bodyPart: 10
   currentXNormalizedRot: 0
   currentYNormalizedRot: 0
   currentZNormalizedRot: 0
-  currentEularJointRotation: {x: 0, y: 0, z: 0}
+  currentEulerJointRotation: {x: 0, y: 0, z: 0}
   _endEpisodeOnGroundTouch: 1
   _rewardAgentOnHeightCheck: 1
   _rewardHeightCheck: 0.023
@@ -2883,10 +2883,10 @@ ConfigurableJoint:
   m_ConnectedBody: {fileID: 6069429241202721777}
   m_ConnectedArticulationBody: {fileID: 0}
   m_Anchor: {x: 0, y: 0, z: 0}
-  m_Axis: {x: 1, y: 0, z: 0}
+  m_Axis: {x: -1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
   m_ConnectedAnchor: {x: 0, y: 0, z: 0}
-  m_SecondaryAxis: {x: 0, y: 1, z: 0}
+  m_SecondaryAxis: {x: 0, y: 0, z: -1}
   m_XMotion: 0
   m_YMotion: 0
   m_ZMotion: 0
@@ -2908,7 +2908,7 @@ ConfigurableJoint:
     bounciness: 0
     contactDistance: 0
   m_HighAngularXLimit:
-    limit: 177
+    limit: 120
     bounciness: 0
     contactDistance: 0
   m_AngularYZLimitSpring:
@@ -2934,17 +2934,17 @@ ConfigurableJoint:
     serializedVersion: 4
     positionSpring: 0
     positionDamper: 0
-    maximumForce: 3.4028233e+38
+    maximumForce: 3.402823e+38
     useAcceleration: 0
   m_ZDrive:
     serializedVersion: 4
     positionSpring: 0
     positionDamper: 0
-    maximumForce: 3.4028233e+38
+    maximumForce: 0
     useAcceleration: 0
   m_TargetRotation: {x: 0, y: 0, z: 0, w: 1}
   m_TargetAngularVelocity: {x: 0, y: 0, z: 0}
-  m_RotationDriveMode: 0
+  m_RotationDriveMode: 1
   m_AngularXDrive:
     serializedVersion: 4
     positionSpring: 0
@@ -2959,11 +2959,11 @@ ConfigurableJoint:
     useAcceleration: 0
   m_SlerpDrive:
     serializedVersion: 4
-    positionSpring: 0
-    positionDamper: 0
-    maximumForce: 0
+    positionSpring: 10000
+    positionDamper: 100
+    maximumForce: 25000
     useAcceleration: 0
-  m_ProjectionMode: 0
+  m_ProjectionMode: 1
   m_ProjectionDistance: 0.1
   m_ProjectionAngle: 180
   m_ConfiguredInWorldSpace: 0
@@ -3059,7 +3059,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &1475495101195356161
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3074,12 +3074,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 4161595719813265865}
   joint: {fileID: 2324003044592070276}
-  _ragdollSettings: {fileID: 0}
+  _ragdollSettings: {fileID: 11400000, guid: eb6959b4eb81e524692aec73d48b906f, type: 2}
   _bodyPart: 12
   currentXNormalizedRot: 0
   currentYNormalizedRot: 0
   currentZNormalizedRot: 0
-  currentEularJointRotation: {x: 0, y: 0, z: 0}
+  currentEulerJointRotation: {x: 0, y: 0, z: 0}
   _endEpisodeOnGroundTouch: 1
   _rewardAgentOnHeightCheck: 1
   _rewardHeightCheck: 0.023
@@ -3096,16 +3096,16 @@ ConfigurableJoint:
   m_ConnectedBody: {fileID: 416192526288352819}
   m_ConnectedArticulationBody: {fileID: 0}
   m_Anchor: {x: 0, y: 0, z: 0}
-  m_Axis: {x: 1, y: 0, z: 0}
+  m_Axis: {x: 0, y: 1, z: 0}
   m_AutoConfigureConnectedAnchor: 1
   m_ConnectedAnchor: {x: 0, y: 0, z: 0}
-  m_SecondaryAxis: {x: 0, y: 1, z: 0}
+  m_SecondaryAxis: {x: 0, y: 0, z: 1}
   m_XMotion: 0
   m_YMotion: 0
   m_ZMotion: 0
   m_AngularXMotion: 1
   m_AngularYMotion: 1
-  m_AngularZMotion: 1
+  m_AngularZMotion: 0
   m_LinearLimitSpring:
     spring: 0
     damper: 0
@@ -3117,22 +3117,22 @@ ConfigurableJoint:
     spring: 0
     damper: 0
   m_LowAngularXLimit:
-    limit: 0
+    limit: -60
     bounciness: 0
     contactDistance: 0
   m_HighAngularXLimit:
-    limit: 113.00029
+    limit: 120
     bounciness: 0
     contactDistance: 0
   m_AngularYZLimitSpring:
     spring: 0
     damper: 0
   m_AngularYLimit:
-    limit: 23.007294
+    limit: 100
     bounciness: 0
     contactDistance: 0
   m_AngularZLimit:
-    limit: 51.929695
+    limit: 0
     bounciness: 0
     contactDistance: 0
   m_TargetPosition: {x: 0, y: 0, z: 0}
@@ -3157,7 +3157,7 @@ ConfigurableJoint:
     useAcceleration: 0
   m_TargetRotation: {x: 0, y: 0, z: 0, w: 1}
   m_TargetAngularVelocity: {x: 0, y: 0, z: 0}
-  m_RotationDriveMode: 0
+  m_RotationDriveMode: 1
   m_AngularXDrive:
     serializedVersion: 4
     positionSpring: 0
@@ -3172,11 +3172,11 @@ ConfigurableJoint:
     useAcceleration: 0
   m_SlerpDrive:
     serializedVersion: 4
-    positionSpring: 0
-    positionDamper: 0
-    maximumForce: 0
+    positionSpring: 10000
+    positionDamper: 100
+    maximumForce: 25000
     useAcceleration: 0
-  m_ProjectionMode: 0
+  m_ProjectionMode: 1
   m_ProjectionDistance: 0.1
   m_ProjectionAngle: 180
   m_ConfiguredInWorldSpace: 0
@@ -3336,7 +3336,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &3196989801256220170
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3351,12 +3351,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 6069429241202721777}
   joint: {fileID: 3267596182861370747}
-  _ragdollSettings: {fileID: 0}
+  _ragdollSettings: {fileID: 11400000, guid: eb6959b4eb81e524692aec73d48b906f, type: 2}
   _bodyPart: 9
   currentXNormalizedRot: 0
   currentYNormalizedRot: 0
   currentZNormalizedRot: 0
-  currentEularJointRotation: {x: 0, y: 0, z: 0}
+  currentEulerJointRotation: {x: 0, y: 0, z: 0}
   _endEpisodeOnGroundTouch: 1
   _rewardAgentOnHeightCheck: 1
   _rewardHeightCheck: 0.023
@@ -3373,16 +3373,16 @@ ConfigurableJoint:
   m_ConnectedBody: {fileID: 8161968314748049056}
   m_ConnectedArticulationBody: {fileID: 0}
   m_Anchor: {x: 0, y: 0, z: 0}
-  m_Axis: {x: 1, y: 0, z: 0}
+  m_Axis: {x: -1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
   m_ConnectedAnchor: {x: 0, y: 0, z: 0}
-  m_SecondaryAxis: {x: 0, y: 1, z: 0}
+  m_SecondaryAxis: {x: 0, y: 0, z: -1}
   m_XMotion: 0
   m_YMotion: 0
   m_ZMotion: 0
   m_AngularXMotion: 1
-  m_AngularYMotion: 0
-  m_AngularZMotion: 1
+  m_AngularYMotion: 1
+  m_AngularZMotion: 0
   m_LinearLimitSpring:
     spring: 0
     damper: 0
@@ -3394,22 +3394,22 @@ ConfigurableJoint:
     spring: 0
     damper: 0
   m_LowAngularXLimit:
-    limit: 0
+    limit: -90
     bounciness: 0
     contactDistance: 0
   m_HighAngularXLimit:
-    limit: 172.64755
+    limit: 60
     bounciness: 0
     contactDistance: 0
   m_AngularYZLimitSpring:
     spring: 0
     damper: 0
   m_AngularYLimit:
-    limit: 0
+    limit: 40
     bounciness: 0
     contactDistance: 0
   m_AngularZLimit:
-    limit: 88.49559
+    limit: 0
     bounciness: 0
     contactDistance: 0
   m_TargetPosition: {x: 0, y: 0, z: 0}
@@ -3434,7 +3434,7 @@ ConfigurableJoint:
     useAcceleration: 0
   m_TargetRotation: {x: 0, y: 0, z: 0, w: 1}
   m_TargetAngularVelocity: {x: 0, y: 0, z: 0}
-  m_RotationDriveMode: 0
+  m_RotationDriveMode: 1
   m_AngularXDrive:
     serializedVersion: 4
     positionSpring: 0
@@ -3449,11 +3449,11 @@ ConfigurableJoint:
     useAcceleration: 0
   m_SlerpDrive:
     serializedVersion: 4
-    positionSpring: 0
-    positionDamper: 0
-    maximumForce: 0
+    positionSpring: 10000
+    positionDamper: 100
+    maximumForce: 25000
     useAcceleration: 0
-  m_ProjectionMode: 0
+  m_ProjectionMode: 1
   m_ProjectionDistance: 0.1
   m_ProjectionAngle: 180
   m_ConfiguredInWorldSpace: 0
@@ -4325,7 +4325,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &2629557879430248556
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4340,12 +4340,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 3549682519907988014}
   joint: {fileID: 4514061946066577556}
-  _ragdollSettings: {fileID: 0}
+  _ragdollSettings: {fileID: 11400000, guid: eb6959b4eb81e524692aec73d48b906f, type: 2}
   _bodyPart: 7
   currentXNormalizedRot: 0
   currentYNormalizedRot: 0
   currentZNormalizedRot: 0
-  currentEularJointRotation: {x: 0, y: 0, z: 0}
+  currentEulerJointRotation: {x: 0, y: 0, z: 0}
   _endEpisodeOnGroundTouch: 1
   _rewardAgentOnHeightCheck: 1
   _rewardHeightCheck: 0.023
@@ -4362,10 +4362,10 @@ ConfigurableJoint:
   m_ConnectedBody: {fileID: 5896313013603632686}
   m_ConnectedArticulationBody: {fileID: 0}
   m_Anchor: {x: 0, y: 0, z: 0}
-  m_Axis: {x: 1, y: 0, z: 0}
+  m_Axis: {x: 0, y: -1, z: 0}
   m_AutoConfigureConnectedAnchor: 1
   m_ConnectedAnchor: {x: 0, y: 0, z: 0}
-  m_SecondaryAxis: {x: 0, y: 1, z: 0}
+  m_SecondaryAxis: {x: 0, y: 0, z: 1}
   m_XMotion: 0
   m_YMotion: 0
   m_ZMotion: 0
@@ -4387,7 +4387,7 @@ ConfigurableJoint:
     bounciness: 0
     contactDistance: 0
   m_HighAngularXLimit:
-    limit: 79.146385
+    limit: 160
     bounciness: 0
     contactDistance: 0
   m_AngularYZLimitSpring:
@@ -4398,7 +4398,7 @@ ConfigurableJoint:
     bounciness: 0
     contactDistance: 0
   m_AngularZLimit:
-    limit: 66.659935
+    limit: 0
     bounciness: 0
     contactDistance: 0
   m_TargetPosition: {x: 0, y: 0, z: 0}
@@ -4423,7 +4423,7 @@ ConfigurableJoint:
     useAcceleration: 0
   m_TargetRotation: {x: 0, y: 0, z: 0, w: 1}
   m_TargetAngularVelocity: {x: 0, y: 0, z: 0}
-  m_RotationDriveMode: 0
+  m_RotationDriveMode: 1
   m_AngularXDrive:
     serializedVersion: 4
     positionSpring: 0
@@ -4438,11 +4438,11 @@ ConfigurableJoint:
     useAcceleration: 0
   m_SlerpDrive:
     serializedVersion: 4
-    positionSpring: 0
-    positionDamper: 0
-    maximumForce: 0
+    positionSpring: 10000
+    positionDamper: 100
+    maximumForce: 25000
     useAcceleration: 0
-  m_ProjectionMode: 0
+  m_ProjectionMode: 1
   m_ProjectionDistance: 0.1
   m_ProjectionAngle: 180
   m_ConfiguredInWorldSpace: 0
@@ -4898,7 +4898,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 120
+    VectorObservationSize: 208
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 52
@@ -4930,7 +4930,13 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 0
+  MaxStep: 500
+  OnFinishedEpisode:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSucceededEpisode:
+    m_PersistentCalls:
+      m_Calls: []
   _targetTransform: {fileID: 0}
   _bodyParts:
     dictionaryList:
@@ -5571,7 +5577,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &1866696394659011521
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5586,12 +5592,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 416192526288352819}
   joint: {fileID: 2501623101165457919}
-  _ragdollSettings: {fileID: 0}
+  _ragdollSettings: {fileID: 11400000, guid: eb6959b4eb81e524692aec73d48b906f, type: 2}
   _bodyPart: 1
   currentXNormalizedRot: 0
   currentYNormalizedRot: 0
   currentZNormalizedRot: 0
-  currentEularJointRotation: {x: 0, y: 0, z: 0}
+  currentEulerJointRotation: {x: 0, y: 0, z: 0}
   _endEpisodeOnGroundTouch: 1
   _rewardAgentOnHeightCheck: 1
   _rewardHeightCheck: 0.023
@@ -5629,22 +5635,22 @@ ConfigurableJoint:
     spring: 0
     damper: 0
   m_LowAngularXLimit:
-    limit: -51.097076
+    limit: -20
     bounciness: 0
     contactDistance: 0
   m_HighAngularXLimit:
-    limit: 45
+    limit: 20
     bounciness: 0
     contactDistance: 0
   m_AngularYZLimitSpring:
     spring: 0
     damper: 0
   m_AngularYLimit:
-    limit: 67.83973
+    limit: 20
     bounciness: 0
     contactDistance: 0
   m_AngularZLimit:
-    limit: 67.475296
+    limit: 15
     bounciness: 0
     contactDistance: 0
   m_TargetPosition: {x: 0, y: 0, z: 0}
@@ -5669,7 +5675,7 @@ ConfigurableJoint:
     useAcceleration: 0
   m_TargetRotation: {x: 0, y: 0, z: 0, w: 1}
   m_TargetAngularVelocity: {x: 0, y: 0, z: 0}
-  m_RotationDriveMode: 0
+  m_RotationDriveMode: 1
   m_AngularXDrive:
     serializedVersion: 4
     positionSpring: 0
@@ -5684,11 +5690,11 @@ ConfigurableJoint:
     useAcceleration: 0
   m_SlerpDrive:
     serializedVersion: 4
-    positionSpring: 0
-    positionDamper: 0
-    maximumForce: 0
+    positionSpring: 10000
+    positionDamper: 100
+    maximumForce: 25000
     useAcceleration: 0
-  m_ProjectionMode: 0
+  m_ProjectionMode: 1
   m_ProjectionDistance: 0.1
   m_ProjectionAngle: 180
   m_ConfiguredInWorldSpace: 0
@@ -5982,7 +5988,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &8856318121614251740
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5997,12 +6003,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 5896313013603632686}
   joint: {fileID: 7420492661555491525}
-  _ragdollSettings: {fileID: 0}
+  _ragdollSettings: {fileID: 11400000, guid: eb6959b4eb81e524692aec73d48b906f, type: 2}
   _bodyPart: 6
   currentXNormalizedRot: 0
   currentYNormalizedRot: 0
   currentZNormalizedRot: 0
-  currentEularJointRotation: {x: 0, y: 0, z: 0}
+  currentEulerJointRotation: {x: 0, y: 0, z: 0}
   _endEpisodeOnGroundTouch: 1
   _rewardAgentOnHeightCheck: 1
   _rewardHeightCheck: 0.023
@@ -6019,16 +6025,16 @@ ConfigurableJoint:
   m_ConnectedBody: {fileID: 416192526288352819}
   m_ConnectedArticulationBody: {fileID: 0}
   m_Anchor: {x: 0, y: 0, z: 0}
-  m_Axis: {x: 1, y: 0, z: 0}
+  m_Axis: {x: 0, y: -1, z: 0}
   m_AutoConfigureConnectedAnchor: 1
   m_ConnectedAnchor: {x: 0, y: 0, z: 0}
-  m_SecondaryAxis: {x: 0, y: 1, z: 0}
+  m_SecondaryAxis: {x: 0, y: 0, z: 1}
   m_XMotion: 0
   m_YMotion: 0
   m_ZMotion: 0
   m_AngularXMotion: 1
   m_AngularYMotion: 1
-  m_AngularZMotion: 1
+  m_AngularZMotion: 0
   m_LinearLimitSpring:
     spring: 0
     damper: 0
@@ -6040,22 +6046,22 @@ ConfigurableJoint:
     spring: 0
     damper: 0
   m_LowAngularXLimit:
-    limit: 0
+    limit: -60
     bounciness: 0
     contactDistance: 0
   m_HighAngularXLimit:
-    limit: 113.00029
+    limit: 120
     bounciness: 0
     contactDistance: 0
   m_AngularYZLimitSpring:
     spring: 0
     damper: 0
   m_AngularYLimit:
-    limit: 23.007294
+    limit: 100
     bounciness: 0
     contactDistance: 0
   m_AngularZLimit:
-    limit: 51.929695
+    limit: 0
     bounciness: 0
     contactDistance: 0
   m_TargetPosition: {x: 0, y: 0, z: 0}
@@ -6080,7 +6086,7 @@ ConfigurableJoint:
     useAcceleration: 0
   m_TargetRotation: {x: 0, y: 0, z: 0, w: 1}
   m_TargetAngularVelocity: {x: 0, y: 0, z: 0}
-  m_RotationDriveMode: 0
+  m_RotationDriveMode: 1
   m_AngularXDrive:
     serializedVersion: 4
     positionSpring: 0
@@ -6095,11 +6101,11 @@ ConfigurableJoint:
     useAcceleration: 0
   m_SlerpDrive:
     serializedVersion: 4
-    positionSpring: 0
-    positionDamper: 0
-    maximumForce: 0
+    positionSpring: 10000
+    positionDamper: 100
+    maximumForce: 25000
     useAcceleration: 0
-  m_ProjectionMode: 0
+  m_ProjectionMode: 1
   m_ProjectionDistance: 0.1
   m_ProjectionAngle: 180
   m_ConfiguredInWorldSpace: 0
@@ -6195,7 +6201,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &2777730744379220076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6210,12 +6216,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 8075708853633886688}
   joint: {fileID: 8782930168193488513}
-  _ragdollSettings: {fileID: 0}
+  _ragdollSettings: {fileID: 11400000, guid: eb6959b4eb81e524692aec73d48b906f, type: 2}
   _bodyPart: 13
   currentXNormalizedRot: 0
   currentYNormalizedRot: 0
   currentZNormalizedRot: 0
-  currentEularJointRotation: {x: 0, y: 0, z: 0}
+  currentEulerJointRotation: {x: 0, y: 0, z: 0}
   _endEpisodeOnGroundTouch: 1
   _rewardAgentOnHeightCheck: 1
   _rewardHeightCheck: 0.023
@@ -6232,10 +6238,10 @@ ConfigurableJoint:
   m_ConnectedBody: {fileID: 4161595719813265865}
   m_ConnectedArticulationBody: {fileID: 0}
   m_Anchor: {x: 0, y: 0, z: 0}
-  m_Axis: {x: 1, y: 0, z: 0}
+  m_Axis: {x: 0, y: -1, z: 0}
   m_AutoConfigureConnectedAnchor: 1
   m_ConnectedAnchor: {x: 0, y: 0, z: 0}
-  m_SecondaryAxis: {x: 0, y: 1, z: 0}
+  m_SecondaryAxis: {x: 0, y: 0, z: 1}
   m_XMotion: 0
   m_YMotion: 0
   m_ZMotion: 0
@@ -6257,7 +6263,7 @@ ConfigurableJoint:
     bounciness: 0
     contactDistance: 0
   m_HighAngularXLimit:
-    limit: 79.146385
+    limit: 160
     bounciness: 0
     contactDistance: 0
   m_AngularYZLimitSpring:
@@ -6268,7 +6274,7 @@ ConfigurableJoint:
     bounciness: 0
     contactDistance: 0
   m_AngularZLimit:
-    limit: 66.659935
+    limit: 0
     bounciness: 0
     contactDistance: 0
   m_TargetPosition: {x: 0, y: 0, z: 0}
@@ -6293,7 +6299,7 @@ ConfigurableJoint:
     useAcceleration: 0
   m_TargetRotation: {x: 0, y: 0, z: 0, w: 1}
   m_TargetAngularVelocity: {x: 0, y: 0, z: 0}
-  m_RotationDriveMode: 0
+  m_RotationDriveMode: 1
   m_AngularXDrive:
     serializedVersion: 4
     positionSpring: 0
@@ -6308,11 +6314,11 @@ ConfigurableJoint:
     useAcceleration: 0
   m_SlerpDrive:
     serializedVersion: 4
-    positionSpring: 0
-    positionDamper: 0
-    maximumForce: 0
+    positionSpring: 10000
+    positionDamper: 100
+    maximumForce: 25000
     useAcceleration: 0
-  m_ProjectionMode: 0
+  m_ProjectionMode: 1
   m_ProjectionDistance: 0.1
   m_ProjectionAngle: 180
   m_ConfiguredInWorldSpace: 0

@@ -9,10 +9,12 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _episodeCountText;
     [SerializeField] private TextMeshProUGUI _succesfullEpisodeCountText;
     [SerializeField] private TextMeshProUGUI _successRatioText;
-    [SerializeField] private TextMeshProUGUI _averageEpisodeDuration;
+    [SerializeField] private TextMeshProUGUI _averageEpisodeDurationText;
     private TrainingManager _trainer;
     private float _totalEpisodeCount;
     private float _succesfullEpisodeCount;
+    private float _totalEpisodeDuration;
+    private float _averageEpisodeDuration;
     
     private void Awake()
     {
@@ -29,9 +31,12 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    private void updateEpisodeCount()
+    private void updateEpisodeCount(float pEpisodeDuration)
     {
+        _totalEpisodeDuration += pEpisodeDuration;
         _totalEpisodeCount += 1;
+        _averageEpisodeDuration = _totalEpisodeDuration / _totalEpisodeCount;
+        _averageEpisodeDurationText.SetText($"{_averageEpisodeDuration.ToString("F3")}s");
         _episodeCountText.SetText(_totalEpisodeCount.ToString());
         calculateSuccessRatio();
     }

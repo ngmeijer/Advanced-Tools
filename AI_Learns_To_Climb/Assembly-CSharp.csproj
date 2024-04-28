@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\HandsController.cs" />
+    <Compile Include="Assets\Scripts\MLAgent.cs" />
     <Compile Include="Assets\Scripts\TrainingManager.cs" />
     <Compile Include="Assets\TargetPosition.cs" />
     <Compile Include="Assets\Scripts\TestAgent.cs" />

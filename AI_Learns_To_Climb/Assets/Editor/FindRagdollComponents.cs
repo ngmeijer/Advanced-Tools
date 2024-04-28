@@ -13,7 +13,7 @@ public class FindRagdollComponents : Editor
 
         RagdollController controller = (RagdollController)target;
 
-        GUILayout.Label($"Body part count: {controller.BodyPartCount()}");
+        GUILayout.Label($"Body part count: {controller.GetBodyPartCount()}");
         if (GUILayout.Button("Assign Components For Limbs"))
         {
             BodyPartController[] bodyparts = FindObjectsOfType<BodyPartController>();

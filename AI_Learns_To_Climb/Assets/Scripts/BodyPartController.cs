@@ -40,6 +40,7 @@ public class BodyPartController : MonoBehaviour
     public ConfigurableJoint joint;
     [SerializeField] private RagdollSettings _ragdollSettings;
     [SerializeField] private BodyPart _bodyPart;
+    public BodyPart BodyPart { get { return _bodyPart; } }
 
     public float ForceMultiplier()
     {
@@ -63,7 +64,7 @@ public class BodyPartController : MonoBehaviour
     public float currentXNormalizedRot;
     public float currentYNormalizedRot;
     public float currentZNormalizedRot;
-    public Vector3 currentEularJointRotation;
+    public Vector3 currentEulerJointRotation;
 
     public bool PunishAgentOnGroundTouch()
     {
@@ -172,7 +173,7 @@ public class BodyPartController : MonoBehaviour
         currentZNormalizedRot = Mathf.InverseLerp(-joint.angularZLimit.limit, joint.angularZLimit.limit, zRot);
 
         joint.targetRotation = Quaternion.Euler(xRot, yRot, zRot);
-        currentEularJointRotation = new Vector3(xRot, yRot, zRot);
+        currentEulerJointRotation = new Vector3(xRot, yRot, zRot);
     }
 
     public void SetJointStrength(float strength)
@@ -182,7 +183,7 @@ public class BodyPartController : MonoBehaviour
         {
             positionSpring = 40000,
             positionDamper = 5000,
-            maximumForce = rawVal
+            maximumForce = 20000
         };
         joint.slerpDrive = jd;
         currentStrength = jd.maximumForce;

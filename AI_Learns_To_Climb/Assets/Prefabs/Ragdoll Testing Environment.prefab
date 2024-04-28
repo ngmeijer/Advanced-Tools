@@ -721,61 +721,49 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4555635541926938719}
     m_Modifications:
-    - target: {fileID: 521578318097030955, guid: 884442450944e71439d335f9366960f1, type: 3}
-      propertyPath: m_Enabled
+    - target: {fileID: 1475495101195356161, guid: 884442450944e71439d335f9366960f1, type: 3}
+      propertyPath: _rewardAgentOnHeightCheck
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 521578318097030955, guid: 884442450944e71439d335f9366960f1, type: 3}
-      propertyPath: _targetTransform
-      value: 
-      objectReference: {fileID: 1961694566139364302}
-    - target: {fileID: 1475495101195356161, guid: 884442450944e71439d335f9366960f1, type: 3}
-      propertyPath: _ragdollSettings
-      value: 
-      objectReference: {fileID: 11400000, guid: eb6959b4eb81e524692aec73d48b906f, type: 2}
     - target: {fileID: 1866696394659011521, guid: 884442450944e71439d335f9366960f1, type: 3}
-      propertyPath: _ragdollSettings
-      value: 
-      objectReference: {fileID: 11400000, guid: eb6959b4eb81e524692aec73d48b906f, type: 2}
+      propertyPath: _rewardAgentOnHeightCheck
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2629557879430248556, guid: 884442450944e71439d335f9366960f1, type: 3}
-      propertyPath: _ragdollSettings
-      value: 
-      objectReference: {fileID: 11400000, guid: eb6959b4eb81e524692aec73d48b906f, type: 2}
+      propertyPath: _rewardAgentOnHeightCheck
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2777730744379220076, guid: 884442450944e71439d335f9366960f1, type: 3}
-      propertyPath: _ragdollSettings
-      value: 
-      objectReference: {fileID: 11400000, guid: eb6959b4eb81e524692aec73d48b906f, type: 2}
+      propertyPath: _rewardAgentOnHeightCheck
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3174268280594833404, guid: 884442450944e71439d335f9366960f1, type: 3}
-      propertyPath: _ragdollSettings
-      value: 
-      objectReference: {fileID: 11400000, guid: eb6959b4eb81e524692aec73d48b906f, type: 2}
+      propertyPath: _rewardAgentOnHeightCheck
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3196989801256220170, guid: 884442450944e71439d335f9366960f1, type: 3}
-      propertyPath: _ragdollSettings
-      value: 
-      objectReference: {fileID: 11400000, guid: eb6959b4eb81e524692aec73d48b906f, type: 2}
+      propertyPath: _rewardAgentOnHeightCheck
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4191887063165841830, guid: 884442450944e71439d335f9366960f1, type: 3}
-      propertyPath: _ragdollSettings
-      value: 
-      objectReference: {fileID: 11400000, guid: eb6959b4eb81e524692aec73d48b906f, type: 2}
+      propertyPath: _rewardAgentOnHeightCheck
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4252099805053295769, guid: 884442450944e71439d335f9366960f1, type: 3}
-      propertyPath: _ragdollSettings
-      value: 
-      objectReference: {fileID: 11400000, guid: eb6959b4eb81e524692aec73d48b906f, type: 2}
-    - target: {fileID: 4525622112162537666, guid: 884442450944e71439d335f9366960f1, type: 3}
-      propertyPath: m_Enabled
+      propertyPath: _rewardAgentOnHeightCheck
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7301708506969718427, guid: 884442450944e71439d335f9366960f1, type: 3}
-      propertyPath: _ragdollSettings
-      value: 
-      objectReference: {fileID: 11400000, guid: eb6959b4eb81e524692aec73d48b906f, type: 2}
+      propertyPath: _rewardAgentOnHeightCheck
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7612272045043035494, guid: 884442450944e71439d335f9366960f1, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7612272045043035494, guid: 884442450944e71439d335f9366960f1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.306
+      value: 1.861
       objectReference: {fileID: 0}
     - target: {fileID: 7612272045043035494, guid: 884442450944e71439d335f9366960f1, type: 3}
       propertyPath: m_LocalPosition.z
@@ -814,21 +802,21 @@ PrefabInstance:
       value: Demon T Wiezzorek 1
       objectReference: {fileID: 0}
     - target: {fileID: 8554901274630110467, guid: 884442450944e71439d335f9366960f1, type: 3}
-      propertyPath: _ragdollSettings
-      value: 
-      objectReference: {fileID: 11400000, guid: eb6959b4eb81e524692aec73d48b906f, type: 2}
+      propertyPath: _rewardAgentOnHeightCheck
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8587137954274944064, guid: 884442450944e71439d335f9366960f1, type: 3}
-      propertyPath: _ragdollSettings
-      value: 
-      objectReference: {fileID: 11400000, guid: eb6959b4eb81e524692aec73d48b906f, type: 2}
+      propertyPath: _rewardAgentOnHeightCheck
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8771234439318786733, guid: 884442450944e71439d335f9366960f1, type: 3}
-      propertyPath: _ragdollSettings
-      value: 
-      objectReference: {fileID: 11400000, guid: eb6959b4eb81e524692aec73d48b906f, type: 2}
+      propertyPath: _rewardAgentOnHeightCheck
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8856318121614251740, guid: 884442450944e71439d335f9366960f1, type: 3}
-      propertyPath: _ragdollSettings
-      value: 
-      objectReference: {fileID: 11400000, guid: eb6959b4eb81e524692aec73d48b906f, type: 2}
+      propertyPath: _rewardAgentOnHeightCheck
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

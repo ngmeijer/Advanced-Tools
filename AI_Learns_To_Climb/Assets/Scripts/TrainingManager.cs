@@ -36,7 +36,7 @@ public class TrainingManager : MonoBehaviour
             {
                 position.z = z * 16;
                 GameObject environment = Instantiate(_environmentPrefab, position, Quaternion.identity, this.transform);
-                TestAgent agent = environment.GetComponentInChildren<TestAgent>();
+                MLAgent agent = environment.GetComponentInChildren<MLAgent>();
                 _agents.Add(agent);
                 environments.Add(environment);
             }

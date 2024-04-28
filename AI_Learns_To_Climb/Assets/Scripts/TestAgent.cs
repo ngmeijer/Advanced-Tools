@@ -1,23 +1,7 @@
-using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
 using UnityEngine;
-using UnityEngine.Events;
 using Random = UnityEngine.Random;
-
-public class MLAgent : Agent
-{
-    public UnityEvent<float> OnFinishedEpisode = new UnityEvent<float>();
-    public UnityEvent OnSucceededEpisode = new UnityEvent();
-
-    protected float _episodeDuration;
-
-
-    protected virtual void Update()
-    {
-        _episodeDuration += Time.deltaTime;
-    }
-}
 
 public class TestAgent : MLAgent
 {
