@@ -10,25 +10,34 @@ public enum BodyPart
     TORSO,
     HIPS,
 
-    UPPER_LEG,
-    LOWER_LEG,
-    FOOT,
+    L_UPPER_LEG,
+    L_LOWER_LEG,
+    L_FOOT,
 
-    UPPER_ARM,
-    LOWER_ARM,
-    HAND,
+    L_UPPER_ARM,
+    L_LOWER_ARM,
+    L_HAND,
+
+    R_UPPER_LEG,
+    R_LOWER_LEG,
+    R_FOOT,
+
+    R_UPPER_ARM,
+    R_LOWER_ARM,
+    R_HAND,
 }
 
-public enum PUNISH_OR_REWARD 
-{ 
-    PUNISH, 
+public enum PUNISH_OR_REWARD
+{
+    PUNISH,
     REWARD
 }
 
 
 public class BodyPartController : MonoBehaviour
 {
-    [SerializeField] protected Rigidbody rb;
+    public Rigidbody rb;
+    public ConfigurableJoint joint;
     [SerializeField] private RagdollSettings _ragdollSettings;
     [SerializeField] private BodyPart _bodyPart;
 
@@ -43,7 +52,7 @@ public class BodyPartController : MonoBehaviour
     }
 
     public delegate void OnGiveReward(float pReward);
-    public OnGiveReward onGiveReward;
+    public OnGiveReward onGiveRewardOrPunishment;
 
     public delegate void OnEndEpisode();
     public OnEndEpisode onEndEpisode;
@@ -51,8 +60,14 @@ public class BodyPartController : MonoBehaviour
     protected Vector3 _startPos;
     protected Quaternion _startRot;
 
-    public bool PunishAgentOnGroundTouch() {
-        _ragdollSettings.rewardsOnGroundHit.TryGetValue(_bodyPart, out CustomKeyValuePair data);
+    public float currentXNormalizedRot;
+    public float currentYNormalizedRot;
+    public float currentZNormalizedRot;
+    public Vector3 currentEularJointRotation;
+
+    public bool PunishAgentOnGroundTouch()
+    {
+        _ragdollSettings.rewardsOnGroundHit.TryGetValue(_bodyPart, out PunishOrRewardContainer data);
         if (data.Type == PUNISH_OR_REWARD.PUNISH)
             return true;
 
@@ -66,6 +81,8 @@ public class BodyPartController : MonoBehaviour
     [SerializeField] private bool _touchingGround;
     public bool TouchingGround => _touchingGround;
 
+    public float currentStrength;
+
     private void Awake()
     {
         if (rb == null)
@@ -78,15 +95,15 @@ public class BodyPartController : MonoBehaviour
         _startRot = transform.localRotation;
     }
 
-    public void AddForceToLimb(Vector3 pForce)
+    public void SetLimbRotation(Vector3 pEulerRotation)
     {
-        _ragdollSettings.forceMultiplierOnLimbs.TryGetValue(_bodyPart, out float _forceMultiplier);
-        rb.AddForce(pForce * 15);
+        Quaternion converted = Quaternion.Euler(pEulerRotation.x, pEulerRotation.y, pEulerRotation.z);
+        joint.targetRotation = converted;
     }
 
     public void ResetLimb()
     {
-        transform.localPosition = _startPos;
+        transform.localPosition = _startPos; 
         transform.localRotation = _startRot;
 
         _touchingGround = false;
@@ -99,7 +116,7 @@ public class BodyPartController : MonoBehaviour
     {
         if (!TouchingGround && _rewardAgentOnHeightCheck)
         {
-            onGiveReward?.Invoke(_rewardHeightCheck);
+            onGiveRewardOrPunishment?.Invoke(_rewardHeightCheck);
         }
     }
 
@@ -109,13 +126,26 @@ public class BodyPartController : MonoBehaviour
         {
             _touchingGround = true;
 
-            _ragdollSettings.rewardsOnGroundHit.TryGetValue(_bodyPart, out CustomKeyValuePair groundHitReaction);
-            onGiveReward?.Invoke(groundHitReaction.Amount);
+            _ragdollSettings.rewardsOnGroundHit.TryGetValue(_bodyPart, out PunishOrRewardContainer groundHitReaction);
+            Debug.Log($"Granting reward: {groundHitReaction.Amount} because {_bodyPart} hit the ground.");
+            onGiveRewardOrPunishment?.Invoke(groundHitReaction.Amount);
 
             if (_endEpisodeOnGroundTouch)
             {
-                Debug.Log($"Hit the ground with body part {_bodyPart}");
                 onEndEpisode?.Invoke();
+            }
+        }
+    }
+
+    protected virtual void OnCollisionStay(Collision collision)
+    {
+        if (collision.collider.CompareTag("Ground"))
+        {
+            if (!PunishAgentOnGroundTouch())
+            {
+                _ragdollSettings.rewardsOnGroundHit.TryGetValue(_bodyPart, out PunishOrRewardContainer groundHitReaction);
+                Debug.Log($"Granting reward in OnStay: {groundHitReaction.Amount} because {_bodyPart} hit the ground.");
+                onGiveRewardOrPunishment?.Invoke(groundHitReaction.Amount);
             }
         }
     }
@@ -124,5 +154,37 @@ public class BodyPartController : MonoBehaviour
     {
         if (collision.collider.CompareTag("Ground"))
             _touchingGround = false;
+    }
+
+    public void SetJointTargetRotation(float x, float y, float z)
+    {
+        x = (x + 1f) * 0.5f;
+        y = (y + 1f) * 0.5f;
+        z = (z + 1f) * 0.5f;
+
+        var xRot = Mathf.Lerp(joint.lowAngularXLimit.limit, joint.highAngularXLimit.limit, x);
+        var yRot = Mathf.Lerp(-joint.angularYLimit.limit, joint.angularYLimit.limit, y);
+        var zRot = Mathf.Lerp(-joint.angularZLimit.limit, joint.angularZLimit.limit, z);
+
+        currentXNormalizedRot =
+            Mathf.InverseLerp(joint.lowAngularXLimit.limit, joint.highAngularXLimit.limit, xRot);
+        currentYNormalizedRot = Mathf.InverseLerp(-joint.angularYLimit.limit, joint.angularYLimit.limit, yRot);
+        currentZNormalizedRot = Mathf.InverseLerp(-joint.angularZLimit.limit, joint.angularZLimit.limit, zRot);
+
+        joint.targetRotation = Quaternion.Euler(xRot, yRot, zRot);
+        currentEularJointRotation = new Vector3(xRot, yRot, zRot);
+    }
+
+    public void SetJointStrength(float strength)
+    {
+        var rawVal = (strength + 1f) * 0.5f * 20000;
+        var jd = new JointDrive
+        {
+            positionSpring = 40000,
+            positionDamper = 5000,
+            maximumForce = rawVal
+        };
+        joint.slerpDrive = jd;
+        currentStrength = jd.maximumForce;
     }
 }

@@ -7,7 +7,7 @@ public class FeetController : BodyPartController
         if (TouchingGround)
         {
             Debug.Log("Rewarding being grounded.");
-            onGiveReward?.Invoke(0.1f);
+            onGiveRewardOrPunishment?.Invoke(0.1f);
         }
     }
 }

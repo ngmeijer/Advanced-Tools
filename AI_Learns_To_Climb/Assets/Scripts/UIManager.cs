@@ -9,6 +9,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _episodeCountText;
     [SerializeField] private TextMeshProUGUI _succesfullEpisodeCountText;
     [SerializeField] private TextMeshProUGUI _successRatioText;
+    [SerializeField] private TextMeshProUGUI _averageEpisodeDuration;
     private TrainingManager _trainer;
     private float _totalEpisodeCount;
     private float _succesfullEpisodeCount;
@@ -20,7 +21,7 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
-        TestAgent[] agents = _trainer.Agents.ToArray();
+        MLAgent[] agents = _trainer.Agents.ToArray();
         foreach (var agent in agents)
         {
             agent.OnFinishedEpisode.AddListener(updateEpisodeCount);
