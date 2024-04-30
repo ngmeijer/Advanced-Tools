@@ -61,9 +61,14 @@
     <Analyzer Include="E:\Unity versions\2023.2.19f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.UIToolkit.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Obstacle.cs" />
+    <Compile Include="Assets\Scripts\ObstacleManager.cs" />
+    <Compile Include="Assets\Scripts\MLAgent.cs" />
     <Compile Include="Assets\Scripts\TrainingManager.cs" />
     <Compile Include="Assets\Scripts\TestAgent.cs" />
     <Compile Include="Assets\Scripts\UIManager.cs" />
+    <Compile Include="Assets\EnvironmentManager.cs" />
+    <Compile Include="Assets\Scripts\AvoidanceAgent.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
