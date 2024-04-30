@@ -14,6 +14,8 @@ public class TestAgent : MLAgent
 
     protected override void Update()
     {
+        base.Update();
+
         if (StepCount >= MaxStep - 1)
         {
             _floorRenderer.material = _tookTooLongMat;

@@ -721,53 +721,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4555635541926938719}
     m_Modifications:
-    - target: {fileID: 1475495101195356161, guid: 884442450944e71439d335f9366960f1, type: 3}
-      propertyPath: _rewardAgentOnHeightCheck
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1866696394659011521, guid: 884442450944e71439d335f9366960f1, type: 3}
-      propertyPath: _rewardAgentOnHeightCheck
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2629557879430248556, guid: 884442450944e71439d335f9366960f1, type: 3}
-      propertyPath: _rewardAgentOnHeightCheck
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2777730744379220076, guid: 884442450944e71439d335f9366960f1, type: 3}
-      propertyPath: _rewardAgentOnHeightCheck
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3174268280594833404, guid: 884442450944e71439d335f9366960f1, type: 3}
-      propertyPath: _rewardAgentOnHeightCheck
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3196989801256220170, guid: 884442450944e71439d335f9366960f1, type: 3}
-      propertyPath: _rewardAgentOnHeightCheck
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4191887063165841830, guid: 884442450944e71439d335f9366960f1, type: 3}
-      propertyPath: _rewardAgentOnHeightCheck
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4252099805053295769, guid: 884442450944e71439d335f9366960f1, type: 3}
-      propertyPath: _rewardAgentOnHeightCheck
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7301708506969718427, guid: 884442450944e71439d335f9366960f1, type: 3}
-      propertyPath: _rewardAgentOnHeightCheck
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7612272045043035494, guid: 884442450944e71439d335f9366960f1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.3861249
       objectReference: {fileID: 0}
     - target: {fileID: 7612272045043035494, guid: 884442450944e71439d335f9366960f1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.861
+      value: 0.164
       objectReference: {fileID: 0}
     - target: {fileID: 7612272045043035494, guid: 884442450944e71439d335f9366960f1, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.907
+      value: 4.911
       objectReference: {fileID: 0}
     - target: {fileID: 7612272045043035494, guid: 884442450944e71439d335f9366960f1, type: 3}
       propertyPath: m_LocalRotation.w
@@ -800,22 +764,6 @@ PrefabInstance:
     - target: {fileID: 7973440639830846514, guid: 884442450944e71439d335f9366960f1, type: 3}
       propertyPath: m_Name
       value: Demon T Wiezzorek 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8554901274630110467, guid: 884442450944e71439d335f9366960f1, type: 3}
-      propertyPath: _rewardAgentOnHeightCheck
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8587137954274944064, guid: 884442450944e71439d335f9366960f1, type: 3}
-      propertyPath: _rewardAgentOnHeightCheck
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8771234439318786733, guid: 884442450944e71439d335f9366960f1, type: 3}
-      propertyPath: _rewardAgentOnHeightCheck
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8856318121614251740, guid: 884442450944e71439d335f9366960f1, type: 3}
-      propertyPath: _rewardAgentOnHeightCheck
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

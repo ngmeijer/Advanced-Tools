@@ -42,15 +42,7 @@ public class BodyPartController : MonoBehaviour
     [SerializeField] private BodyPart _bodyPart;
     public BodyPart BodyPart { get { return _bodyPart; } }
 
-    public float ForceMultiplier()
-    {
-        float forceMultiplier = 0f;
-        if (_ragdollSettings.forceMultiplierOnLimbs.TryGetValue(_bodyPart, out float _forceMultiplier))
-        {
-            forceMultiplier = _forceMultiplier;
-        }
-        return forceMultiplier;
-    }
+    [HideInInspector] public float ForceMultiplier;
 
     public delegate void OnGiveReward(float pReward);
     public OnGiveReward onGiveRewardOrPunishment;
@@ -92,8 +84,10 @@ public class BodyPartController : MonoBehaviour
             rb = GetComponent<Rigidbody>();
         }
 
-        _startPos = transform.localPosition;
-        _startRot = transform.localRotation;
+        _startPos = rb.transform.position;
+        _startRot = rb.transform.rotation;
+        rb.maxAngularVelocity = 50f;
+        
     }
 
     public void SetLimbRotation(Vector3 pEulerRotation)
@@ -104,9 +98,10 @@ public class BodyPartController : MonoBehaviour
 
     public void ResetLimb()
     {
-        transform.localPosition = _startPos; 
-        transform.localRotation = _startRot;
-
+        rb.transform.position = _startPos;
+        rb.transform.rotation = _startRot;
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
         _touchingGround = false;
     }
 
@@ -159,10 +154,14 @@ public class BodyPartController : MonoBehaviour
 
     public void SetJointTargetRotation(float x, float y, float z)
     {
+        //X Y Z are values in the range of [-1 | 1]. 
+        //x = 0.35 (example value)
+        //So x = (0.35 + 1f) * 0.5f = 0.675
         x = (x + 1f) * 0.5f;
         y = (y + 1f) * 0.5f;
         z = (z + 1f) * 0.5f;
 
+        //xRot = 
         var xRot = Mathf.Lerp(joint.lowAngularXLimit.limit, joint.highAngularXLimit.limit, x);
         var yRot = Mathf.Lerp(-joint.angularYLimit.limit, joint.angularYLimit.limit, y);
         var zRot = Mathf.Lerp(-joint.angularZLimit.limit, joint.angularZLimit.limit, z);
@@ -172,7 +171,12 @@ public class BodyPartController : MonoBehaviour
         currentYNormalizedRot = Mathf.InverseLerp(-joint.angularYLimit.limit, joint.angularYLimit.limit, yRot);
         currentZNormalizedRot = Mathf.InverseLerp(-joint.angularZLimit.limit, joint.angularZLimit.limit, zRot);
 
-        joint.targetRotation = Quaternion.Euler(xRot, yRot, zRot);
+        //joint.targetRotation = Quaternion.Euler(xRot, yRot, zRot);
+        ConfigurableJointExtensions.SetTargetRotation(joint, Quaternion.Euler(xRot, yRot, zRot), _startRot);
+        if(BodyPart == BodyPart.L_UPPER_LEG)
+        {
+            Debug.Log($"Target rotation of left upper leg: {joint.targetRotation}");
+        }
         currentEulerJointRotation = new Vector3(xRot, yRot, zRot);
     }
 
@@ -183,7 +187,7 @@ public class BodyPartController : MonoBehaviour
         {
             positionSpring = 40000,
             positionDamper = 5000,
-            maximumForce = 20000
+            maximumForce = rawVal
         };
         joint.slerpDrive = jd;
         currentStrength = jd.maximumForce;

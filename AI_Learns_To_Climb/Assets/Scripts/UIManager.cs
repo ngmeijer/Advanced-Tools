@@ -27,6 +27,7 @@ public class UIManager : MonoBehaviour
         foreach (var agent in agents)
         {
             agent.OnFinishedEpisode.AddListener(updateEpisodeCount);
+            Debug.Log("Added listener.");
             agent.OnSucceededEpisode.AddListener(updateSuccesfullEpisodeCount);
         }
     }

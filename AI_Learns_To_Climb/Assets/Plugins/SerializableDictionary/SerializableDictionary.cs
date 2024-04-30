@@ -82,8 +82,8 @@ namespace ProjectTools
             public TypeKey Key;
             public TypeValue Value;
 
-            public int index;
-            public bool isKeyDuplicated;
+            [HideInInspector] public int index;
+            [HideInInspector] public bool isKeyDuplicated;
 
             public SerializedDictionaryKVPProps(TypeKey key, TypeValue value) { this.Key = key; this.Value = value; }
 

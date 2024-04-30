@@ -1,6 +1,8 @@
-﻿[System.Serializable]
+﻿using UnityEngine;
+
+[System.Serializable]
 public struct PunishOrRewardContainer
 {
     public PUNISH_OR_REWARD Type;
-    public float Amount;
+    [Range(-1, 1)] public float Amount;
 }

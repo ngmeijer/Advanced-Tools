@@ -29,25 +29,25 @@ MonoBehaviour:
     - Key: 3
       Value:
         Type: 0
-        Amount: -0.4
+        Amount: -1
       index: 2
       isKeyDuplicated: 0
     - Key: 9
       Value:
         Type: 0
-        Amount: -0.4
+        Amount: -1
       index: 3
       isKeyDuplicated: 0
     - Key: 4
       Value:
         Type: 0
-        Amount: -0.4
+        Amount: -1
       index: 4
       isKeyDuplicated: 0
     - Key: 10
       Value:
         Type: 0
-        Amount: -0.4
+        Amount: -1
       index: 5
       isKeyDuplicated: 0
     - Key: 6
@@ -98,68 +98,3 @@ MonoBehaviour:
         Amount: -0.4
       index: 13
       isKeyDuplicated: 0
-  forceMultiplierOnLimbs:
-    dictionaryList:
-    - Key: 0
-      Value: 0
-      index: 0
-      isKeyDuplicated: 0
-    - Key: 1
-      Value: 0
-      index: 1
-      isKeyDuplicated: 0
-    - Key: 2
-      Value: 0
-      index: 2
-      isKeyDuplicated: 0
-    - Key: 3
-      Value: 0
-      index: 3
-      isKeyDuplicated: 0
-    - Key: 9
-      Value: 0
-      index: 4
-      isKeyDuplicated: 0
-    - Key: 4
-      Value: 0
-      index: 5
-      isKeyDuplicated: 0
-    - Key: 10
-      Value: 0
-      index: 6
-      isKeyDuplicated: 0
-    - Key: 5
-      Value: 0
-      index: 7
-      isKeyDuplicated: 0
-    - Key: 11
-      Value: 0
-      index: 8
-      isKeyDuplicated: 0
-    - Key: 6
-      Value: 0
-      index: 9
-      isKeyDuplicated: 0
-    - Key: 12
-      Value: 0
-      index: 10
-      isKeyDuplicated: 0
-    - Key: 7
-      Value: 0
-      index: 11
-      isKeyDuplicated: 0
-    - Key: 13
-      Value: 0
-      index: 12
-      isKeyDuplicated: 0
-    - Key: 8
-      Value: 0
-      index: 13
-      isKeyDuplicated: 0
-    - Key: 14
-      Value: 0
-      index: 14
-      isKeyDuplicated: 0
-  GroundHittingConsequence:
-    Type: 0
-    Amount: 0

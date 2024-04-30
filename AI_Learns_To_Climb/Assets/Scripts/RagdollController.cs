@@ -16,6 +16,7 @@ public class RagdollController : MLAgent
     [SerializeField] private Transform _targetTransform;
     private Vector3 _startPos;
 
+    [SerializeField] private float _forceMultiplier;
     [SerializeField] private SerializableDictionary<BodyPart, BodyPartController> _bodyParts = new SerializableDictionary<BodyPart, BodyPartController>();
     public float GetBodyPartCount()
     {
@@ -35,6 +36,16 @@ public class RagdollController : MLAgent
         }
     }
 
+    protected override void Update()
+    {
+        base.Update();
+
+        foreach(KeyValuePair<BodyPart, BodyPartController> pair in _bodyParts)
+        {
+            pair.Value.ForceMultiplier = _forceMultiplier;
+        }
+    }
+
     private void triggerEndEpisode()
     {
         OnFinishedEpisode?.Invoke(_episodeDuration);
@@ -44,7 +55,11 @@ public class RagdollController : MLAgent
 
     private void receiveRewardForLimb(float pReward)
     {
-        AddReward(pReward);
+        if (pReward < 0)
+        {
+            SetReward(-1);
+        }
+        else AddReward(pReward);
     }
 
     private void checkDistanceToTarget()
@@ -93,21 +108,31 @@ public class RagdollController : MLAgent
         List<BodyPartController> bodyParts = _bodyParts.Values.ToList();
         foreach (BodyPartController part in bodyParts)
         {
-            if(part == null)
+            if (part == null)
             {
                 Debug.Log($"Part is null.");
                 return;
             }
 
             sensor.AddObservation((int)part.BodyPart);
-            sensor.AddObservation(part.transform.localPosition);
+            
+            sensor.AddObservation(part.joint.lowAngularXLimit.limit);
+            sensor.AddObservation(part.joint.highAngularXLimit.limit);
+            
+            sensor.AddObservation(-part.joint.angularYLimit.limit);
+            sensor.AddObservation(part.joint.angularYLimit.limit);
+
+            sensor.AddObservation(-part.joint.angularZLimit.limit);
+            sensor.AddObservation(part.joint.angularZLimit.limit);
+
+            sensor.AddObservation(part.transform.position);
             sensor.AddObservation(part.currentEulerJointRotation);
             sensor.AddObservation(part.TouchingGround);
             sensor.AddObservation(part.PunishAgentOnGroundTouch());
             sensor.AddObservation(part.rb.velocity);
             sensor.AddObservation(part.rb.angularVelocity);
             sensor.AddObservation(part.currentStrength);
-        }   
+        }
     }
 
     public override void Heuristic(in ActionBuffers actionsOut)
@@ -134,18 +159,80 @@ public class RagdollController : MLAgent
         _bodyParts[BodyPart.L_FOOT].SetJointTargetRotation(continuousActions[++outputIndex], continuousActions[++outputIndex], continuousActions[++outputIndex]);
         _bodyParts[BodyPart.R_FOOT].SetJointTargetRotation(continuousActions[++outputIndex], continuousActions[++outputIndex], continuousActions[++outputIndex]);
 
-        _bodyParts[BodyPart.L_UPPER_ARM].SetJointTargetRotation(continuousActions[++outputIndex], continuousActions[++outputIndex], 0);
-        _bodyParts[BodyPart.R_UPPER_ARM].SetJointTargetRotation(continuousActions[++outputIndex], continuousActions[++outputIndex], 0);
+        _bodyParts[BodyPart.L_UPPER_ARM].SetJointTargetRotation(continuousActions[++outputIndex], 0, continuousActions[++outputIndex]);
+        _bodyParts[BodyPart.R_UPPER_ARM].SetJointTargetRotation(continuousActions[++outputIndex], 0, continuousActions[++outputIndex]);
 
-        _bodyParts[BodyPart.L_LOWER_ARM].SetJointTargetRotation(continuousActions[++outputIndex], 0, 0);
-        _bodyParts[BodyPart.R_LOWER_ARM].SetJointTargetRotation(continuousActions[++outputIndex], 0, 0);
+        _bodyParts[BodyPart.L_LOWER_ARM].SetJointTargetRotation(0, 0, continuousActions[++outputIndex]);
+        _bodyParts[BodyPart.R_LOWER_ARM].SetJointTargetRotation(0, 0, continuousActions[++outputIndex]);
 
-        _bodyParts[BodyPart.HEAD].SetJointTargetRotation(continuousActions[++outputIndex], continuousActions[++outputIndex], 0);
+        _bodyParts[BodyPart.HEAD].SetJointTargetRotation(continuousActions[++outputIndex], continuousActions[++outputIndex], continuousActions[++outputIndex]);
+
+        //26x output index
 
         List<BodyPartController> parts = _bodyParts.Values.ToList();
         for (int i = 0; i < parts.Count; i++)
         {
             parts[i].SetJointStrength(continuousActions[++outputIndex]);
         }
+
+        //39x output index
+    }
+}
+
+public static class ConfigurableJointExtensions
+{
+    /// <summary>
+    /// Sets a joint's targetRotation to match a given local rotation.
+    /// The joint transform's local rotation must be cached on Start and passed into this method.
+    /// </summary>
+    public static void SetTargetRotationLocal(this ConfigurableJoint joint, Quaternion targetLocalRotation, Quaternion startLocalRotation)
+    {
+        if (joint.configuredInWorldSpace)
+        {
+            Debug.LogError("SetTargetRotationLocal should not be used with joints that are configured in world space. For world space joints, use SetTargetRotation.", joint);
+        }
+        SetTargetRotationInternal(joint, targetLocalRotation, startLocalRotation, Space.Self);
+    }
+
+    /// <summary>
+    /// Sets a joint's targetRotation to match a given world rotation.
+    /// The joint transform's world rotation must be cached on Start and passed into this method.
+    /// </summary>
+    public static void SetTargetRotation(this ConfigurableJoint joint, Quaternion targetWorldRotation, Quaternion startWorldRotation)
+    {
+        if (!joint.configuredInWorldSpace)
+        {
+            Debug.LogError("SetTargetRotation must be used with joints that are configured in world space. For local space joints, use SetTargetRotationLocal.", joint);
+        }
+        SetTargetRotationInternal(joint, targetWorldRotation, startWorldRotation, Space.World);
+    }
+
+    static void SetTargetRotationInternal(ConfigurableJoint joint, Quaternion targetRotation, Quaternion startRotation, Space space)
+    {
+        // Calculate the rotation expressed by the joint's axis and secondary axis
+        var right = joint.axis;
+        var forward = Vector3.Cross(joint.axis, joint.secondaryAxis).normalized;
+        var up = Vector3.Cross(forward, right).normalized;
+        Quaternion worldToJointSpace = Quaternion.LookRotation(forward, up);
+
+        // Transform into world space
+        Quaternion resultRotation = Quaternion.Inverse(worldToJointSpace);
+
+        // Counter-rotate and apply the new local rotation.
+        // Joint space is the inverse of world space, so we need to invert our value
+        if (space == Space.World)
+        {
+            resultRotation *= startRotation * Quaternion.Inverse(targetRotation);
+        }
+        else
+        {
+            resultRotation *= Quaternion.Inverse(targetRotation) * startRotation;
+        }
+
+        // Transform back into joint space
+        resultRotation *= worldToJointSpace;
+
+        // Set target rotation to our newly calculated rotation
+        joint.targetRotation = resultRotation;
     }
 }
