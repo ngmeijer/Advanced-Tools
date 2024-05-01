@@ -8,7 +8,7 @@ public class Collectible : Spawnable
     {
         if (!collision.collider.CompareTag("Agent"))
             return;
-     
+
         OnHitCollider?.Invoke(this);
     }
 

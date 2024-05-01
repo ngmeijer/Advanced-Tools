@@ -48,7 +48,7 @@ public class ObjectPool : MonoBehaviour
 
         GameObject item = Instantiate(_itemPrefab.gameObject, transform.localPosition, Quaternion.identity, this.transform);
         Spawnable itemComponent = item.GetComponent<Spawnable>();
-        itemComponent.OnHitCollider.AddListener(removeObstacle);
+        itemComponent.OnHitCollider.AddListener(removeItem);
         _spawnedItems.Add(itemComponent);
         return item;
     }
@@ -60,12 +60,12 @@ public class ObjectPool : MonoBehaviour
             GameObject obstacle = Instantiate(_itemPrefab.gameObject, transform.localPosition, Quaternion.identity, this.transform);
             obstacle.SetActive(false);
             Spawnable itemComponent = obstacle.GetComponent<Spawnable>();
-            itemComponent.OnHitCollider.AddListener(removeObstacle);
+            itemComponent.OnHitCollider.AddListener(removeItem);
             _spawnedItems.Add(itemComponent);
         }
     }
 
-    private void removeObstacle(Spawnable pitemToRemove)
+    private void removeItem(Spawnable pitemToRemove)
     {
         int index = _spawnedItems.IndexOf(pitemToRemove);
         _spawnedItems[index].gameObject.SetActive(false);
@@ -76,6 +76,6 @@ public class ObjectPool : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = _gizmoColor;
-        Gizmos.DrawWireCube(_spawnAreaCenter, new Vector3(ItemSpawnWidth, 5f, 1f));
+        Gizmos.DrawWireCube(transform.position + _spawnAreaCenter, new Vector3(ItemSpawnWidth, 2f, 1f));
     }
 }

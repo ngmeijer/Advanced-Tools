@@ -68,6 +68,6 @@ public class UIManager : MonoBehaviour
     private void calculateAverageDuration()
     {
         float averageDuration = _totalEpisodeDuration / _totalEpisodeCount;
-        _averageDurationText.SetText($"{averageDuration.ToString("F3")}s");
+        _averageDurationText.SetText($"{averageDuration.ToString("F2")}s");
     }
 }

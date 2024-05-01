@@ -17,6 +17,7 @@ public class AvoidanceAgent : MLAgent
     private Vector3 _startPos;
     private Quaternion _startRot;
 
+
     private void Start()
     {
         _startPos = transform.localPosition;
@@ -35,12 +36,12 @@ public class AvoidanceAgent : MLAgent
 
         if (!_collidedWithObstacle)
         {
-            AddReward(0.05f);
+            AddReward(0.01f);
         }
 
         if(CurrentEpisodeDuration > MaxDuration) 
         {
-            AddReward(0.7f);
+            AddReward(0.4f);
             Debug.Log("Agent successfull");
             OnSucceededEpisode?.Invoke(_currentEpisodeDuration);
             _currentEpisodeDuration = 0;
@@ -71,7 +72,7 @@ public class AvoidanceAgent : MLAgent
     {
         if (collision.collider.CompareTag("Obstacle"))
         {
-            AddReward(-0.2f); 
+            AddReward(-0.7f); 
             _collidedWithObstacle = true;
             OnFailedEpisode?.Invoke(_currentEpisodeDuration);
             _currentEpisodeDuration = 0;
@@ -84,6 +85,13 @@ public class AvoidanceAgent : MLAgent
             OnFailedEpisode?.Invoke(_currentEpisodeDuration);
             _currentEpisodeDuration = 0;
             EndEpisode();
+        }
+
+        if (collision.collider.CompareTag("Collectible"))
+        {
+            AddReward(0.8f);
+            _collectiblesFound++;
+            OnFoundCollectible?.Invoke();
         }
     }
 }

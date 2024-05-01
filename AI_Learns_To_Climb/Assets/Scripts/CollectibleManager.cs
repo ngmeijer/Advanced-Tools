@@ -15,18 +15,19 @@ public class CollectibleManager : MonoBehaviour
         {
             transform.AddComponent<ObjectPool>();
         }
+
+        StartCoroutine(handleColllectibleSpawning());
     }
 
-    private void Update()
-    {
-        handleColllectibleSpawning();
-    }
-
-    private void handleColllectibleSpawning()
+    private IEnumerator handleColllectibleSpawning()
     {
         if (_collectiblePool.CurrentActiveItems == 0)
         {
             _collectiblePool.ActivateItem();
         }
+
+        yield return new WaitForSeconds(0.5f);
+
+        StartCoroutine(handleColllectibleSpawning());
     }
 }

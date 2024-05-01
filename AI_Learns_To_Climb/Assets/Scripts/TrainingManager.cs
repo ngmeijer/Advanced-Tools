@@ -45,6 +45,7 @@ public class TrainingManager : MonoBehaviour
                 MLAgent agent = environment.GetComponentInChildren<MLAgent>();
                 _agents.Add(agent);
                 envManager.SetListeners(agent);
+                envManager.SetID(_agents.Count - 1);
                 environments.Add(environment);
             }
         }
@@ -55,9 +56,7 @@ public class TrainingManager : MonoBehaviour
 
     private void setCanvasToEnvironmentPosition(GameObject pEnvironment)
     {
-        Vector3 canvasPos = new Vector3(0, 20,
-            pEnvironment.transform.position.z + _areaSize.z);
+        Vector3 canvasPos = new Vector3(_canvas.transform.position.x, _canvas.transform.position.y, pEnvironment.transform.position.z + _areaSize.z);
         _canvas.transform.position = canvasPos;
-        Debug.Log($"set canvas to position {canvasPos}");
     }
 }
