@@ -10,6 +10,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _succesfullEpisodeCountText;
     [SerializeField] private TextMeshProUGUI _successRatioText;
     [SerializeField] private TextMeshProUGUI _averageDurationText;
+    [SerializeField] private TextMeshProUGUI _maxDurationText;
     private TrainingManager _trainer;
     private float _totalEpisodeCount;
     private float _succesfullEpisodeCount;
@@ -30,6 +31,8 @@ public class UIManager : MonoBehaviour
             agent.OnFailedEpisode.AddListener(updateDataOnFail);
             agent.OnSucceededEpisode.AddListener(updateDataOnSuccess);
         }
+
+        _maxDurationText.SetText($"{agents[0].MaxDuration.ToString()}s");
     }
 
     private void updateTotalEpisodeCount()

@@ -38,7 +38,7 @@ public class AvoidanceAgent : MLAgent
             AddReward(0.05f);
         }
 
-        if(StepCount >= MaxStep - 1)
+        if(CurrentEpisodeDuration > MaxDuration) 
         {
             AddReward(0.7f);
             Debug.Log("Agent successfull");

@@ -8,6 +8,8 @@ TagManager:
   - Target
   - InvisibleBarrier
   - Obstacle
+  - Collectible
+  - Agent
   layers:
   - Default
   - TransparentFX

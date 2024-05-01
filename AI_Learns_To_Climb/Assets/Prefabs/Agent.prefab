@@ -227,6 +227,7 @@ MonoBehaviour:
   OnSucceededEpisode:
     m_PersistentCalls:
       m_Calls: []
+  _maxDuration: 90
   _obstacleManager: {fileID: 0}
   _maxHealth: 0
 --- !u!114 &1990397438568336927

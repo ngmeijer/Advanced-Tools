@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class EnvironmentManager : MonoBehaviour
@@ -10,6 +11,13 @@ public class EnvironmentManager : MonoBehaviour
     [SerializeField] private Material _winMaterial;
     [HideInInspector] public MLAgent Agent;
 
+    [SerializeField] private TextMeshProUGUI _currentDurationText;
+
+    private void Update()
+    {
+        setCurrentDurationText();
+    }
+
     private void setSucceededGroundMat(float arg0)
     {
         _groundRenderer.material = _winMaterial;
@@ -18,6 +26,11 @@ public class EnvironmentManager : MonoBehaviour
     private void setFailedGroundMat(float arg0)
     {
         _groundRenderer.material = _loseMaterial;
+    }
+
+    private void setCurrentDurationText()
+    {
+        _currentDurationText.SetText($"{Agent.CurrentEpisodeDuration.ToString("F2")}s");
     }
 
     public void SetListeners(MLAgent pAgent)

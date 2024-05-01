@@ -8,6 +8,10 @@ public class MLAgent : Agent
     public UnityEvent<float> OnSucceededEpisode = new UnityEvent<float>();
 
     protected float _currentEpisodeDuration;
+    public float CurrentEpisodeDuration => _currentEpisodeDuration;
+
+    [SerializeField] private int _maxDuration = 90;
+    public float MaxDuration => _maxDuration;
 
     protected virtual void Update()
     {
