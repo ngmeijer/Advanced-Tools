@@ -61,22 +61,22 @@
     <Analyzer Include="E:\Unity versions\2023.2.19f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.UIToolkit.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Spawnable.cs" />
-    <Compile Include="Assets\Scripts\Obstacle.cs" />
-    <Compile Include="Assets\Scripts\ObstacleManager.cs" />
+    <Compile Include="Assets\Scripts\Managers\ExplorationManager.cs" />
+    <Compile Include="Assets\Scripts\Managers\TrainingManager.cs" />
     <Compile Include="Assets\Scripts\MLAgent.cs" />
-    <Compile Include="Assets\Scripts\TrainingManager.cs" />
     <Compile Include="Assets\Scripts\ObjectPool.cs" />
+    <Compile Include="Assets\Scripts\Spawnables\Collectible.cs" />
     <Compile Include="Assets\Scripts\GroundBlock.cs" />
-    <Compile Include="Assets\Scripts\EnvironmentManager.cs" />
     <Compile Include="Assets\Scripts\CollectibleObjectPool.cs" />
-    <Compile Include="Assets\Scripts\CollectibleManager.cs" />
     <Compile Include="Assets\Scripts\TestAgent.cs" />
-    <Compile Include="Assets\Scripts\UIManager.cs" />
-    <Compile Include="Assets\Scripts\Collectible.cs" />
-    <Compile Include="Assets\Scripts\ExplorationManager.cs" />
+    <Compile Include="Assets\Scripts\Spawnables\Obstacle.cs" />
+    <Compile Include="Assets\Scripts\Managers\ObstacleManager.cs" />
+    <Compile Include="Assets\Scripts\Spawnables\Spawnable.cs" />
     <Compile Include="Assets\Scripts\Event_OnHitCollider.cs" />
+    <Compile Include="Assets\Scripts\Managers\UIManager.cs" />
     <Compile Include="Assets\Scripts\AvoidanceAgent.cs" />
+    <Compile Include="Assets\Scripts\Managers\CollectibleManager.cs" />
+    <Compile Include="Assets\Scripts\Managers\EnvironmentManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

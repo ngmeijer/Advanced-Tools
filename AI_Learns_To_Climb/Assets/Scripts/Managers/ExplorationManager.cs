@@ -9,6 +9,7 @@ public class ExplorationManager : MonoBehaviour
     [SerializeField] private Vector3 _spawnAreaStart;
     [SerializeField] private Vector3Int _spawnAreaRadius;
     [SerializeField] private Color _gizmoColor;
+    [SerializeField] private MLAgent _agent;
 
     private List<GameObject> _groundBlocks = new List<GameObject>();
     private List<GameObject> _visitedBlocks = new List<GameObject>();
@@ -37,7 +38,18 @@ public class ExplorationManager : MonoBehaviour
         Spawnable groundComponent = groundBlockInstance.GetComponent<Spawnable>();
         groundBlockInstance.transform.localPosition = _spawnAreaStart + new Vector3(pX * groundComponent._spawnableDimensions.x, 0, pZ * groundComponent._spawnableDimensions.z);
         groundComponent.OnHitCollider.AddListener(checkVisitedBlocks);
+        (groundComponent as GroundBlock).OnAgentStay.AddListener(punishAgentStay);
         _groundBlocks.Add(groundBlockInstance);
+    }
+
+    /// <summary>
+    /// Punish an agent for every 
+    /// </summary>
+    /// <param name="arg0"></param>
+    private void punishAgentStay(Spawnable arg0)
+    {
+        Debug.Log("Punish agent for staying too long on a block");
+        _agent.AddReward(-0.01f);
     }
 
     private void OnDrawGizmos()

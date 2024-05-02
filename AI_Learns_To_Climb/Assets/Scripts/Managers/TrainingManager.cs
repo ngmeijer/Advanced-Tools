@@ -22,9 +22,10 @@ public class TrainingManager : MonoBehaviour
         if (!_massTesting)
         {
             GameObject environment = Instantiate(_environmentPrefab, Vector3.zero, Quaternion.identity, this.transform);
+            EnvironmentManager envManager = environment.GetComponentInChildren<EnvironmentManager>();
             MLAgent agent = environment.GetComponentInChildren<MLAgent>();
             _agents.Add(agent);
-
+            envManager.SetListeners(agent);
             setCanvasToEnvironmentPosition(environment);
             return;
         }

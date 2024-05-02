@@ -42,7 +42,6 @@ public class AvoidanceAgent : MLAgent
         if(CurrentEpisodeDuration > MaxDuration) 
         {
             AddReward(0.4f);
-            Debug.Log("Agent successfull");
             OnSucceededEpisode?.Invoke(_currentEpisodeDuration);
             _currentEpisodeDuration = 0;
             EndEpisode();

@@ -10,8 +10,13 @@ public class GroundBlock : Spawnable
     [SerializeField] private float _cooldownInterval = 1f;
     private float _cooldownLeft;
 
+    public Event_OnHitCollider OnAgentStay = new Event_OnHitCollider();
+
     private Color _startColor;
     [SerializeField] private Color _saturatedColor;
+
+    private float _agentTimeSpentOnBlock;
+    [SerializeField] private float _maxTimeSpentOnBlock = 1f;
 
     private void Start()
     {
@@ -25,6 +30,20 @@ public class GroundBlock : Spawnable
             OnHitCollider?.Invoke(this);
             _agentOnBlock = true;
             _renderer.material.color = _saturatedColor;
+        }
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        if(_agentOnBlock)
+        {
+            _agentTimeSpentOnBlock += Time.deltaTime;
+
+            if (_agentTimeSpentOnBlock > _maxTimeSpentOnBlock)
+            {
+                OnAgentStay?.Invoke(this);
+                _agentTimeSpentOnBlock = 0;
+            }
         }
     }
 
@@ -46,7 +65,6 @@ public class GroundBlock : Spawnable
         {
             Color lerpedColor = Color.Lerp(_startColor, _saturatedColor, _cooldownLeft / _maxCooldown);
             _renderer.material.color = lerpedColor;
-            Debug.Log(lerpedColor.ToString());
             yield return new WaitForSeconds(_cooldownInterval);
             StartCoroutine(startCooldown());
         }
