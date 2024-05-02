@@ -67,12 +67,14 @@
     <Compile Include="Assets\Scripts\MLAgent.cs" />
     <Compile Include="Assets\Scripts\TrainingManager.cs" />
     <Compile Include="Assets\Scripts\ObjectPool.cs" />
+    <Compile Include="Assets\Scripts\GroundBlock.cs" />
     <Compile Include="Assets\Scripts\EnvironmentManager.cs" />
     <Compile Include="Assets\Scripts\CollectibleObjectPool.cs" />
     <Compile Include="Assets\Scripts\CollectibleManager.cs" />
     <Compile Include="Assets\Scripts\TestAgent.cs" />
     <Compile Include="Assets\Scripts\UIManager.cs" />
     <Compile Include="Assets\Scripts\Collectible.cs" />
+    <Compile Include="Assets\Scripts\ExplorationManager.cs" />
     <Compile Include="Assets\Scripts\Event_OnHitCollider.cs" />
     <Compile Include="Assets\Scripts\AvoidanceAgent.cs" />
   </ItemGroup>

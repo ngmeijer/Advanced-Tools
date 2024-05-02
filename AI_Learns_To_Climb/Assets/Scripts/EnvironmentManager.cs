@@ -3,12 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnvironmentManager : MonoBehaviour
 {
-    [SerializeField] private MeshRenderer _groundRenderer;
-    [SerializeField] private Material _loseMaterial;
-    [SerializeField] private Material _winMaterial;
+    [SerializeField] private Image _successIndicator;
     [HideInInspector] public MLAgent Agent;
 
     [SerializeField] private TextMeshProUGUI _agentIDText;
@@ -29,12 +28,12 @@ public class EnvironmentManager : MonoBehaviour
 
     private void setSucceededGroundMat(float arg0)
     {
-        _groundRenderer.material = _winMaterial;
+        _successIndicator.color = Color.green;
     }
 
     private void setFailedGroundMat(float arg0)
     {
-        _groundRenderer.material = _loseMaterial;
+        _successIndicator.color = Color.red;
     }
 
     private void setCurrentDurationText()
