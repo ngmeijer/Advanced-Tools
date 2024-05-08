@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class MLAgent : Agent
+public abstract class MLAgent : Agent
 {
     public UnityEvent<float> OnFailedEpisode = new UnityEvent<float>();
     public UnityEvent<float> OnSucceededEpisode = new UnityEvent<float>();
@@ -11,14 +11,14 @@ public class MLAgent : Agent
     protected float _currentEpisodeDuration;
     public float CurrentEpisodeDuration => _currentEpisodeDuration;
 
-    protected int _collectiblesFound;
-    public int CollectiblesFound => _collectiblesFound;
+    protected int _amountOfCollectiblesFound;
+    public int CollectiblesFound => _amountOfCollectiblesFound;
 
-    [SerializeField] private int _maxDuration = 90;
+    [SerializeField] private int _maxDuration = 30;
     public float MaxDuration => _maxDuration;
 
-    protected virtual void Update()
+    protected virtual void FixedUpdate()
     {
-        _currentEpisodeDuration += Time.deltaTime;
+        _currentEpisodeDuration += Time.fixedDeltaTime;
     }
 }

@@ -134,6 +134,7 @@ MonoBehaviour:
   - Obstacle
   - InvisibleBarrier
   - Wall
+  - Collectible
   m_RaysPerDirection: 15
   m_MaxRayDegrees: 84.3
   m_SphereCastRadius: 0.2
@@ -198,7 +199,7 @@ MonoBehaviour:
   - Collectible
   m_RaysPerDirection: 2
   m_MaxRayDegrees: 3
-  m_SphereCastRadius: 0.2
+  m_SphereCastRadius: 0
   m_RayLength: 20
   m_RayLayerMask:
     serializedVersion: 2
@@ -260,7 +261,7 @@ MonoBehaviour:
   - Collectible
   m_RaysPerDirection: 2
   m_MaxRayDegrees: 3
-  m_SphereCastRadius: 0.2
+  m_SphereCastRadius: 0
   m_RayLength: 20
   m_RayLayerMask:
     serializedVersion: 2
@@ -346,7 +347,7 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 1000
+  MaxStep: 0
   OnFailedEpisode:
     m_PersistentCalls:
       m_Calls: []
@@ -357,8 +358,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _maxDuration: 90
-  _obstacleManager: {fileID: 0}
-  _maxHealth: 0
+  _data: {fileID: 11400000, guid: c84c524830173e3489f7b6f7e11cd0fc, type: 2}
 --- !u!114 &1990397438568336927
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -372,7 +372,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 4
+    VectorObservationSize: 100
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 1
@@ -382,7 +382,7 @@ MonoBehaviour:
     VectorActionSpaceType: 1
     hasUpgradedBrainParametersWithActionSpec: 1
   m_Model: {fileID: 0}
-  m_InferenceDevice: 1
+  m_InferenceDevice: 2
   m_BehaviorType: 0
   m_BehaviorName: Avoiding Behaviour
   TeamId: 0
@@ -429,4 +429,4 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 72
-  m_CollisionDetection: 1
+  m_CollisionDetection: 2

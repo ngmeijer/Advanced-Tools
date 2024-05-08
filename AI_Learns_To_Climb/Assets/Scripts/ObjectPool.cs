@@ -8,6 +8,8 @@ public class ObjectPool : MonoBehaviour
     [SerializeField] private float _itemSpawnWidth;
     public float ItemSpawnWidth => _itemSpawnWidth;
     [SerializeField] private int _itemInStorageCount = 100;
+    public int ItemInStorageCount => _itemInStorageCount;
+
     [SerializeField] private List<Spawnable> _spawnedItems = new List<Spawnable>();
 
     [SerializeField] private Vector3 _spawnAreaCenter;

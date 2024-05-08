@@ -122,6 +122,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawnableDimensions: {x: 1, y: 0, z: 9}
   _renderer: {fileID: 3410785582022909505}
-  _cooldown: 15
+  _maxCooldown: 12
   _cooldownInterval: 1
+  EnableReinforcement: 0
+  OnCooldownNotify:
+    m_PersistentCalls:
+      m_Calls: []
   _saturatedColor: {r: 0.7565203, g: 0, b: 1, a: 1}
+  _maxTimeSpentOnBlock: 0

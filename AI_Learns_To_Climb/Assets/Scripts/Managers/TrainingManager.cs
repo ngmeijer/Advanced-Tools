@@ -4,10 +4,13 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 
+/// <summary>
+/// Handles the generation of training environments.
+/// </summary>
 public class TrainingManager : MonoBehaviour
 {
     [SerializeField] private bool _massTesting;
-    [SerializeField] private int _maxTrainingEnvironments = 50;
+    [Range(1,40)][SerializeField] private int _maxTrainingEnvironments = 30;
     [SerializeField] private GameObject _environmentPrefab;
     [SerializeField] private List<MLAgent> _agents;
     [SerializeField] private GameObject _canvas;
@@ -19,19 +22,22 @@ public class TrainingManager : MonoBehaviour
     
     private void Awake()
     {
+        //In case I want to focus on a single environment to test out a new feature
         if (!_massTesting)
         {
             GameObject environment = Instantiate(_environmentPrefab, Vector3.zero, Quaternion.identity, this.transform);
-            EnvironmentManager envManager = environment.GetComponentInChildren<EnvironmentManager>();
-            MLAgent agent = environment.GetComponentInChildren<MLAgent>();
-            _agents.Add(agent);
-            envManager.SetListeners(agent);
+            setEnvironmentVariables(environment);
             setCanvasToEnvironmentPosition(environment);
             return;
         }
-        
+
+        generateEnvironments();
+    }
+
+    private void generateEnvironments()
+    {
         int count = (int)Mathf.Sqrt(_maxTrainingEnvironments);
-        
+
         Vector3 position = Vector3.zero;
         List<GameObject> environments = new List<GameObject>();
         for (int x = 0; x < count; x++)
@@ -42,17 +48,25 @@ public class TrainingManager : MonoBehaviour
                 position.z = (z * _areaSize.z) + _areaSpacing.z;
                 GameObject environment = Instantiate(_environmentPrefab, position, Quaternion.identity, this.transform);
 
-                EnvironmentManager envManager = environment.GetComponent<EnvironmentManager>();
-                MLAgent agent = environment.GetComponentInChildren<MLAgent>();
-                _agents.Add(agent);
-                envManager.SetListeners(agent);
-                envManager.SetID(_agents.Count - 1);
+                setEnvironmentVariables(environment);
                 environments.Add(environment);
             }
         }
 
         GameObject lastEnv = environments[environments.Count - 1];
         setCanvasToEnvironmentPosition(lastEnv);
+    }
+
+    private void setEnvironmentVariables(GameObject pEnvironment)
+    {
+        EnvironmentManager envManager = pEnvironment.GetComponentInChildren<EnvironmentManager>();
+        Debug.Assert(envManager != null, "Environment Manager is null. Ensure there is a child with the EnvironmentManager component attached.");
+
+        MLAgent agent = pEnvironment.GetComponentInChildren<MLAgent>();
+        Debug.Assert(agent != null, "MLAgent is null. Ensure there is a GameObject with a class that derives from MLAgent attached.");
+        _agents.Add(agent);
+        envManager.SetListeners(agent);
+        envManager.SetID(_agents.Count - 1);
     }
 
     private void setCanvasToEnvironmentPosition(GameObject pEnvironment)

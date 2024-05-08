@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -20,9 +21,11 @@ public class ObstacleManager : MonoBehaviour
         {
             transform.AddComponent<ObjectPool>();
         }
+
+        _maxObstacleCountInTrainingArea = Math.Clamp(_maxObstacleCountInTrainingArea, 0, _obstaclePool.ItemInStorageCount);
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         handleObstacleSpawning();
     }
@@ -32,7 +35,7 @@ public class ObstacleManager : MonoBehaviour
         if (_obstaclePool.CurrentActiveItems >= _maxObstacleCountInTrainingArea)
             return;
 
-        _durationSinceObstacleSpawned += Time.deltaTime;
+        _durationSinceObstacleSpawned += Time.fixedDeltaTime;
         if (_durationSinceObstacleSpawned >= _obstacleSpawnrate)
         {
             _durationSinceObstacleSpawned = 0;

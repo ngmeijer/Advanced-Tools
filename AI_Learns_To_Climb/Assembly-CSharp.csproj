@@ -61,6 +61,7 @@
     <Analyzer Include="E:\Unity versions\2023.2.19f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.UIToolkit.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\AgentReinforcementLearningData.cs" />
     <Compile Include="Assets\Scripts\Managers\ExplorationManager.cs" />
     <Compile Include="Assets\Scripts\Managers\TrainingManager.cs" />
     <Compile Include="Assets\Scripts\MLAgent.cs" />

@@ -10,19 +10,25 @@ public class ExplorationManager : MonoBehaviour
     [SerializeField] private Vector3Int _spawnAreaRadius;
     [SerializeField] private Color _gizmoColor;
     [SerializeField] private MLAgent _agent;
+    [SerializeField] private bool _enableReinforcement;
 
-    private List<GameObject> _groundBlocks = new List<GameObject>();
+    private Dictionary<GroundBlock, float> _groundBlocks = new Dictionary<GroundBlock, float>();
     private List<GameObject> _visitedBlocks = new List<GameObject>();
 
     private void Start()
     {
-        for(int x = 0; x < _spawnAreaRadius.x; x++)
+        for(int x = 0; x <= _spawnAreaRadius.x; x++)
         {
             for (int z = 0; z < _spawnAreaRadius.z; z++)
             {
                 spawnGroundBlock(x, z);
             }
         }
+    }
+
+    private void Update()
+    {
+        (_agent as AvoidanceAgent).SetGroundBlockData(_groundBlocks);
     }
 
     private void checkVisitedBlocks(Spawnable pBlock)
@@ -35,11 +41,23 @@ public class ExplorationManager : MonoBehaviour
     private void spawnGroundBlock(int pX, int pZ)
     {
         GameObject groundBlockInstance = Instantiate(_groundBlockPrefab.gameObject, Vector3.zero, Quaternion.identity, this.transform);
-        Spawnable groundComponent = groundBlockInstance.GetComponent<Spawnable>();
+        GroundBlock groundComponent = groundBlockInstance.GetComponent<GroundBlock>();
         groundBlockInstance.transform.localPosition = _spawnAreaStart + new Vector3(pX * groundComponent._spawnableDimensions.x, 0, pZ * groundComponent._spawnableDimensions.z);
-        groundComponent.OnHitCollider.AddListener(checkVisitedBlocks);
-        (groundComponent as GroundBlock).OnAgentStay.AddListener(punishAgentStay);
-        _groundBlocks.Add(groundBlockInstance);
+
+        if (_enableReinforcement)
+        {
+            groundComponent.OnHitCollider.AddListener(checkVisitedBlocks);
+            groundComponent.OnAgentStay.AddListener(punishAgentStay);
+            groundComponent.OnCooldownNotify.AddListener(updateCooldown);
+            groundComponent.EnableReinforcement = true;
+        }
+
+        _groundBlocks.Add(groundComponent, 0);
+    }
+
+    private void updateCooldown(float pCooldownLeft, GroundBlock pGroundBlock)
+    {
+        _groundBlocks[pGroundBlock] = pCooldownLeft;
     }
 
     /// <summary>
@@ -48,8 +66,7 @@ public class ExplorationManager : MonoBehaviour
     /// <param name="arg0"></param>
     private void punishAgentStay(Spawnable arg0)
     {
-        Debug.Log("Punish agent for staying too long on a block");
-        _agent.AddReward(-0.01f);
+        _agent.AddReward((_agent as AvoidanceAgent).ReinforcementData.ResultOnGroundblockStay); 
     }
 
     private void OnDrawGizmos()

@@ -7,6 +7,7 @@ using UnityEngine;
 public class CollectibleManager : MonoBehaviour
 {
     private ObjectPool _collectiblePool;
+    [SerializeField] private int _maxCollectibleCountInTrainingArea = 3;
 
     private void Awake()
     {
@@ -16,12 +17,13 @@ public class CollectibleManager : MonoBehaviour
             transform.AddComponent<ObjectPool>();
         }
 
+        _maxCollectibleCountInTrainingArea = Math.Clamp(_maxCollectibleCountInTrainingArea, 0, _collectiblePool.ItemInStorageCount);
         StartCoroutine(handleColllectibleSpawning());
     }
 
     private IEnumerator handleColllectibleSpawning()
     {
-        if (_collectiblePool.CurrentActiveItems == 0)
+        if (_collectiblePool.CurrentActiveItems < _maxCollectibleCountInTrainingArea)
         {
             _collectiblePool.ActivateItem();
         }
