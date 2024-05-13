@@ -10,6 +10,8 @@ public abstract class SpawnableManager : MonoBehaviour
     [Tooltip("How often should a new obstacle spawn in seconds?")][SerializeField] protected float _spawnrate;
     [SerializeField] protected int _spawnMultiplier = 3;
 
+    [HideInInspector] public MLAgent Agent;
+
     protected virtual void Awake()
     {
         _pool = GetComponent<ObjectPool>();
@@ -18,4 +20,6 @@ public abstract class SpawnableManager : MonoBehaviour
     }
 
     protected abstract IEnumerator spawnObject();
+
+    protected abstract void disableAllObjects();
 }

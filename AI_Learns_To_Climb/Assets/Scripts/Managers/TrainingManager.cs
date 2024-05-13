@@ -62,11 +62,19 @@ public class TrainingManager : MonoBehaviour
         EnvironmentManager envManager = pEnvironment.GetComponentInChildren<EnvironmentManager>();
         Debug.Assert(envManager != null, "Environment Manager is null. Ensure there is a child with the EnvironmentManager component attached.");
 
-        MLAgent agent = pEnvironment.GetComponentInChildren<MLAgent>();
-        Debug.Assert(agent != null, "MLAgent is null. Ensure there is a GameObject with a class that derives from MLAgent attached.");
-        _agents.Add(agent);
-        envManager.SetListeners(agent);
-        envManager.SetID(_agents.Count - 1);
+        CollectibleManager collectibleManager = pEnvironment.GetComponentInChildren<CollectibleManager>();
+        Debug.Assert(collectibleManager != null, "Collectible Manager is null. Ensure there is a child with the CollectibleManager component attached.");
+
+        MLAgent[] foundAgents = pEnvironment.GetComponentsInChildren<MLAgent>();
+        Debug.Assert(foundAgents != null, "MLAgent is null. Ensure there is a GameObject with a class that derives from MLAgent attached.");
+
+        for (int i = 0; i < foundAgents.Length; i++)
+        {
+            _agents.Add(foundAgents[i]);
+        }
+        envManager.SetAgents(foundAgents);
+
+        //collectibleManager.SetListeners(foundAgents);
     }
 
     private void setCanvasToEnvironmentPosition(GameObject pEnvironment)

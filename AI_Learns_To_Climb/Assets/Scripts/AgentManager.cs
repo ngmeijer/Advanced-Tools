@@ -10,6 +10,11 @@ public class AgentManager : SpawnableManager
         StartCoroutine(spawnObject());
     }
 
+    protected override void disableAllObjects()
+    {
+        throw new System.NotImplementedException();
+    }
+
     protected override IEnumerator spawnObject()
     {
         if (_pool.CurrentActiveItems < _maxSpawnableCountInArea)

@@ -7,65 +7,35 @@ using UnityEngine.UI;
 
 public class EnvironmentManager : MonoBehaviour
 {
-    [SerializeField] private Image _successIndicator;
-    [HideInInspector] public MLAgent Agent;
+    [SerializeField] private GameObject _canvasPrefab;
+    [SerializeField] private Transform _canvasParent;
+    [SerializeField] private GameObject _weapon;
 
-    [SerializeField] private TextMeshProUGUI _agentIDText;
-    [SerializeField] private TextMeshProUGUI _currentDurationText;
-    [SerializeField] private TextMeshProUGUI _collectiblesFoundText;
-    [SerializeField] private TextMeshProUGUI _cumulativeRewardText;
-    [SerializeField] private TextMeshProUGUI _currentHealthText;
-    [SerializeField] private Image _currentHealthIndicator;
+    private MLAgent[] _agents;
 
-    private void LateUpdate()
+    public void SetAgents(MLAgent[] pAgents)
     {
-        setCurrentDurationText();
-        setRewardText();
-        setCurrentHealthUI();
+        _agents = pAgents;
+        for(int i = 0; i < pAgents.Length; i++)
+        {
+            pAgents[i].OnPickedUpWeapon.AddListener(handleWeaponPickupNotify);
+            Vector3 canvasPos = _canvasParent.position + new Vector3(0, i * 11.5f, 0);
+            GameObject canvas = Instantiate(_canvasPrefab, canvasPos, Quaternion.identity, _canvasParent);
+            CanvasManager canvasManager = canvas.GetComponent<CanvasManager>();
+            canvasManager.SetListeners(pAgents[i]);
+        }
     }
 
-    private void setCurrentHealthUI()
+    private void handleWeaponPickupNotify(bool pState)
     {
-        float healthPercentage = Agent.CurrentHealth / (float)Agent.TrainingSettings.MaxHealth;
-        _currentHealthText.SetText($"{healthPercentage * 100:F0}%");
-        _currentHealthIndicator.transform.localScale = new Vector3(healthPercentage, 1, 1);
-    }
-
-    private void setRewardText()
-    {
-        _cumulativeRewardText.SetText(Agent.GetCumulativeReward().ToString("F2"));
-    }
-
-    private void setSucceededGroundMat(float arg0, float arg1)
-    {
-        _successIndicator.color = Color.green;
-    }
-
-    private void setFailedGroundMat(float arg0, float arg1)
-    {
-        _successIndicator.color = Color.red;
-    }
-
-    private void setCurrentDurationText()
-    {
-        _currentDurationText.SetText($"{Agent.CurrentEpisodeDuration.ToString("F2")}s");
-    }
-
-    private void setFoundCollectiblesText()
-    {
-        _collectiblesFoundText.SetText($"{Agent.CollectiblesFound}");
-    }
-
-    public void SetListeners(MLAgent pAgent)
-    {
-        Agent = pAgent;
-        Agent.OnFailedEpisode.AddListener(setFailedGroundMat);
-        Agent.OnSucceededEpisode.AddListener(setSucceededGroundMat);
-        Agent.OnFoundCollectible.AddListener(setFoundCollectiblesText);
-    }
-
-    public void SetID(int pAgentID)
-    {
-        _agentIDText.SetText($"Agent {pAgentID}");
+        _weapon.SetActive(pState);
+        for(int i = 0; i <_agents.Length; i++)
+        {
+            _agents[i].WeaponAvailable = pState;
+            if(pState == true)
+            {
+                _agents[i].DisableWeapon();
+            }
+        }
     }
 }

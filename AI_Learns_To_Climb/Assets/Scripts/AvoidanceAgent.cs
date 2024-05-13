@@ -28,15 +28,20 @@ public class AvoidanceAgent : MLAgent
     public override void OnEpisodeBegin()
     {
         _currentHealth = _data.MaxHealth;
-        //transform.localPosition = _startPos;
+        transform.localPosition = _startPos;
 
         _amountOfCollectiblesFound = 0;
-        OnFoundCollectible?.Invoke();
+        //OnFoundCollectible?.Invoke();
+
+        //Disable carrying weapon, enable level weapon
+        handleWeapon(false);
     }
 
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
+
+        transform.rotation = Quaternion.identity;
 
         if (!_collidedWithDamageDealer)
         {
@@ -61,25 +66,33 @@ public class AvoidanceAgent : MLAgent
         _collidedWithDamageDealer = false;
     }
 
+    private void handleWeapon(bool pActive)
+    {
+        _carryingWeapon = pActive;
+        _weapon.SetActive(pActive);
+        OnPickedUpWeapon?.Invoke(!pActive);
+    }
+
     public override void CollectObservations(VectorSensor sensor)
     {
         sensor.AddObservation(this.transform.localPosition);
-        sensor.AddObservation(this.transform.localRotation.eulerAngles);
         sensor.AddObservation(_collidedWithDamageDealer);
         sensor.AddObservation(_amountOfCollectiblesFound);
         sensor.AddObservation(_currentHealth);
+        sensor.AddObservation(_carryingWeapon);
+        sensor.AddObservation(WeaponAvailable);
 
-        if (_groundBlocks == null)
-            return;
+        //if (_groundBlocks == null)
+        //    return;
 
-        Debug.Assert(sensor.ObservationSize() != _groundBlocks.Count + 6, $"Observation Size ({sensor.ObservationSize()}) of AvoidanceAgent is a different size than the size of " +
-            $"GroundBlocks dictionary * 2 (Size {_groundBlocks.Count} = {_groundBlocks.Count * 2}) + x other observations (check the script for x).");
+        //Debug.Assert(sensor.ObservationSize() != _groundBlocks.Count + 6, $"Observation Size ({sensor.ObservationSize()}) of AvoidanceAgent is a different size than the size of " +
+        //    $"GroundBlocks dictionary * 2 (Size {_groundBlocks.Count} = {_groundBlocks.Count * 2}) + x other observations (check the script for x).");
 
-        foreach (KeyValuePair<GroundBlock, float> groundBlock in _groundBlocks)
-        {
-            sensor.AddObservation(groundBlock.Key.transform.localPosition);
-            sensor.AddObservation(groundBlock.Value);
-        }
+        //foreach (KeyValuePair<GroundBlock, float> groundBlock in _groundBlocks)
+        //{
+        //    sensor.AddObservation(groundBlock.Key.transform.localPosition);
+        //    sensor.AddObservation(groundBlock.Value);
+        //}
     }
 
     public override void OnActionReceived(ActionBuffers actions)
@@ -87,12 +100,9 @@ public class AvoidanceAgent : MLAgent
         float moveX = actions.ContinuousActions[0];
         float moveZ = actions.ContinuousActions[1];
 
-        float rotY = actions.ContinuousActions[2];
-
         Vector3 movementVec = new Vector3(moveX, 0, moveZ);
 
         transform.localPosition += movementVec * Time.deltaTime * _data.MoveSpeed;
-        transform.Rotate(0, rotY, 0);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -109,6 +119,7 @@ public class AvoidanceAgent : MLAgent
 
     private void checkColliderTagOnEnter(string pTag)
     {
+        Debug.Log(WeaponAvailable);
         switch (pTag)
         {
             case "Obstacle":
@@ -131,8 +142,22 @@ public class AvoidanceAgent : MLAgent
                 _currentHealth = Mathf.Clamp(_currentHealth, 0, _data.MaxHealth);
                 break;
             case "Weapon":
-                _currentHealth -= _data.WeaponDamage;
-                AddReward(_data.ResultOnWeaponHit);
+                if(WeaponAvailable)
+                {
+                    handleWeapon(true);
+                    AddReward(_data.ResultOnWeaponPickup);
+                }
+                break;
+            case "Agent":
+                if (_carryingWeapon)
+                {
+                    AddReward(_data.ResultOnDamagedEnemy);
+                }
+                else if(_carryingWeapon == false && WeaponAvailable == false)
+                {
+                    AddReward(_data.ResultOnWeaponHit);
+                    _currentHealth -= _data.WeaponDamage;
+                }
                 break;
             case "InvisibleBarrier":
                 EndEpisode();

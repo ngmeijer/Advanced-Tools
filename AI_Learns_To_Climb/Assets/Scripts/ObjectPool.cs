@@ -82,4 +82,16 @@ public class ObjectPool : MonoBehaviour
         Gizmos.color = _gizmoColor;
         Gizmos.DrawWireCube(transform.position + _spawnAreaCenter, _spawnAreaSize);
     }
+
+    public void DeactivateAlltems()
+    {
+        for(int i = 0; i < _spawnedItems.Count; i++)
+        {
+            if (_spawnedItems[i].transform.gameObject.activeInHierarchy == false)
+                continue;
+            _spawnedItems[i].transform.gameObject.SetActive(false);
+        }
+
+        _currentActiveItems = 0;
+    }
 }

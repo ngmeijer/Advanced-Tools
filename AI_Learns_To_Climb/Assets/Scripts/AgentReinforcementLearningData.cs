@@ -25,6 +25,12 @@ public class AgentReinforcementLearningData : ScriptableObject
     [Range(1, 100)][SerializeField] private int _healthPotionValue;
     public int HealthPotionValue => _healthPotionValue;
 
+    [Range(0, 1)][SerializeField] private float _resultOnDamagedEnemy;
+    public float ResultOnDamagedEnemy => _resultOnDamagedEnemy;
+
+    [Range(0, 1)][SerializeField] private float _resultOnWeaponPickup;
+    public float ResultOnWeaponPickup => _resultOnWeaponPickup;
+
     [Space(20)]
     [Header("Negative reinforcement")]
     [Header("Walls")]

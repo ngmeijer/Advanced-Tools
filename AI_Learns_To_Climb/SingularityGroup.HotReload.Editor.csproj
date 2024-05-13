@@ -108,8 +108,8 @@
     <Compile Include="Packages\com.singularitygroup.hotreload\Editor\CLI\FallbackCliController.cs" />
     <Compile Include="Packages\com.singularitygroup.hotreload\Editor\GitUtil.cs" />
     <Compile Include="Packages\com.singularitygroup.hotreload\Editor\Helpers\BuildInfoHelper.cs" />
-    <Compile Include="Packages\com.singularitygroup.hotreload\Editor\Window\GUI\Buttons\OpenDialogueButton.cs" />
     <Compile Include="Packages\com.singularitygroup.hotreload\Editor\ProjectGeneration\ProjectGeneration.cs" />
+    <Compile Include="Packages\com.singularitygroup.hotreload\Editor\Window\GUI\Buttons\OpenDialogueButton.cs" />
     <Compile Include="Packages\com.singularitygroup.hotreload\Editor\Window\GUI\Options\Base\OptionInterfaces.cs" />
     <Compile Include="Packages\com.singularitygroup.hotreload\Editor\Versioning\PackageUpdateChecker.cs" />
     <Compile Include="Packages\com.singularitygroup.hotreload\Editor\CLI\LinuxCliController.cs" />

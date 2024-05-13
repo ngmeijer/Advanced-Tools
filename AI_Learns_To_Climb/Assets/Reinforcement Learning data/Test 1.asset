@@ -14,11 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHealth: 100
   _moveSpeed: 15
+  _weaponDamage: 60
   _resultOnSurviveFrame: 0.0001
-  _resultOnCollectibleHit: 1
+  _resultOnCollectibleHit: 0.7
   _healthPotionValue: 40
+  _resultOnDamagedEnemy: 0.9
+  _resultOnWeaponPickup: 0.8
   _wallDamage: 20
-  _resultOnWallHit: -0.1
+  _resultOnWallHit: -0.3
+  _resultOnWeaponHit: -0.9
   _obstacleDamage: 20
   _resultOnObstacleHit: -0.5
   _resultOnGroundblockStay: 0
