@@ -1,10 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Events;
 
-public class ObstacleManager : SpawnableManager
+public class AgentManager : SpawnableManager
 {
     protected override void Awake()
     {
@@ -16,10 +14,7 @@ public class ObstacleManager : SpawnableManager
     {
         if (_pool.CurrentActiveItems < _maxSpawnableCountInArea)
         {
-            for (int i = 0; i < _spawnMultiplier; i++)
-            {
-                _pool.ActivateItem();
-            }
+            _pool.ActivateItem();
         }
 
         yield return new WaitForSeconds(_spawnrate);

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 
 [CreateAssetMenu(menuName = "Reinforcement Learning consequences")]
@@ -8,6 +7,12 @@ public class AgentReinforcementLearningData : ScriptableObject
     [Header("Agent properties")]
     [Range(1, 100)][SerializeField] private int _maxHealth;
     public int MaxHealth => _maxHealth;
+
+    [Range(1, 20)][SerializeField] private float _moveSpeed = 10;
+    public float MoveSpeed => _moveSpeed;
+
+    [Range(1, 100)][SerializeField] private int _weaponDamage = 60;
+    public int WeaponDamage => _weaponDamage;
 
 
     [Header("Positive reinforcement")]
@@ -27,6 +32,9 @@ public class AgentReinforcementLearningData : ScriptableObject
     public int WallDamage => _wallDamage;
     [Range(-1, 0)][SerializeField] private float _resultOnWallHit;
     public float ResultOnWallHit => _resultOnWallHit;
+
+    [Range(-1, 0)][SerializeField] private float _resultOnWeaponHit;
+    public float ResultOnWeaponHit => _resultOnWeaponHit;
 
     [Header("Obstacles")]
     [Range(1, 100)][SerializeField] private int _obstacleDamage;

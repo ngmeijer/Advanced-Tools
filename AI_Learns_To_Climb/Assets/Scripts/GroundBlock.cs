@@ -20,6 +20,7 @@ public class GroundBlock : Spawnable
 
     private float _agentTimeSpentOnBlock;
     [SerializeField] private float _maxTimeSpentOnBlock = 1f;
+    public Vector3 _spawnableDimensions;
 
     private void Start()
     {

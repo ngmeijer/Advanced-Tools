@@ -12,13 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24e40c52e564f4b49b4031fb93c3874d, type: 3}
   m_Name: Test 1
   m_EditorClassIdentifier: 
-  _maxHealth: 1
-  _resultOnSurviveFrame: 0.008
+  _maxHealth: 100
+  _moveSpeed: 15
+  _resultOnSurviveFrame: 0.0001
   _resultOnCollectibleHit: 1
   _healthPotionValue: 40
-  _wallDamage: 0
-  _resultOnWallHit: -1
-  _obstacleDamage: 0
-  _resultOnObstacleHit: -1
-  _resultOnGroundblockStay: -0.005
-  _resultOnNotFindingCollectibles: -0.005
+  _wallDamage: 20
+  _resultOnWallHit: -0.1
+  _obstacleDamage: 20
+  _resultOnObstacleHit: -0.5
+  _resultOnGroundblockStay: 0
+  _resultOnNotFindingCollectibles: -0.0001

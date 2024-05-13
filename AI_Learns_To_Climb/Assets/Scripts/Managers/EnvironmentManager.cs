@@ -14,11 +14,21 @@ public class EnvironmentManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _currentDurationText;
     [SerializeField] private TextMeshProUGUI _collectiblesFoundText;
     [SerializeField] private TextMeshProUGUI _cumulativeRewardText;
+    [SerializeField] private TextMeshProUGUI _currentHealthText;
+    [SerializeField] private Image _currentHealthIndicator;
 
-    private void Update()
+    private void LateUpdate()
     {
         setCurrentDurationText();
         setRewardText();
+        setCurrentHealthUI();
+    }
+
+    private void setCurrentHealthUI()
+    {
+        float healthPercentage = Agent.CurrentHealth / (float)Agent.TrainingSettings.MaxHealth;
+        _currentHealthText.SetText($"{healthPercentage * 100:F0}%");
+        _currentHealthIndicator.transform.localScale = new Vector3(healthPercentage, 1, 1);
     }
 
     private void setRewardText()
@@ -26,12 +36,12 @@ public class EnvironmentManager : MonoBehaviour
         _cumulativeRewardText.SetText(Agent.GetCumulativeReward().ToString("F2"));
     }
 
-    private void setSucceededGroundMat(float arg0)
+    private void setSucceededGroundMat(float arg0, float arg1)
     {
         _successIndicator.color = Color.green;
     }
 
-    private void setFailedGroundMat(float arg0)
+    private void setFailedGroundMat(float arg0, float arg1)
     {
         _successIndicator.color = Color.red;
     }

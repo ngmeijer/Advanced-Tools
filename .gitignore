@@ -11,3 +11,7 @@ ml-agents-develop/
 AI_Learns_To_Climb/results/
 
 AI_Learns_To_Climb/.vs/
+
+AI_Learns_To_Climb/Packages/com.singularitygroup.hotreload/
+
+AI_Learns_To_Climb/Assets/HotReload/

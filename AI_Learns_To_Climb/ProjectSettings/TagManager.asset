@@ -10,6 +10,8 @@ TagManager:
   - Obstacle
   - Collectible
   - Agent
+  - HealthPotion
+  - Weapon
   layers:
   - Default
   - TransparentFX

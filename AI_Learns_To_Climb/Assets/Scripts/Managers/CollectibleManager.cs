@@ -4,32 +4,23 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class CollectibleManager : MonoBehaviour
+public class CollectibleManager : SpawnableManager
 {
-    private ObjectPool _collectiblePool;
-    [SerializeField] private int _maxCollectibleCountInTrainingArea = 3;
-
-    private void Awake()
+    protected override void Awake()
     {
-        _collectiblePool = GetComponent<ObjectPool>();
-        if (_collectiblePool == null)
-        {
-            transform.AddComponent<ObjectPool>();
-        }
-
-        _maxCollectibleCountInTrainingArea = Math.Clamp(_maxCollectibleCountInTrainingArea, 0, _collectiblePool.ItemInStorageCount);
-        StartCoroutine(handleColllectibleSpawning());
+        base.Awake();
+        StartCoroutine(spawnObject());
     }
 
-    private IEnumerator handleColllectibleSpawning()
+    protected override IEnumerator spawnObject()
     {
-        if (_collectiblePool.CurrentActiveItems < _maxCollectibleCountInTrainingArea)
+        if (_pool.CurrentActiveItems < _maxSpawnableCountInArea)
         {
-            _collectiblePool.ActivateItem();
+            _pool.ActivateItem();
         }
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(_spawnrate);
 
-        StartCoroutine(handleColllectibleSpawning());
+        StartCoroutine(spawnObject());
     }
 }

@@ -5,6 +5,4 @@ using UnityEngine;
 public class Spawnable : MonoBehaviour
 {
     public Event_OnHitCollider OnHitCollider = new Event_OnHitCollider();
-
-    public Vector3 _spawnableDimensions;
 }

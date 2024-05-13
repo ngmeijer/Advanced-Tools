@@ -9,27 +9,26 @@ using UnityEngine;
 public class AvoidanceAgent : MLAgent
 {
     [SerializeField] private RayPerceptionSensor _sensor;
-    [SerializeField] private AgentReinforcementLearningData _data;
     public AgentReinforcementLearningData ReinforcementData => _data;
     private Dictionary<GroundBlock, float> _groundBlocks;
     private GroundBlock _currentGroundblock;
 
-    private int _currentHealth;
-
-    private bool _collidedWithObstacle;
+    private bool _collidedWithDamageDealer;
     private Vector3 _startPos;
     private Quaternion _startRot;
 
 
-    private void Start()
+    protected override void OnEnable()
     {
+        base.OnEnable();
         _startPos = transform.localPosition;
         _startRot = transform.localRotation;
     }
 
     public override void OnEpisodeBegin()
     {
-        transform.localPosition = _startPos;
+        _currentHealth = _data.MaxHealth;
+        //transform.localPosition = _startPos;
 
         _amountOfCollectiblesFound = 0;
         OnFoundCollectible?.Invoke();
@@ -39,35 +38,34 @@ public class AvoidanceAgent : MLAgent
     {
         base.FixedUpdate();
 
-        transform.rotation = Quaternion.identity;
-
-        if (!_collidedWithObstacle)
+        if (!_collidedWithDamageDealer)
         {
             AddReward(_data.ResultOnSurviveFrame);
         }
 
-        if (CurrentEpisodeDuration > MaxDuration)
+        if (CurrentEpisodeDuration >= MaxDuration)
         {
-            OnSucceededEpisode?.Invoke(_currentEpisodeDuration);
+            OnSucceededEpisode?.Invoke(_currentEpisodeDuration, GetCumulativeReward());
             _currentEpisodeDuration = 0;
             EndEpisode();
         }
 
-        if(_amountOfCollectiblesFound == 0)
-        {
-            AddReward(_data.ResultOnNotFindingCollectibles);
-        }
+        //if(_amountOfCollectiblesFound == 0)
+        //{
+        //    AddReward(_data.ResultOnNotFindingCollectibles);
+        //}
     }
 
     private void LateUpdate()
     {
-        _collidedWithObstacle = false;
+        _collidedWithDamageDealer = false;
     }
 
     public override void CollectObservations(VectorSensor sensor)
     {
         sensor.AddObservation(this.transform.localPosition);
-        sensor.AddObservation(_collidedWithObstacle);
+        sensor.AddObservation(this.transform.localRotation.eulerAngles);
+        sensor.AddObservation(_collidedWithDamageDealer);
         sensor.AddObservation(_amountOfCollectiblesFound);
         sensor.AddObservation(_currentHealth);
 
@@ -87,9 +85,14 @@ public class AvoidanceAgent : MLAgent
     public override void OnActionReceived(ActionBuffers actions)
     {
         float moveX = actions.ContinuousActions[0];
+        float moveZ = actions.ContinuousActions[1];
 
-        float moveSpeed = 13f;
-        transform.localPosition += new Vector3(moveX, 0, 0) * Time.fixedDeltaTime * moveSpeed;
+        float rotY = actions.ContinuousActions[2];
+
+        Vector3 movementVec = new Vector3(moveX, 0, moveZ);
+
+        transform.localPosition += movementVec * Time.deltaTime * _data.MoveSpeed;
+        transform.Rotate(0, rotY, 0);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -98,7 +101,7 @@ public class AvoidanceAgent : MLAgent
 
         if (_currentHealth <= 0)
         {
-            OnFailedEpisode?.Invoke(_currentEpisodeDuration);
+            OnFailedEpisode?.Invoke(_currentEpisodeDuration, GetCumulativeReward());
             _currentEpisodeDuration = 0;
             EndEpisode();
         }
@@ -111,20 +114,28 @@ public class AvoidanceAgent : MLAgent
             case "Obstacle":
                 _currentHealth -= _data.ObstacleDamage;
                 AddReward(_data.ResultOnObstacleHit);
-                _collidedWithObstacle = true;
+                _collidedWithDamageDealer = true;
                 break;
             case "Wall":
                 _currentHealth -= _data.WallDamage;
                 AddReward(_data.ResultOnWallHit);
+                _collidedWithDamageDealer = true;
                 break;
             case "Collectible":
-                AddReward(_data.ResultOnCollectibleHit);
                 _amountOfCollectiblesFound++;
+                AddReward(_data.ResultOnCollectibleHit);
                 OnFoundCollectible?.Invoke();
                 break;
             case "HealthPotion":
                 _currentHealth += _data.HealthPotionValue;
                 _currentHealth = Mathf.Clamp(_currentHealth, 0, _data.MaxHealth);
+                break;
+            case "Weapon":
+                _currentHealth -= _data.WeaponDamage;
+                AddReward(_data.ResultOnWeaponHit);
+                break;
+            case "InvisibleBarrier":
+                EndEpisode();
                 break;
         }
     }
