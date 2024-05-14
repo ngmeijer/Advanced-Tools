@@ -28,6 +28,9 @@ public class AgentReinforcementLearningData : ScriptableObject
     [Range(0, 1)][SerializeField] private float _resultOnDamagedEnemy;
     public float ResultOnDamagedEnemy => _resultOnDamagedEnemy;
 
+    [Range(0, 1)][SerializeField] private float _resultOnKilledEnemy;
+    public float ResultOnKilledEnemy => _resultOnKilledEnemy;
+
     [Range(0, 1)][SerializeField] private float _resultOnWeaponPickup;
     public float ResultOnWeaponPickup => _resultOnWeaponPickup;
 
@@ -39,8 +42,8 @@ public class AgentReinforcementLearningData : ScriptableObject
     [Range(-1, 0)][SerializeField] private float _resultOnWallHit;
     public float ResultOnWallHit => _resultOnWallHit;
 
-    [Range(-1, 0)][SerializeField] private float _resultOnWeaponHit;
-    public float ResultOnWeaponHit => _resultOnWeaponHit;
+    [Range(-1, 0)][SerializeField] private float _resultOnDamageReceive;
+    public float ResultOnDamageReceive => _resultOnDamageReceive;
 
     [Header("Obstacles")]
     [Range(1, 100)][SerializeField] private int _obstacleDamage;

@@ -13,6 +13,7 @@ public class CanvasManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _collectiblesFoundText;
     [SerializeField] private TextMeshProUGUI _cumulativeRewardText;
     [SerializeField] private TextMeshProUGUI _currentHealthText;
+    [SerializeField] private TextMeshProUGUI _kdText;
     [SerializeField] private Image _currentHealthIndicator;
 
     [HideInInspector] public MLAgent Agent;
@@ -30,6 +31,11 @@ public class CanvasManager : MonoBehaviour
         Agent.OnFailedEpisode.AddListener(setFailedGroundMat);
         Agent.OnSucceededEpisode.AddListener(setSucceededGroundMat);
         Agent.OnFoundCollectible.AddListener(setFoundCollectiblesText);
+    }
+
+    public void UpdateKD()
+    {
+        _kdText.SetText($"{Agent.KillCount}/{Agent.DeathCount}");
     }
 
     private void setCurrentHealthUI()

@@ -64,6 +64,7 @@ GameObject:
   - component: {fileID: 4595337689968008601}
   - component: {fileID: 3151224203845788333}
   - component: {fileID: 1558457562035481383}
+  - component: {fileID: 1525856820149691759}
   m_Layer: 0
   m_Name: ObstacleManager
   m_TagString: Untagged
@@ -117,9 +118,22 @@ MonoBehaviour:
   _itemPrefab: {fileID: 5359580114152532126, guid: 8c200191dffc2bb4e8d05f06a3380a53, type: 3}
   _itemInStorageCount: 100
   _spawnedItems: []
-  _spawnAreaSize: {x: 25, y: 1, z: 25}
-  _spawnAreaCenter: {x: 0, y: 18, z: 0}
-  _gizmoColor: {r: 1, g: 0, b: 0, a: 1}
+  _spawnArea: {fileID: 0}
+--- !u!114 &1525856820149691759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 310991483679985685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69a9733e6319ca54a8fcf1a00ba5dd32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Size: {x: 0, y: 0, z: 0}
+  Center: {x: 0, y: 0, z: 0}
+  GizmoColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &637969730989226547
 GameObject:
   m_ObjectHideFlags: 0
@@ -131,6 +145,7 @@ GameObject:
   - component: {fileID: 8726199747905052118}
   - component: {fileID: 6804429268193868267}
   - component: {fileID: 6681027221697136203}
+  - component: {fileID: 3977613957395850085}
   m_Layer: 0
   m_Name: CollectibleManager
   m_TagString: Untagged
@@ -184,9 +199,22 @@ MonoBehaviour:
   _itemPrefab: {fileID: 4934260014047195432, guid: 1029d35e99d4bc64c80d7c2da04ab481, type: 3}
   _itemInStorageCount: 12
   _spawnedItems: []
-  _spawnAreaSize: {x: 28, y: 0.5, z: 28}
-  _spawnAreaCenter: {x: 0, y: 1.5, z: 0}
-  _gizmoColor: {r: 1, g: 0.76114666, b: 0, a: 1}
+  _spawnArea: {fileID: 3977613957395850085}
+--- !u!114 &3977613957395850085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 637969730989226547}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69a9733e6319ca54a8fcf1a00ba5dd32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Size: {x: 28, y: 2, z: 28}
+  Center: {x: 0, y: 1, z: 0}
+  GizmoColor: {r: 1, g: 0.7812411, b: 0, a: 1}
 --- !u!1 &877160928107428488
 GameObject:
   m_ObjectHideFlags: 0
@@ -411,6 +439,7 @@ GameObject:
   - component: {fileID: 5494248206855504485}
   - component: {fileID: 473339777237619613}
   - component: {fileID: 4011067190873120993}
+  - component: {fileID: 2495396301325041618}
   m_Layer: 0
   m_Name: HealthPotionManager
   m_TagString: Untagged
@@ -464,9 +493,22 @@ MonoBehaviour:
   _itemPrefab: {fileID: 3374306299168564116, guid: 101b7ee9f3739684ca3a239b3c5950ac, type: 3}
   _itemInStorageCount: 8
   _spawnedItems: []
-  _spawnAreaSize: {x: 27.5, y: 0.5, z: 27.5}
-  _spawnAreaCenter: {x: 0, y: 1.5, z: 0}
-  _gizmoColor: {r: 1, g: 0.049433887, b: 0, a: 1}
+  _spawnArea: {fileID: 0}
+--- !u!114 &2495396301325041618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1413571615809456037}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69a9733e6319ca54a8fcf1a00ba5dd32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Size: {x: 0, y: 0, z: 0}
+  Center: {x: 0, y: 0, z: 0}
+  GizmoColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &1730026287402687024
 GameObject:
   m_ObjectHideFlags: 0
@@ -514,7 +556,7 @@ MonoBehaviour:
   _groundBlockPrefab: {fileID: 5628590139177916829, guid: 4add5c5f249c60145a2c67b0d1df7fdd, type: 3}
   _spawnAreaStart: {x: -15, y: 0, z: -15}
   _spawnAreaRadius: {x: 30, y: 0, z: 30}
-  _gizmoColor: {r: 0.33910346, g: 1, b: 0, a: 1}
+  _gizmoColor: {r: 0.33725476, g: 1, b: 0, a: 1}
   _agent: {fileID: 1644721791740449173}
   _enableReinforcement: 0
 --- !u!1 &2448240732786626771
@@ -720,6 +762,7 @@ GameObject:
   m_Component:
   - component: {fileID: 221516996301920314}
   - component: {fileID: 928629051839629581}
+  - component: {fileID: 976527371524720771}
   m_Layer: 0
   m_Name: EnvironmentManager
   m_TagString: Untagged
@@ -757,6 +800,22 @@ MonoBehaviour:
   _canvasPrefab: {fileID: 4042245349226321201, guid: 94d307fb95e0b9648a4b022c9f7a57ab, type: 3}
   _canvasParent: {fileID: 6658949017911565651}
   _weapon: {fileID: 4120047742764185099}
+  _weaponSpawnArea: {fileID: 976527371524720771}
+--- !u!114 &976527371524720771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4344633791955843633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69a9733e6319ca54a8fcf1a00ba5dd32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Size: {x: 20, y: 1, z: 20}
+  Center: {x: 0, y: 2, z: 0}
+  GizmoColor: {r: 0, g: 0.3395729, b: 1, a: 1}
 --- !u!1 &4420357752100105427
 GameObject:
   m_ObjectHideFlags: 0
@@ -1397,10 +1456,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 320036748535330594, guid: 42c7161e3aa8d1844b3fa1e18c38b342, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3730037199338928650, guid: 42c7161e3aa8d1844b3fa1e18c38b342, type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8638395892589281880, guid: 42c7161e3aa8d1844b3fa1e18c38b342, type: 3}

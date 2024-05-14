@@ -12,12 +12,12 @@ public class TrainingManager : MonoBehaviour
     [SerializeField] private bool _massTesting;
     [Range(1,40)][SerializeField] private int _maxTrainingEnvironments = 30;
     [SerializeField] private GameObject _environmentPrefab;
-    [SerializeField] private List<MLAgent> _agents;
     [SerializeField] private GameObject _canvas;
 
     [SerializeField] private Vector3 _areaSize;
     [SerializeField] private Vector3 _areaSpacing;
 
+    [SerializeField] private List<MLAgent> _agents = new List<MLAgent>();
     public List<MLAgent> Agents => _agents;
     
     private void Awake()

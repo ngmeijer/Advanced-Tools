@@ -7,7 +7,9 @@ public abstract class SpawnableManager : MonoBehaviour
 {
     protected ObjectPool _pool;
     [SerializeField] protected int _maxSpawnableCountInArea = 10;
-    [Tooltip("How often should a new obstacle spawn in seconds?")][SerializeField] protected float _spawnrate;
+
+    [Tooltip("How often should a new obstacle spawn in seconds?")]
+    [SerializeField] protected float _spawnrate;
     [SerializeField] protected int _spawnMultiplier = 3;
 
     [HideInInspector] public MLAgent Agent;

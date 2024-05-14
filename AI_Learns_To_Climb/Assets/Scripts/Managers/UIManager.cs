@@ -37,7 +37,7 @@ public class UIManager : MonoBehaviour
             agent.OnFoundCollectible.AddListener(updateCollectibleCount);
         }
 
-        _maxDurationText.SetText($"{agents[0].MaxDuration.ToString()}s");
+        _maxDurationText.SetText($"{agents[0].MaxDuration}s");
     }
 
     private void updateTotalEpisodeCount()

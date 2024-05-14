@@ -6,6 +6,12 @@ using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
 using UnityEngine;
 
+public enum WeaponState
+{
+    PICKED_UP,
+    DROPPED
+}
+
 public class AvoidanceAgent : MLAgent
 {
     [SerializeField] private RayPerceptionSensor _sensor;
@@ -33,8 +39,7 @@ public class AvoidanceAgent : MLAgent
         _amountOfCollectiblesFound = 0;
         //OnFoundCollectible?.Invoke();
 
-        //Disable carrying weapon, enable level weapon
-        handleWeapon(false);
+        handleWeapon(WeaponState.DROPPED);
     }
 
     protected override void FixedUpdate()
@@ -66,11 +71,19 @@ public class AvoidanceAgent : MLAgent
         _collidedWithDamageDealer = false;
     }
 
-    private void handleWeapon(bool pActive)
+    /// <summary>
+    /// If <paramref name="pActive"/> is TRUE, then the weapon has been picked up. The visualizer on the agent should be enabled and the instance in the world disabled.
+    /// If <paramref name="pActive"/> is FALSE, then the agent has dropped the weapon. The visualizer on the agent should be disabled and the instance in the world enabled again.
+    /// </summary>
+    /// <param name="pActive"></param>
+    private void handleWeapon(WeaponState pState)
     {
-        _carryingWeapon = pActive;
-        _weapon.SetActive(pActive);
-        OnPickedUpWeapon?.Invoke(!pActive);
+        _carryingWeapon = pState;
+        if (pState == WeaponState.PICKED_UP)
+        {
+            _weaponVisualizer.SetActive(true);
+            OnPickedUpWeapon?.Invoke(pState, _weaponCollidedWith);
+        }
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -79,7 +92,7 @@ public class AvoidanceAgent : MLAgent
         sensor.AddObservation(_collidedWithDamageDealer);
         sensor.AddObservation(_amountOfCollectiblesFound);
         sensor.AddObservation(_currentHealth);
-        sensor.AddObservation(_carryingWeapon);
+        sensor.AddObservation((float)_carryingWeapon);
         sensor.AddObservation(WeaponAvailable);
 
         //if (_groundBlocks == null)
@@ -107,7 +120,7 @@ public class AvoidanceAgent : MLAgent
 
     private void OnCollisionEnter(Collision collision)
     {
-        checkColliderTagOnEnter(collision.collider.tag);
+        checkColliderTagOnEnter(collision.collider.gameObject);
 
         if (_currentHealth <= 0)
         {
@@ -117,52 +130,103 @@ public class AvoidanceAgent : MLAgent
         }
     }
 
-    private void checkColliderTagOnEnter(string pTag)
+    private void checkColliderTagOnEnter(GameObject pCollisionObject)
     {
-        Debug.Log(WeaponAvailable);
-        switch (pTag)
+        switch (pCollisionObject.tag)
         {
             case "Obstacle":
-                _currentHealth -= _data.ObstacleDamage;
-                AddReward(_data.ResultOnObstacleHit);
-                _collidedWithDamageDealer = true;
+                handleObstacleCollision();
                 break;
             case "Wall":
-                _currentHealth -= _data.WallDamage;
-                AddReward(_data.ResultOnWallHit);
-                _collidedWithDamageDealer = true;
+                handleWallCollision();
                 break;
             case "Collectible":
-                _amountOfCollectiblesFound++;
-                AddReward(_data.ResultOnCollectibleHit);
-                OnFoundCollectible?.Invoke();
+                handleCollectibleCollision();
                 break;
             case "HealthPotion":
-                _currentHealth += _data.HealthPotionValue;
-                _currentHealth = Mathf.Clamp(_currentHealth, 0, _data.MaxHealth);
+                handleHealthPotionCollision();
                 break;
             case "Weapon":
-                if(WeaponAvailable)
-                {
-                    handleWeapon(true);
-                    AddReward(_data.ResultOnWeaponPickup);
-                }
+                handleWeaponCollision(pCollisionObject);
                 break;
             case "Agent":
-                if (_carryingWeapon)
-                {
-                    AddReward(_data.ResultOnDamagedEnemy);
-                }
-                else if(_carryingWeapon == false && WeaponAvailable == false)
-                {
-                    AddReward(_data.ResultOnWeaponHit);
-                    _currentHealth -= _data.WeaponDamage;
-                }
+                handleDamageDealing(pCollisionObject);
                 break;
             case "InvisibleBarrier":
                 EndEpisode();
                 break;
         }
+    }
+
+    private void handleHealthPotionCollision()
+    {
+        _currentHealth += _data.HealthPotionValue;
+        _currentHealth = Mathf.Clamp(_currentHealth, 0, _data.MaxHealth);
+    }
+
+    private void handleWeaponCollision(GameObject pCollisionObject)
+    {
+        if (_carryingWeapon == WeaponState.PICKED_UP)
+            return;
+
+        _weaponCollidedWith = pCollisionObject;
+        handleWeapon(WeaponState.PICKED_UP);
+        AddReward(_data.ResultOnWeaponPickup);
+    }
+
+    private void handleDamageDealing(GameObject pCollisionObject)
+    {
+        if (_carryingWeapon != WeaponState.PICKED_UP)
+            return;
+
+        MLAgent enemy = pCollisionObject.GetComponent<MLAgent>();
+        enemy.ReceiveDamage(_data.WeaponDamage);
+        if (enemy.CurrentHealth > 0)
+        {
+            AddReward(_data.ResultOnDamagedEnemy);
+            Debug.Log("Damaged enemy.");
+            return;
+        }
+
+        _killCount += 1;
+        Debug.Log("Killed enemy");
+        AddReward(_data.ResultOnKilledEnemy);
+        OnHasBeenKilledByAgent.Invoke(enemy, this);
+    }
+
+    private void handleDamageReceiving(MLAgent pCollisionAgent)
+    {
+        _currentHealth -= _data.WeaponDamage;
+
+        if (CurrentHealth <= 0)
+        {
+            _deathCount += 1;
+            Debug.Log("Died in combat");
+            OnHasBeenKilledByAgent.Invoke(this, pCollisionAgent);
+        }
+        return;
+
+    }
+
+    private void handleObstacleCollision()
+    {
+        _currentHealth -= _data.ObstacleDamage;
+        AddReward(_data.ResultOnObstacleHit);
+        _collidedWithDamageDealer = true;
+    }
+
+    private void handleWallCollision()
+    {
+        _currentHealth -= _data.WallDamage;
+        AddReward(_data.ResultOnWallHit);
+        _collidedWithDamageDealer = true;
+    }
+
+    private void handleCollectibleCollision()
+    {
+        _amountOfCollectiblesFound++;
+        AddReward(_data.ResultOnCollectibleHit);
+        OnFoundCollectible?.Invoke();
     }
 
     public void SetGroundBlockData(Dictionary<GroundBlock, float> pGroundBlocks)

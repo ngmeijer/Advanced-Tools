@@ -16,9 +16,10 @@ MonoBehaviour:
   _moveSpeed: 15
   _weaponDamage: 60
   _resultOnSurviveFrame: 0.0001
-  _resultOnCollectibleHit: 0.7
+  _resultOnCollectibleHit: 0.85
   _healthPotionValue: 40
-  _resultOnDamagedEnemy: 0.9
+  _resultOnDamagedEnemy: 0.7
+  _resultOnKilledEnemy: 1
   _resultOnWeaponPickup: 0.8
   _wallDamage: 20
   _resultOnWallHit: -0.3

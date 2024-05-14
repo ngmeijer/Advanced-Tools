@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
+[RequireComponent(typeof(SpawnArea))]
 public class ObjectPool : MonoBehaviour
 {
     [Tooltip("Prefab must have component 'Spawnable'!")][SerializeField] private Spawnable _itemPrefab;
@@ -11,12 +11,10 @@ public class ObjectPool : MonoBehaviour
 
     [SerializeField] private List<Spawnable> _spawnedItems = new List<Spawnable>();
 
-    [SerializeField] private Vector3 _spawnAreaSize;
-    [SerializeField] private Vector3 _spawnAreaCenter;
-    [SerializeField] private Color _gizmoColor;
-
     private float _currentActiveItems;
     public float CurrentActiveItems => _currentActiveItems;
+
+    [SerializeField] private SpawnArea _spawnArea;
 
     private void Start()
     {
@@ -25,9 +23,7 @@ public class ObjectPool : MonoBehaviour
 
     public void ActivateItem()
     {
-        Vector3 randomPos = new Vector3(Random.Range(-_spawnAreaSize.x / 2, _spawnAreaSize.x / 2),
-            _spawnAreaCenter.y,
-            Random.Range(-_spawnAreaSize.z / 2, _spawnAreaSize.z / 2));
+        Vector3 randomPos = _spawnArea.GetRandomPosition();
         GameObject newItem = getItemFromPool();
         newItem.transform.localPosition = randomPos;
         newItem.SetActive(true);
@@ -75,12 +71,6 @@ public class ObjectPool : MonoBehaviour
         _spawnedItems[index].gameObject.SetActive(false);
         _spawnedItems[index].gameObject.transform.rotation = Quaternion.identity;
         _currentActiveItems--;
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = _gizmoColor;
-        Gizmos.DrawWireCube(transform.position + _spawnAreaCenter, _spawnAreaSize);
     }
 
     public void DeactivateAlltems()
