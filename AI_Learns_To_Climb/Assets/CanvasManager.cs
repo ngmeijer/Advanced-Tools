@@ -35,6 +35,7 @@ public class CanvasManager : MonoBehaviour
 
     public void UpdateKD()
     {
+        Debug.Log($"Updating KD {Agent.KillCount}/{Agent.DeathCount} for agent {Agent.ID}");
         _kdText.SetText($"{Agent.KillCount}/{Agent.DeathCount}");
     }
 

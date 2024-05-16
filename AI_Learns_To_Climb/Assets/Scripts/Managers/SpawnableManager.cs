@@ -12,6 +12,8 @@ public abstract class SpawnableManager : MonoBehaviour
     [SerializeField] protected float _spawnrate;
     [SerializeField] protected int _spawnMultiplier = 3;
 
+    [SerializeField] protected bool _enableSpawning = true;
+
     [HideInInspector] public MLAgent Agent;
 
     protected virtual void Awake()

@@ -61,6 +61,7 @@
     <Analyzer Include="E:\Unity versions\2023.2.19f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.UIToolkit.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\CombatMLAgent.cs" />
     <Compile Include="Assets\Scripts\AgentSpawner.cs" />
     <Compile Include="Assets\Scripts\AgentReinforcementLearningData.cs" />
     <Compile Include="Assets\Scripts\Managers\ExplorationManager.cs" />
@@ -77,11 +78,11 @@
     <Compile Include="Assets\Scripts\Managers\ObstacleManager.cs" />
     <Compile Include="Assets\WeaponController.cs" />
     <Compile Include="Assets\Scripts\Spawnables\Spawnable.cs" />
+    <Compile Include="Assets\Scripts\AgentCollisionManager.cs" />
     <Compile Include="Assets\Scripts\Event_OnHitCollider.cs" />
     <Compile Include="Assets\Scripts\Managers\SpawnableManager.cs" />
     <Compile Include="Assets\Scripts\Managers\UIManager.cs" />
     <Compile Include="Assets\Scripts\HealthPotion.cs" />
-    <Compile Include="Assets\Scripts\AvoidanceAgent.cs" />
     <Compile Include="Assets\Scripts\Managers\CollectibleManager.cs" />
     <Compile Include="Assets\Scripts\Managers\EnvironmentManager.cs" />
   </ItemGroup>

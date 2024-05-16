@@ -9,9 +9,12 @@ public class EnvironmentManager : MonoBehaviour
 {
     [SerializeField] private GameObject _canvasPrefab;
     [SerializeField] private Transform _canvasParent;
+
+    [SerializeField] private Transform _weaponParent;
     [SerializeField] private GameObject _weaponPrefab;
     [SerializeField] private int _maxWeaponCount = 5;
     [SerializeField] private SpawnArea _weaponSpawnArea;
+    [SerializeField] private SpawnArea _agentSpawnArea;
 
     private MLAgent[] _agents;
     [SerializeField] private List<GameObject> _spawnedWeapons = new List<GameObject>();
@@ -23,7 +26,7 @@ public class EnvironmentManager : MonoBehaviour
     {
         for(int i = 0; i < _maxWeaponCount; i++)
         {
-            GameObject weaponInstance = Instantiate(_weaponPrefab, _weaponSpawnArea.GetRandomPosition(), Quaternion.identity, this.transform);
+            GameObject weaponInstance = Instantiate(_weaponPrefab, _weaponSpawnArea.GetRandomPosition(), Quaternion.identity, _weaponParent);
             _spawnedWeapons.Add(weaponInstance);
         }
     }
@@ -34,15 +37,21 @@ public class EnvironmentManager : MonoBehaviour
         for(int i = 0; i < pAgents.Length; i++)
         {
             pAgents[i].OnPickedUpWeapon.AddListener(handleWeaponPickupNotify);
-            pAgents[i].OnHasBeenKilledByAgent.AddListener(handleAgentKill);
-            Vector3 canvasPos = _canvasParent.position + new Vector3(0, i * 11.5f, 0);
-            GameObject canvas = Instantiate(_canvasPrefab, canvasPos, _canvasParent.rotation, _canvasParent);
+            pAgents[i].OnAgentKill.AddListener(handleAgentKill);
+            pAgents[i].OnEndEpisode?.AddListener(generatePlayerPosition);
+            GameObject canvas = Instantiate(_canvasPrefab, _canvasParent.position, _canvasParent.rotation, _canvasParent);
             CanvasManager canvasManager = canvas.GetComponent<CanvasManager>();
             canvasManager.SetListeners(pAgents[i]);
             _canvasesForAgents.Add(pAgents[i], canvasManager);
             canvasManager.SetID(i);
             pAgents[i].SetID(i);
         }
+    }
+
+    private void generatePlayerPosition(MLAgent pAgent)
+    {
+        Vector3 position = _agentSpawnArea.GetRandomPosition();
+        pAgent.ReceiveNewRandomPosition(position);
     }
 
     private void handleAgentKill(MLAgent pHasBeenKilled, MLAgent pHasKilled)
@@ -62,13 +71,13 @@ public class EnvironmentManager : MonoBehaviour
             return;
         }
 
-        if (pState == WeaponState.DROPPED) {
+        if (pState == WeaponState.DROPPED_WEAPON) {
             _spawnedWeapons[weaponIndex].transform.localPosition = _weaponSpawnArea.GetRandomPosition();
             _spawnedWeapons[weaponIndex].SetActive(true);
             _takenWeapons.Remove(pWeapon);
         }
 
-        if (pState == WeaponState.PICKED_UP)
+        if (pState == WeaponState.CARRY_WEAPON)
         {
             _spawnedWeapons[weaponIndex].SetActive(false);
             _takenWeapons.Add(pWeapon);

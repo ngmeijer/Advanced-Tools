@@ -8,12 +8,14 @@ public abstract class MLAgent : Agent
 {
     public UnityEvent<float, float> OnFailedEpisode = new UnityEvent<float, float>();
     public UnityEvent<float, float> OnSucceededEpisode = new UnityEvent<float, float>();
+    public UnityEvent<MLAgent> OnEndEpisode = new UnityEvent<MLAgent>();
     public UnityEvent<WeaponState, GameObject> OnPickedUpWeapon = new UnityEvent<WeaponState, GameObject>();
     public UnityEvent OnFoundCollectible = new UnityEvent();
-    public UnityEvent<MLAgent, MLAgent> OnHasBeenKilledByAgent = new UnityEvent<MLAgent, MLAgent>();
+    public UnityEvent<MLAgent, MLAgent> OnAgentKill = new UnityEvent<MLAgent, MLAgent>();
 
     public bool WeaponAvailable = true;
-    protected WeaponState _carryingWeapon;
+    protected WeaponState _carryingWeapon = WeaponState.DROPPED_WEAPON;
+    public WeaponState AgentWeaponState => _carryingWeapon;
 
     protected GameObject _weaponCollidedWith;
 
@@ -24,6 +26,9 @@ public abstract class MLAgent : Agent
 
     protected float _currentEpisodeDuration;
     public float CurrentEpisodeDuration => _currentEpisodeDuration;
+
+    protected int _agentID;
+    public int ID => _agentID;
 
     protected int _amountOfCollectiblesFound;
     public int CollectiblesFound => _amountOfCollectiblesFound;
@@ -40,36 +45,37 @@ public abstract class MLAgent : Agent
     protected int _deathCount;
     public int DeathCount => _deathCount;
 
+    protected Vector3 _newRandomPosition;
+
     protected virtual void Start()
     {
         WeaponAvailable = true;
     }
-    
 
     protected virtual void FixedUpdate()
     {
         _currentEpisodeDuration += Time.fixedDeltaTime;
     }
 
-    public void ReceiveDamage(int pDamage)
+    public void ModifyHealth(int pDelta)
     {
-        _currentHealth -= pDamage;
-        AddReward(_data.ResultOnDamageReceive);
-        if (CurrentHealth <= 0)
-        {
-            _deathCount += 1;
-            Debug.Log("Died in combat");
-        }
+        _currentHealth += pDelta;
+        _currentHealth = Mathf.Clamp(_currentHealth, 0, _data.MaxHealth);
+    }
+
+    public void ModifyCollectibleCount(int pCount)
+    {
+        _amountOfCollectiblesFound += pCount;
+    }
+
+    public void ReceiveNewRandomPosition(Vector3 pPosition)
+    {
+        _newRandomPosition = pPosition;
     }
 
     public void SetID(int pID)
     {
+        _agentID = pID;
         _agentIDOnBodyText.SetText(pID.ToString());
-    }
-
-    public void DisableWeapon()
-    {
-        _weaponVisualizer.SetActive(false);
-        _carryingWeapon = WeaponState.DROPPED;
     }
 }

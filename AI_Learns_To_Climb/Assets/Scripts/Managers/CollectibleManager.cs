@@ -10,7 +10,9 @@ public class CollectibleManager : SpawnableManager
     protected override void Awake()
     {
         base.Awake();
-        StartCoroutine(spawnObject());
+
+        if(_enableSpawning)
+            StartCoroutine(spawnObject());
     }
 
     public void SetListeners(MLAgent pAgent)

@@ -28,7 +28,7 @@ public class ExplorationManager : MonoBehaviour
 
     private void Update()
     {
-        (_agent as AvoidanceAgent).SetGroundBlockData(_groundBlocks);
+        (_agent as CombatMLAgent).SetGroundBlockData(_groundBlocks);
     }
 
     private void checkVisitedBlocks(Spawnable pBlock)
@@ -66,7 +66,7 @@ public class ExplorationManager : MonoBehaviour
     /// <param name="arg0"></param>
     private void punishAgentStay(Spawnable arg0)
     {
-        _agent.AddReward((_agent as AvoidanceAgent).ReinforcementData.ResultOnGroundblockStay); 
+        _agent.AddReward((_agent as CombatMLAgent).ReinforcementData.ResultOnGroundblockStay); 
     }
 
     private void OnDrawGizmos()

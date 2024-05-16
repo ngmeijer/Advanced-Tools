@@ -79,7 +79,10 @@ public class TrainingManager : MonoBehaviour
 
     private void setCanvasToEnvironmentPosition(GameObject pEnvironment)
     {
-        Vector3 canvasPos = new Vector3(_canvas.transform.position.x, _canvas.transform.position.y, pEnvironment.transform.position.z + _areaSize.z);
+        Vector3 canvasPos = new Vector3(
+            _canvas.transform.position.x, 
+            _canvas.transform.position.y, 
+            pEnvironment.transform.position.z + _areaSize.z / 2);
         _canvas.transform.position = canvasPos;
     }
 }

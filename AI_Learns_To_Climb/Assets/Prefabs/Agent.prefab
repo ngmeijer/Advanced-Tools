@@ -276,7 +276,7 @@ MonoBehaviour:
   m_RaysPerDirection: 40
   m_MaxRayDegrees: 180
   m_SphereCastRadius: 0.5
-  m_RayLength: 30
+  m_RayLength: 45
   m_RayLayerMask:
     serializedVersion: 2
     m_Bits: 4294967291
@@ -609,11 +609,12 @@ GameObject:
   m_Component:
   - component: {fileID: 320036748535330594}
   - component: {fileID: 2472634312084905488}
-  - component: {fileID: 1979456131837335097}
+  - component: {fileID: 9174645687394792168}
   - component: {fileID: 1990397438568336927}
   - component: {fileID: 1739936589611732657}
-  - component: {fileID: 9174645687394792168}
   - component: {fileID: 8384782931318260612}
+  - component: {fileID: 1326311462677383319}
+  - component: {fileID: 4814075023050932093}
   m_Layer: 0
   m_Name: Agent
   m_TagString: Agent
@@ -663,42 +664,33 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1979456131837335097
-MonoBehaviour:
+--- !u!54 &9174645687394792168
+Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8638395892589281880}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1bf2eca9a258cf84aa3c01d971f26b93, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  agentParameters:
-    maxStep: 0
-  hasUpgradedFromAgentParameters: 1
-  MaxStep: 0
-  OnFailedEpisode:
-    m_PersistentCalls:
-      m_Calls: []
-  OnSucceededEpisode:
-    m_PersistentCalls:
-      m_Calls: []
-  OnPickedUpWeapon:
-    m_PersistentCalls:
-      m_Calls: []
-  OnFoundCollectible:
-    m_PersistentCalls:
-      m_Calls: []
-  OnHasBeenKilledByAgent:
-    m_PersistentCalls:
-      m_Calls: []
-  WeaponAvailable: 0
-  _weaponVisualizer: {fileID: 3730037199338928650}
-  _data: {fileID: 11400000, guid: c84c524830173e3489f7b6f7e11cd0fc, type: 2}
-  _agentIDOnBodyText: {fileID: 353514181295413339}
-  _maxDuration: 90
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 64
+  m_CollisionDetection: 2
 --- !u!114 &1990397438568336927
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -743,33 +735,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DecisionPeriod: 5
   TakeActionsBetweenDecisions: 1
---- !u!54 &9174645687394792168
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8638395892589281880}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 64
-  m_CollisionDetection: 2
 --- !u!114 &8384782931318260612
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -782,6 +747,56 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b671db7037c56f94f8124514dc566cc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1326311462677383319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8638395892589281880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e9981aeaa9bf3743a013d8a9924ca08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agentParameters:
+    maxStep: 0
+  hasUpgradedFromAgentParameters: 1
+  MaxStep: 0
+  OnFailedEpisode:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSucceededEpisode:
+    m_PersistentCalls:
+      m_Calls: []
+  OnPickedUpWeapon:
+    m_PersistentCalls:
+      m_Calls: []
+  OnFoundCollectible:
+    m_PersistentCalls:
+      m_Calls: []
+  OnAgentKill:
+    m_PersistentCalls:
+      m_Calls: []
+  WeaponAvailable: 1
+  _weaponVisualizer: {fileID: 3730037199338928650}
+  _data: {fileID: 11400000, guid: c84c524830173e3489f7b6f7e11cd0fc, type: 2}
+  _agentIDOnBodyText: {fileID: 353514181295413339}
+  _maxDuration: 120
+  _collisionManager: {fileID: 4814075023050932093}
+--- !u!114 &4814075023050932093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8638395892589281880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d13b61f6cb40fcd409d37e24a5583af5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CombatAgent: {fileID: 0}
 --- !u!1001 &993319156699444833
 PrefabInstance:
   m_ObjectHideFlags: 0
