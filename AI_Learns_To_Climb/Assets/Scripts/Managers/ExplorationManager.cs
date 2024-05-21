@@ -28,7 +28,7 @@ public class ExplorationManager : MonoBehaviour
 
     private void Update()
     {
-        (_agent as CombatMLAgent).SetGroundBlockData(_groundBlocks);
+        //(_agent as CombatMLAgent).SetGroundBlockData(_groundBlocks);
     }
 
     private void checkVisitedBlocks(Spawnable pBlock)
@@ -47,7 +47,6 @@ public class ExplorationManager : MonoBehaviour
         if (_enableReinforcement)
         {
             groundComponent.OnHitCollider.AddListener(checkVisitedBlocks);
-            groundComponent.OnAgentStay.AddListener(punishAgentStay);
             groundComponent.OnCooldownNotify.AddListener(updateCooldown);
             groundComponent.EnableReinforcement = true;
         }
@@ -58,15 +57,6 @@ public class ExplorationManager : MonoBehaviour
     private void updateCooldown(float pCooldownLeft, GroundBlock pGroundBlock)
     {
         _groundBlocks[pGroundBlock] = pCooldownLeft;
-    }
-
-    /// <summary>
-    /// Punish an agent for every 
-    /// </summary>
-    /// <param name="arg0"></param>
-    private void punishAgentStay(Spawnable arg0)
-    {
-        _agent.AddReward((_agent as CombatMLAgent).ReinforcementData.ResultOnGroundblockStay); 
     }
 
     private void OnDrawGizmos()

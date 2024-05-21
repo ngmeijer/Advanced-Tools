@@ -704,7 +704,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 8
+    VectorObservationSize: 38
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 2
@@ -767,6 +767,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   OnSucceededEpisode:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEndEpisode:
     m_PersistentCalls:
       m_Calls: []
   OnPickedUpWeapon:

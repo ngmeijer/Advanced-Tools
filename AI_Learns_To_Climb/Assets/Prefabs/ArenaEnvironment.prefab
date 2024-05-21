@@ -65,6 +65,7 @@ Transform:
   m_Children:
   - {fileID: 855350861183139253}
   - {fileID: 5486229483846571359}
+  - {fileID: 1685212578143645354}
   m_Father: {fileID: 8832031865553277025}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3093873449842913203
@@ -463,7 +464,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &855350861183139253
 Transform:
   m_ObjectHideFlags: 0
@@ -492,9 +493,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _itemPrefab: {fileID: 5359580114152532126, guid: 8c200191dffc2bb4e8d05f06a3380a53, type: 3}
-  _itemInStorageCount: 200
+  _itemInStorageCount: 500
   _spawnedItems: []
-  _spawnArea: {fileID: 0}
+  _spawnArea: {fileID: 8423598842360640666}
 --- !u!114 &1085638540508707394
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -507,9 +508,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17f04f39e04f0e244b5389b35ad1c4c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxSpawnableCountInArea: 100
+  _maxSpawnableCountInArea: 400
   _spawnrate: 0.1
-  _spawnMultiplier: 3
+  _spawnMultiplier: 10
   _enableSpawning: 1
   Agent: {fileID: 0}
 --- !u!114 &8423598842360640666
@@ -524,9 +525,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69a9733e6319ca54a8fcf1a00ba5dd32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Size: {x: 0, y: 0, z: 0}
-  Center: {x: 0, y: 0, z: 0}
-  GizmoColor: {r: 0, g: 0, b: 0, a: 0}
+  Size: {x: 195, y: 2, z: 195}
+  Center: {x: 0, y: 40, z: 0}
+  GizmoColor: {r: 1, g: 0, b: 0.8248067, a: 1}
 --- !u!1 &2438452038517321198
 GameObject:
   m_ObjectHideFlags: 0
@@ -999,7 +1000,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _itemPrefab: {fileID: 4934260014047195432, guid: 1029d35e99d4bc64c80d7c2da04ab481, type: 3}
-  _itemInStorageCount: 60
+  _itemInStorageCount: 100
   _spawnedItems: []
   _spawnArea: {fileID: 5227520675874090099}
 --- !u!114 &8956462179284813277
@@ -1014,7 +1015,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a03002e685f175a45ac086fc442a2e77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxSpawnableCountInArea: 25
+  _maxSpawnableCountInArea: 75
   _spawnrate: 0.01
   _spawnMultiplier: 1
   _enableSpawning: 1
@@ -1168,6 +1169,88 @@ Transform:
   - {fileID: 2902159981165283687}
   m_Father: {fileID: 5958604549530869163}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8500709603525876142
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1685212578143645354}
+  - component: {fileID: 8268251352179714332}
+  - component: {fileID: 3973029899899097364}
+  - component: {fileID: 6778612525487829690}
+  m_Layer: 0
+  m_Name: HealthPotionManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1685212578143645354
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8500709603525876142}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7196575146551005530}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8268251352179714332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8500709603525876142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a03002e685f175a45ac086fc442a2e77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxSpawnableCountInArea: 8
+  _spawnrate: 0
+  _spawnMultiplier: 3
+  _enableSpawning: 1
+  Agent: {fileID: 0}
+--- !u!114 &3973029899899097364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8500709603525876142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e94e584cc359fd54681c599fa7a235d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _itemPrefab: {fileID: 3374306299168564116, guid: 101b7ee9f3739684ca3a239b3c5950ac, type: 3}
+  _itemInStorageCount: 15
+  _spawnedItems: []
+  _spawnArea: {fileID: 6778612525487829690}
+--- !u!114 &6778612525487829690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8500709603525876142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69a9733e6319ca54a8fcf1a00ba5dd32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Size: {x: 170, y: 2, z: 170}
+  Center: {x: 0, y: 1, z: 0}
+  GizmoColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &8764587512151913923
 GameObject:
   m_ObjectHideFlags: 0
@@ -1694,10 +1777,6 @@ PrefabInstance:
     - target: {fileID: 320036748535330594, guid: 42c7161e3aa8d1844b3fa1e18c38b342, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6619426722027532814, guid: 42c7161e3aa8d1844b3fa1e18c38b342, type: 3}
-      propertyPath: m_RayLength
-      value: 45
       objectReference: {fileID: 0}
     - target: {fileID: 8638395892589281880, guid: 42c7161e3aa8d1844b3fa1e18c38b342, type: 3}
       propertyPath: m_Name

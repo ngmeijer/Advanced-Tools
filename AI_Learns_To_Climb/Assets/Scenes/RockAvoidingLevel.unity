@@ -148,13 +148,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d00ebf4deee55994d80810ea0df42a6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _massTesting: 1
+  _massTesting: 0
   _maxTrainingEnvironments: 5
   _environmentPrefab: {fileID: 9128361258181692215, guid: b60b247dc25d3b64bbac87240f9171bc, type: 3}
-  _agents: []
   _canvas: {fileID: 1484699177}
   _areaSize: {x: 45, y: 0, z: 45}
   _areaSpacing: {x: 3, y: 0, z: 3}
+  _agents: []
 --- !u!4 &765866363
 Transform:
   m_ObjectHideFlags: 0

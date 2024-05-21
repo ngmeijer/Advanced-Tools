@@ -65,6 +65,7 @@
     <Compile Include="Assets\Scripts\AgentSpawner.cs" />
     <Compile Include="Assets\Scripts\AgentReinforcementLearningData.cs" />
     <Compile Include="Assets\Scripts\Managers\ExplorationManager.cs" />
+    <Compile Include="Assets\Scripts\CSVWriter.cs" />
     <Compile Include="Assets\Scripts\Managers\TrainingManager.cs" />
     <Compile Include="Assets\Scripts\MLAgent.cs" />
     <Compile Include="Assets\Scripts\ObjectPool.cs" />
@@ -80,6 +81,7 @@
     <Compile Include="Assets\Scripts\Spawnables\Spawnable.cs" />
     <Compile Include="Assets\Scripts\AgentCollisionManager.cs" />
     <Compile Include="Assets\Scripts\Event_OnHitCollider.cs" />
+    <Compile Include="Assets\Scripts\CSVData.cs" />
     <Compile Include="Assets\Scripts\Managers\SpawnableManager.cs" />
     <Compile Include="Assets\Scripts\Managers\UIManager.cs" />
     <Compile Include="Assets\Scripts\HealthPotion.cs" />

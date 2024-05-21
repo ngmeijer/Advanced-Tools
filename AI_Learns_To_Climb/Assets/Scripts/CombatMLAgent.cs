@@ -20,7 +20,6 @@ public class CombatMLAgent : MLAgent
     private GroundBlock _currentGroundblock;
     [SerializeField] private AgentCollisionManager _collisionManager;
 
-    private bool _collidedWithDamageDealer;
     private Vector3 _startPos;
     private Quaternion _startRot;
 
@@ -35,8 +34,10 @@ public class CombatMLAgent : MLAgent
 
     public override void OnEpisodeBegin()
     {
+        _episodeID += 1;
         _currentHealth = _data.MaxHealth;
-        transform.localPosition = _newRandomPosition;
+        if(_newRandomPosition != Vector3.zero)
+            transform.localPosition = _newRandomPosition;
         _amountOfCollectiblesFound = 0;
     }
 
@@ -61,7 +62,8 @@ public class CombatMLAgent : MLAgent
 
         if (CurrentEpisodeDuration >= MaxDuration)
         {
-            OnSucceededEpisode?.Invoke(_currentEpisodeDuration, GetCumulativeReward());
+            _cumulativeReward = GetCumulativeReward();
+            OnSucceededEpisode?.Invoke(_currentEpisodeDuration, _cumulativeReward);
             TriggerEpisodeEnd();
         }
     }
@@ -70,7 +72,7 @@ public class CombatMLAgent : MLAgent
     {
         if (CurrentHealth <= 0)
             TriggerEpisodeEnd();
-        _collidedWithDamageDealer = false;
+        CollidedWithDamageDealer = true;
     }
 
     /// <summary>
@@ -84,12 +86,12 @@ public class CombatMLAgent : MLAgent
         {
             _weaponCollidedWith = pWorldspaceWeapon;
             _weaponVisualizer.SetActive(true);
-            OnPickedUpWeapon?.Invoke(pState, _weaponCollidedWith);
+            OnPickedUpWeapon?.Invoke(pState, _weaponCollidedWith, this);
         }
         else if (pState == WeaponState.DROPPED_WEAPON)
         {
             _weaponVisualizer.SetActive(false);
-            OnPickedUpWeapon?.Invoke(pState, _weaponCollidedWith);
+            OnPickedUpWeapon?.Invoke(pState, _weaponCollidedWith, this);
             _weaponCollidedWith = null;
         }
     }
@@ -119,6 +121,12 @@ public class CombatMLAgent : MLAgent
         sensor.AddObservation(_currentHealth);
         sensor.AddObservation((float)_carryingWeapon);
         sensor.AddObservation(WeaponAvailable);
+
+        foreach(KeyValuePair<MLAgent, bool> pair in EnemiesWeaponData)
+        {
+            sensor.AddObservation(pair.Key.transform.localPosition);
+            sensor.AddObservation(pair.Value);
+        }
     }
 
     public override void OnActionReceived(ActionBuffers actions)
@@ -137,7 +145,8 @@ public class CombatMLAgent : MLAgent
 
         if (_currentHealth <= 0)
         {
-            OnFailedEpisode?.Invoke(_currentEpisodeDuration, GetCumulativeReward());
+            _cumulativeReward = GetCumulativeReward();
+            OnFailedEpisode?.Invoke(_currentEpisodeDuration, _cumulativeReward);
             TriggerEpisodeEnd();
         }
     }

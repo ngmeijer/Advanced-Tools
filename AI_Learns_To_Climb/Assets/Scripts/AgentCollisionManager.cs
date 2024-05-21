@@ -68,14 +68,15 @@ public class AgentCollisionManager : MonoBehaviour
     {
         CombatAgent.ModifyHealth(CombatAgent.TrainingSettings.ObstacleDamage);
         CombatAgent.AddReward(CombatAgent.TrainingSettings.ResultOnObstacleHit);
-        //_collidedWithDamageDealer = true;
+        CombatAgent.ModifyObstacleHitCount(1);
+        CombatAgent.CollidedWithDamageDealer = true;
     }
 
     private void handleWallCollision()
     {
         CombatAgent.ModifyHealth(CombatAgent.TrainingSettings.WallDamage);
         CombatAgent.AddReward(CombatAgent.TrainingSettings.ResultOnWallHit);
-        //_collidedWithDamageDealer = true;
+        CombatAgent.CollidedWithDamageDealer = true;
     }
 
     private void handleCollectibleCollision()

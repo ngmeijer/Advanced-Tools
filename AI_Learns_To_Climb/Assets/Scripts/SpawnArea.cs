@@ -1,7 +1,9 @@
-﻿using UnityEngine;
+﻿using UnityEditor;
+using UnityEngine;
 
 public class SpawnArea : MonoBehaviour
 {
+    public string Type;
     public Vector3 Size;
     public Vector3 Center;
     public Color GizmoColor;
@@ -13,7 +15,11 @@ public class SpawnArea : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        if (GizmoColor.a == 0)
+            return;
+
         Gizmos.color = GizmoColor;
         Gizmos.DrawWireCube(transform.position + Center, Size);
+        Handles.Label(transform.position + new Vector3(Size.x / 2, 0,0) + Center, Type);
     }
 }
