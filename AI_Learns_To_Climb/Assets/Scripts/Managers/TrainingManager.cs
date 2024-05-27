@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
+using static UnityEngine.Awaitable;
 
 /// <summary>
 /// Handles the generation of training environments.
@@ -10,7 +11,7 @@ using UnityEngine;
 public class TrainingManager : MonoBehaviour
 {
     [SerializeField] private bool _massTesting;
-    [Range(1,40)][SerializeField] private int _maxTrainingEnvironments = 30;
+    [Range(1, 40)][SerializeField] private int _maxTrainingEnvironments = 30;
     [SerializeField] private GameObject _environmentPrefab;
     [SerializeField] private GameObject _canvas;
 
@@ -19,9 +20,17 @@ public class TrainingManager : MonoBehaviour
 
     [SerializeField] private List<MLAgent> _agents = new List<MLAgent>();
     public List<MLAgent> Agents => _agents;
-    
+
+    private CSVWriter _writer;
+    [SerializeField] private int _maxEpisodeCount = 500;
+
+    private ObstacleManager _obstacleManager;
+    private CollectibleManager _collectibleManager;
+
     private void Awake()
     {
+        _writer = GetComponent<CSVWriter>();
+
         //In case I want to focus on a single environment to test out a new feature
         if (!_massTesting)
         {
@@ -32,6 +41,29 @@ public class TrainingManager : MonoBehaviour
         }
 
         generateEnvironments();
+    }
+
+    private void Start()
+    {
+        if (_agents.Count == 1)
+        {
+            MLAgent agent = _agents[0];
+            agent.OnEndEpisode?.AddListener(updateCSVData);
+            agent.OnEndEpisode?.AddListener(resetCollectibles);
+            _writer.SetTestingProperties(
+                _maxEpisodeCount,
+                agent.TrainingSettings.MaxHealth, 
+                _obstacleManager.MaxItemCount, 
+                agent.TrainingSettings.ObstacleDamage, 
+                agent.TrainingSettings.ResultOnObstacleHit, 
+                _collectibleManager.MaxItemCount, 
+                agent.TrainingSettings.ResultOnCollectibleHit);
+        }
+    }
+
+    private void resetCollectibles(MLAgent arg0)
+    {
+        _collectibleManager.RandomizeCollectiblePositions();
     }
 
     private void generateEnvironments()
@@ -62,8 +94,11 @@ public class TrainingManager : MonoBehaviour
         EnvironmentManager envManager = pEnvironment.GetComponentInChildren<EnvironmentManager>();
         Debug.Assert(envManager != null, "Environment Manager is null. Ensure there is a child with the EnvironmentManager component attached.");
 
-        CollectibleManager collectibleManager = pEnvironment.GetComponentInChildren<CollectibleManager>();
-        Debug.Assert(collectibleManager != null, "Collectible Manager is null. Ensure there is a child with the CollectibleManager component attached.");
+        _obstacleManager = pEnvironment.GetComponentInChildren<ObstacleManager>();
+        Debug.Assert(envManager != null, "ObstacleManager is null. Ensure there is a child with the ObstacleManager component attached.");
+
+        _collectibleManager = pEnvironment.GetComponentInChildren<CollectibleManager>();
+        Debug.Assert(_collectibleManager != null, "Collectible Manager is null. Ensure there is a child with the CollectibleManager component attached.");
 
         MLAgent[] foundAgents = pEnvironment.GetComponentsInChildren<MLAgent>();
         Debug.Assert(foundAgents != null, "MLAgent is null. Ensure there is a GameObject with a class that derives from MLAgent attached.");
@@ -77,11 +112,21 @@ public class TrainingManager : MonoBehaviour
         //collectibleManager.SetListeners(foundAgents);
     }
 
+    private void updateCSVData(MLAgent pAgent)
+    {
+        _writer.AddData(pAgent.EpisodeID, pAgent.CumulativeReward, pAgent.CurrentEpisodeDuration, pAgent.RockHitCount, pAgent.CollectiblesFound);
+
+        if (pAgent.EpisodeID >= _maxEpisodeCount - 1)
+        {
+            UnityEditor.EditorApplication.isPlaying = false;
+        }
+    }
+
     private void setCanvasToEnvironmentPosition(GameObject pEnvironment)
     {
         Vector3 canvasPos = new Vector3(
-            _canvas.transform.position.x, 
-            _canvas.transform.position.y, 
+            _canvas.transform.position.x,
+            _canvas.transform.position.y,
             pEnvironment.transform.position.z + _areaSize.z / 2);
         _canvas.transform.position = canvasPos;
     }

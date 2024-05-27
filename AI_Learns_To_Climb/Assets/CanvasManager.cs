@@ -23,6 +23,7 @@ public class CanvasManager : MonoBehaviour
         setCurrentDurationText();
         setRewardText();
         setCurrentHealthUI();
+        setFoundCollectiblesText();
     }
 
     public void SetListeners(MLAgent pAgent)
@@ -30,7 +31,6 @@ public class CanvasManager : MonoBehaviour
         Agent = pAgent;
         Agent.OnFailedEpisode.AddListener(setFailedGroundMat);
         Agent.OnSucceededEpisode.AddListener(setSucceededGroundMat);
-        Agent.OnFoundCollectible.AddListener(setFoundCollectiblesText);
     }
 
     public void UpdateKD()

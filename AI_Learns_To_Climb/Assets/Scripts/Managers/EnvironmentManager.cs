@@ -5,7 +5,6 @@ using TMPro;
 using Unity.MLAgents;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEngine.Awaitable;
 
 public class EnvironmentManager : MonoBehaviour
 {
@@ -25,12 +24,8 @@ public class EnvironmentManager : MonoBehaviour
     private List<GameObject> _takenWeapons = new List<GameObject>();
     private Dictionary<MLAgent, bool> AgentsWeaponStates = new Dictionary<MLAgent, bool>();
 
-    private CSVWriter _writer;
-
     private void Start()
     {
-        _writer = GetComponent<CSVWriter>();
-
         if (!_enableWeapons)
             return;
 
@@ -49,7 +44,6 @@ public class EnvironmentManager : MonoBehaviour
             pAgents[i].OnPickedUpWeapon.AddListener(handleWeaponPickupNotify);
             pAgents[i].OnAgentKill.AddListener(handleAgentKill);
             pAgents[i].OnEndEpisode?.AddListener(generatePlayerPosition);
-            pAgents[i].OnEndEpisode?.AddListener(updateCSVData);
             GameObject canvas = Instantiate(_canvasPrefab, _canvasParent.position, _canvasParent.rotation, _canvasParent);
             CanvasManager canvasManager = canvas.GetComponent<CanvasManager>();
             canvasManager.SetListeners(pAgents[i]);
@@ -58,11 +52,6 @@ public class EnvironmentManager : MonoBehaviour
             canvasManager.SetID(i);
             pAgents[i].SetID(i);
         }
-    }
-
-    private void updateCSVData(MLAgent pAgent)
-    {
-        _writer.AddData(pAgent.EpisodeID, pAgent.CumulativeReward, pAgent.CurrentEpisodeDuration, pAgent.CollectiblesFound);
     }
 
     private void generatePlayerPosition(MLAgent pAgent)

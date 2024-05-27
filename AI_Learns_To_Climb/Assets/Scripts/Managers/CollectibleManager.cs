@@ -47,4 +47,9 @@ public class CollectibleManager : SpawnableManager
 
         StartCoroutine(spawnObject());
     }
+
+    internal void RandomizeCollectiblePositions()
+    {
+        _pool.RandomizeItemPositions();
+    }
 }

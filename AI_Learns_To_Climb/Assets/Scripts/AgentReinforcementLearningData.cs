@@ -11,16 +11,16 @@ public class AgentReinforcementLearningData : ScriptableObject
     [Range(1, 20)][SerializeField] private float _moveSpeed = 10;
     public float MoveSpeed => _moveSpeed;
 
-    [Range(1, 100)][SerializeField] private int _weaponDamage = 60;
+    [Range(-100, 0)][SerializeField] private int _weaponDamage = 60;
     public int WeaponDamage => _weaponDamage;
 
     [Range(1, 100)][SerializeField] private int _healthPotionValue;
     public int HealthPotionValue => _healthPotionValue;
 
-    [Range(1, 100)][SerializeField] private int _wallDamage;
+    [Range(-100, 0)][SerializeField] private int _wallDamage;
     public int WallDamage => _wallDamage;
 
-    [Range(1, 100)][SerializeField] private int _obstacleDamage;
+    [Range(-100, 0)][SerializeField] private int _obstacleDamage;
     public int ObstacleDamage => _obstacleDamage;
 
     [Header("Positive reinforcement")]

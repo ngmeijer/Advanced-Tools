@@ -9,6 +9,10 @@ public class ObstacleManager : SpawnableManager
     protected override void Awake()
     {
         base.Awake();
+
+        if (!_enableSpawning)
+            return;
+
         StartCoroutine(spawnObject());
     }
 
@@ -19,12 +23,11 @@ public class ObstacleManager : SpawnableManager
 
     protected override IEnumerator spawnObject()
     {
-        if (_pool.CurrentActiveItems < _maxSpawnableCountInArea)
+        for (int i = 0; i < _spawnMultiplier; i++)
         {
-            for (int i = 0; i < _spawnMultiplier; i++)
-            {
-                _pool.ActivateItem();
-            }
+            if (_pool.CurrentActiveItems >= _maxSpawnableCountInArea)
+                break;
+            _pool.ActivateItem();
         }
 
         yield return new WaitForSeconds(_spawnrate);

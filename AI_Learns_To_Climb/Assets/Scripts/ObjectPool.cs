@@ -10,6 +10,7 @@ public class ObjectPool : MonoBehaviour
     public int ItemInStorageCount => _itemInStorageCount;
 
     [SerializeField] private List<Spawnable> _spawnedItems = new List<Spawnable>();
+    public List<Spawnable> SpawnedItems => _spawnedItems;
 
     private float _currentActiveItems;
     public float CurrentActiveItems => _currentActiveItems;
@@ -19,6 +20,14 @@ public class ObjectPool : MonoBehaviour
     private void Start()
     {
         fillObjectPool();
+    }
+
+    public void RandomizeItemPositions()
+    {
+        for(int i = 0; i < _spawnedItems.Count; i++)
+        {
+            _spawnedItems[i].transform.localPosition = _spawnArea.GetRandomPosition();
+        }
     }
 
     public void ActivateItem()

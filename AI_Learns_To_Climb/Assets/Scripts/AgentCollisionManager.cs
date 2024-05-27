@@ -3,6 +3,7 @@
 public class AgentCollisionManager : MonoBehaviour
 {
     [HideInInspector] public CombatMLAgent CombatAgent;
+    [SerializeField] private bool _enableWallDamage;
 
     public void CheckColliderTagOnEnter(GameObject pCollisionObject)
     {
@@ -74,9 +75,13 @@ public class AgentCollisionManager : MonoBehaviour
 
     private void handleWallCollision()
     {
-        CombatAgent.ModifyHealth(CombatAgent.TrainingSettings.WallDamage);
+        if (_enableWallDamage)
+        {
+            CombatAgent.ModifyHealth(CombatAgent.TrainingSettings.WallDamage);
+            CombatAgent.CollidedWithDamageDealer = true;
+        }
+
         CombatAgent.AddReward(CombatAgent.TrainingSettings.ResultOnWallHit);
-        CombatAgent.CollidedWithDamageDealer = true;
     }
 
     private void handleCollectibleCollision()

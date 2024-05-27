@@ -1,3 +1,4 @@
+using Google.Protobuf.WellKnownTypes;
 using System.Collections;
 using System.IO;
 using UnityEngine;
@@ -8,15 +9,14 @@ public class CSVWriter : MonoBehaviour
     [SerializeField] private string _fileName = "test.csv";
     private string _filePath;
 
-    private void Start()
+    private void Awake()
     {
-        _filePath = Path.Combine(Application.persistentDataPath, _fileName);
+        _filePath = Path.Combine(Application.dataPath, "Data",  _fileName);
 
         if (File.Exists(_filePath))
             File.Delete(_filePath);
 
         _writer = new StreamWriter(_filePath, false);
-        _writer.WriteLine("Episode ID, Cumulative Reward, Duration, Collectible count");
     }
 
     private void OnApplicationQuit()
@@ -28,15 +28,29 @@ public class CSVWriter : MonoBehaviour
         }
     }
 
-    public void AddData(int pID, float pReward, float pDuration, int pCollectibles)
+    public void SetTestingProperties(int pMaxEpisodeCount, int pAgentHealth, int pRockCount, int pRockDamage, float pRockPunishment, int pCollectibleCount, float pCollectibleReward)
     {
         if (_writer == null)
         {
-            Debug.LogError("StreamWriter is not initialized.");
+            Debug.LogError("Streamwriter is not initialized.");
             return;
         }
 
-        _writer.WriteLine(pID + "," + pReward + "," + pDuration + "," + pCollectibles);
+
+        _writer.WriteLine($"Max episode count: {pMaxEpisodeCount}, Agent health: {pAgentHealth}, Rock count: {pRockCount}, Rock damage: {pRockDamage}, Rock punishment: {pRockPunishment}, Collectible count: {pCollectibleCount}, Collectible reward: {pCollectibleReward}");
+        _writer.WriteLine("-------");
+        _writer.WriteLine("Episode ID, Cumulative reward, Duration, Rock hit count, Collectibles found");
+    }
+
+    public void AddData(int pID, float pReward, float pDuration, int pRockHitCount, int pCollectibles)
+    {
+        if (_writer == null)
+        {
+            Debug.LogError("Streamwriter is not initialized.");
+            return;
+        }
+
+        _writer.WriteLine(pID + "," + pReward + "," + pDuration + "," + pRockHitCount + "," + pCollectibles);
         _writer.Flush();
     }
 }

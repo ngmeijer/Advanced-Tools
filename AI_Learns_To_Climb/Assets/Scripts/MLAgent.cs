@@ -57,7 +57,7 @@ public abstract class MLAgent : Agent
     protected int _deathCount;
     public int DeathCount => _deathCount;
 
-    private bool _collidedWithDamageDealer;
+    protected bool _collidedWithDamageDealer;
     public bool CollidedWithDamageDealer
     {
         get => _collidedWithDamageDealer;

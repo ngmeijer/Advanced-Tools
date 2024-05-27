@@ -39,6 +39,7 @@ public class CombatMLAgent : MLAgent
         if(_newRandomPosition != Vector3.zero)
             transform.localPosition = _newRandomPosition;
         _amountOfCollectiblesFound = 0;
+        _rockHitCount = 0;
     }
 
     public void TriggerEpisodeEnd()
@@ -116,17 +117,17 @@ public class CombatMLAgent : MLAgent
     public override void CollectObservations(VectorSensor sensor)
     {
         sensor.AddObservation(this.transform.localPosition);
-        sensor.AddObservation(_collidedWithDamageDealer);
-        sensor.AddObservation(_amountOfCollectiblesFound);
+        sensor.AddObservation(CollidedWithDamageDealer);
+        //sensor.AddObservation(_amountOfCollectiblesFound);
         sensor.AddObservation(_currentHealth);
-        sensor.AddObservation((float)_carryingWeapon);
-        sensor.AddObservation(WeaponAvailable);
+        //sensor.AddObservation((float)_carryingWeapon);
+        //sensor.AddObservation(WeaponAvailable);
 
-        foreach(KeyValuePair<MLAgent, bool> pair in EnemiesWeaponData)
-        {
-            sensor.AddObservation(pair.Key.transform.localPosition);
-            sensor.AddObservation(pair.Value);
-        }
+        //foreach(KeyValuePair<MLAgent, bool> pair in EnemiesWeaponData)
+        //{
+        //    sensor.AddObservation(pair.Key.transform.localPosition);
+        //    sensor.AddObservation(pair.Value);
+        //}
     }
 
     public override void OnActionReceived(ActionBuffers actions)

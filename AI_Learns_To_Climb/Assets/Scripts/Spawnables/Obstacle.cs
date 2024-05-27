@@ -8,7 +8,7 @@ public class Obstacle : Spawnable
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.CompareTag("Obstacle"))
+        if (collision.collider.CompareTag("Obstacle") || collision.collider.CompareTag("Wall"))
             return;
 
         OnHitCollider?.Invoke(this);

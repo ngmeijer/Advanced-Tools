@@ -129,6 +129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 765866363}
   - component: {fileID: 765866362}
+  - component: {fileID: 765866364}
   m_Layer: 0
   m_Name: TrainingManager
   m_TagString: Untagged
@@ -155,6 +156,7 @@ MonoBehaviour:
   _areaSize: {x: 45, y: 0, z: 45}
   _areaSpacing: {x: 3, y: 0, z: 3}
   _agents: []
+  _maxEpisodeCount: 500
 --- !u!4 &765866363
 Transform:
   m_ObjectHideFlags: 0
@@ -170,6 +172,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &765866364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 765866361}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01b35e858cd76f04fa0705adecf5b9f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _fileName: LRD-LRP-NoWallDmg-Training.csv
 --- !u!1001 &1484699176
 PrefabInstance:
   m_ObjectHideFlags: 0
