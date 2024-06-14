@@ -51,6 +51,9 @@ public abstract class MLAgent : Agent
     protected int _rockHitCount;
     public int RockHitCount => _rockHitCount;
 
+    protected int _healthPotionsCount;
+    public int HealthPotionCount => _healthPotionsCount;
+
     protected int _killCount;
     public int KillCount => _killCount;
 
@@ -90,6 +93,11 @@ public abstract class MLAgent : Agent
     public void ModifyObstacleHitCount(int pCount)
     {
         _rockHitCount += pCount;
+    }
+
+    public void ModifyHealthPotionCount(int pCount)
+    {
+        _healthPotionsCount += pCount;
     }
 
     public void ReceiveNewRandomPosition(Vector3 pPosition)

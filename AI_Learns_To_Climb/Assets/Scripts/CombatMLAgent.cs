@@ -40,6 +40,7 @@ public class CombatMLAgent : MLAgent
             transform.localPosition = _newRandomPosition;
         _amountOfCollectiblesFound = 0;
         _rockHitCount = 0;
+        _healthPotionsCount = 0;
     }
 
     public void TriggerEpisodeEnd()
@@ -56,24 +57,12 @@ public class CombatMLAgent : MLAgent
 
         transform.rotation = Quaternion.identity;
 
-        if (!_collidedWithDamageDealer)
-        {
-            AddReward(_data.ResultOnSurviveFrame);
-        }
-
         if (CurrentEpisodeDuration >= MaxDuration)
         {
             _cumulativeReward = GetCumulativeReward();
             OnSucceededEpisode?.Invoke(_currentEpisodeDuration, _cumulativeReward);
             TriggerEpisodeEnd();
         }
-    }
-
-    private void LateUpdate()
-    {
-        if (CurrentHealth <= 0)
-            TriggerEpisodeEnd();
-        CollidedWithDamageDealer = true;
     }
 
     /// <summary>
@@ -117,7 +106,6 @@ public class CombatMLAgent : MLAgent
     public override void CollectObservations(VectorSensor sensor)
     {
         sensor.AddObservation(this.transform.localPosition);
-        sensor.AddObservation(CollidedWithDamageDealer);
         //sensor.AddObservation(_amountOfCollectiblesFound);
         sensor.AddObservation(_currentHealth);
         //sensor.AddObservation((float)_carryingWeapon);
@@ -135,9 +123,11 @@ public class CombatMLAgent : MLAgent
         float moveX = actions.ContinuousActions[0];
         float moveZ = actions.ContinuousActions[1];
 
+        float speedModifier = actions.ContinuousActions[2];
+
         Vector3 movementVec = new Vector3(moveX, 0, moveZ);
 
-        transform.localPosition += movementVec * Time.deltaTime * _data.MoveSpeed;
+        transform.localPosition += movementVec * Time.deltaTime * (_data.MoveSpeed * speedModifier);
     }
 
     private void OnCollisionEnter(Collision collision)

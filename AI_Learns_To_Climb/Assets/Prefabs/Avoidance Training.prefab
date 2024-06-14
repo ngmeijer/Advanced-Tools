@@ -99,9 +99,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17f04f39e04f0e244b5389b35ad1c4c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxSpawnableCountInArea: 100
+  _maxSpawnableCountInArea: 60
   _spawnrate: 0
-  _spawnMultiplier: 12
+  _spawnMultiplier: 5
   _enableSpawning: 1
   Agent: {fileID: 0}
 --- !u!114 &1558457562035481383
@@ -117,7 +117,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _itemPrefab: {fileID: 5359580114152532126, guid: 8c200191dffc2bb4e8d05f06a3380a53, type: 3}
-  _itemInStorageCount: 120
+  _itemInStorageCount: 80
   _spawnedItems: []
   _spawnArea: {fileID: 1525856820149691759}
 --- !u!114 &1525856820149691759
@@ -133,7 +133,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: Obstacles
-  Size: {x: 33, y: 1, z: 33}
+  Size: {x: 30, y: 1, z: 30}
   Center: {x: 0, y: 20, z: 0}
   GizmoColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &637969730989226547
@@ -182,10 +182,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a03002e685f175a45ac086fc442a2e77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxSpawnableCountInArea: 15
+  _maxSpawnableCountInArea: 12
   _spawnrate: 0.001
   _spawnMultiplier: 1
-  _enableSpawning: 0
+  _enableSpawning: 1
   Agent: {fileID: 0}
 --- !u!114 &6681027221697136203
 MonoBehaviour:
@@ -441,7 +441,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5494248206855504485}
-  - component: {fileID: 473339777237619613}
+  - component: {fileID: 4924599631771663535}
   - component: {fileID: 4011067190873120993}
   - component: {fileID: 2495396301325041618}
   m_Layer: 0
@@ -450,7 +450,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5494248206855504485
 Transform:
   m_ObjectHideFlags: 0
@@ -466,7 +466,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4245665108111611039}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &473339777237619613
+--- !u!114 &4924599631771663535
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -475,13 +475,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1413571615809456037}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a03002e685f175a45ac086fc442a2e77, type: 3}
+  m_Script: {fileID: 11500000, guid: cc4c75688e033834097eba379bc32334, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxSpawnableCountInArea: 10
+  _maxSpawnableCountInArea: 5
   _spawnrate: 0
-  _spawnMultiplier: 3
-  _enableSpawning: 1
+  _spawnMultiplier: 1
+  _enableSpawning: 0
   Agent: {fileID: 0}
 --- !u!114 &4011067190873120993
 MonoBehaviour:
@@ -759,93 +759,6 @@ Transform:
   - {fileID: 7366847728868209828}
   m_Father: {fileID: 7265074709246656337}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &4344633791955843633
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 221516996301920314}
-  - component: {fileID: 928629051839629581}
-  - component: {fileID: 976527371524720771}
-  - component: {fileID: 720923862089629886}
-  m_Layer: 0
-  m_Name: EnvironmentManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &221516996301920314
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4344633791955843633}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4245665108111611039}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &928629051839629581
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4344633791955843633}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ecc5fb92916fa448ac426c6b0ce5a14, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _canvasPrefab: {fileID: 4042245349226321201, guid: 94d307fb95e0b9648a4b022c9f7a57ab, type: 3}
-  _canvasParent: {fileID: 6658949017911565651}
-  _agentSpawnArea: {fileID: 720923862089629886}
-  _enableWeapons: 0
-  _weaponParent: {fileID: 0}
-  _weaponPrefab: {fileID: 0}
-  _maxWeaponCount: 5
-  _weaponSpawnArea: {fileID: 976527371524720771}
-  _spawnedWeapons: []
---- !u!114 &976527371524720771
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4344633791955843633}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69a9733e6319ca54a8fcf1a00ba5dd32, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Type: Weapons
-  Size: {x: 20, y: 1, z: 20}
-  Center: {x: 0, y: 2, z: 0}
-  GizmoColor: {r: 0, g: 0.3395729, b: 1, a: 0}
---- !u!114 &720923862089629886
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4344633791955843633}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69a9733e6319ca54a8fcf1a00ba5dd32, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Type: 
-  Size: {x: 20, y: 2, z: 20}
-  Center: {x: 0, y: 1, z: 0}
-  GizmoColor: {r: 0.02718234, g: 1, b: 0, a: 1}
 --- !u!1 &4420357752100105427
 GameObject:
   m_ObjectHideFlags: 0
@@ -1332,6 +1245,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4245665108111611039}
+  - component: {fileID: 1097555537060951143}
+  - component: {fileID: 9102483136362213843}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -1356,9 +1271,45 @@ Transform:
   - {fileID: 8726199747905052118}
   - {fileID: 5494248206855504485}
   - {fileID: 157180005936823494}
-  - {fileID: 221516996301920314}
   m_Father: {fileID: 7265074709246656337}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1097555537060951143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8676102166012041480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ecc5fb92916fa448ac426c6b0ce5a14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _canvasPrefab: {fileID: 4042245349226321201, guid: 94d307fb95e0b9648a4b022c9f7a57ab, type: 3}
+  _canvasParent: {fileID: 6658949017911565651}
+  _agentSpawnArea: {fileID: 9102483136362213843}
+  _enableWeapons: 0
+  _weaponParent: {fileID: 0}
+  _weaponPrefab: {fileID: 0}
+  _maxWeaponCount: 5
+  _weaponSpawnArea: {fileID: 0}
+  _spawnedWeapons: []
+--- !u!114 &9102483136362213843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8676102166012041480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69a9733e6319ca54a8fcf1a00ba5dd32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Type: Agents
+  Size: {x: 20, y: 2, z: 20}
+  Center: {x: 0, y: 1, z: 0}
+  GizmoColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &9128361258181692215
 GameObject:
   m_ObjectHideFlags: 0
@@ -1445,14 +1396,26 @@ PrefabInstance:
     - target: {fileID: 1326311462677383319, guid: 42c7161e3aa8d1844b3fa1e18c38b342, type: 3}
       propertyPath: _data
       value: 
-      objectReference: {fileID: 11400000, guid: c84c524830173e3489f7b6f7e11cd0fc, type: 2}
+      objectReference: {fileID: 11400000, guid: 557232b89a968a640859721023bfa1c9, type: 2}
     - target: {fileID: 1326311462677383319, guid: 42c7161e3aa8d1844b3fa1e18c38b342, type: 3}
       propertyPath: _maxDuration
       value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 1990397438568336927, guid: 42c7161e3aa8d1844b3fa1e18c38b342, type: 3}
+      propertyPath: m_InferenceDevice
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1990397438568336927, guid: 42c7161e3aa8d1844b3fa1e18c38b342, type: 3}
       propertyPath: m_BrainParameters.VectorObservationSize
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1990397438568336927, guid: 42c7161e3aa8d1844b3fa1e18c38b342, type: 3}
+      propertyPath: 'm_BrainParameters.VectorActionSize.Array.data[0]'
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1990397438568336927, guid: 42c7161e3aa8d1844b3fa1e18c38b342, type: 3}
+      propertyPath: m_BrainParameters.m_ActionSpec.m_NumContinuousActions
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4814075023050932093, guid: 42c7161e3aa8d1844b3fa1e18c38b342, type: 3}
       propertyPath: _enableWallDamage

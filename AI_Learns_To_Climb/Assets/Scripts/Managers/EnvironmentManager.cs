@@ -24,6 +24,15 @@ public class EnvironmentManager : MonoBehaviour
     private List<GameObject> _takenWeapons = new List<GameObject>();
     private Dictionary<MLAgent, bool> AgentsWeaponStates = new Dictionary<MLAgent, bool>();
 
+    private ObstacleManager _obstacleManager;
+    public ObstacleManager ObstacleManager => _obstacleManager;
+
+    private CollectibleManager _collectibleManager;
+    public CollectibleManager CollectibleManager => _collectibleManager;
+
+    private HealthPotionManager _healthPotionManager;
+    public HealthPotionManager HealthPotionManager => _healthPotionManager;
+
     private void Start()
     {
         if (!_enableWeapons)
@@ -51,7 +60,18 @@ public class EnvironmentManager : MonoBehaviour
             AgentsWeaponStates.Add(pAgents[i], false);
             canvasManager.SetID(i);
             pAgents[i].SetID(i);
+            pAgents[i].OnEndEpisode?.AddListener(resetCollectibles);
+            pAgents[i].OnEndEpisode?.AddListener(resetHealthPotions);
         }
+
+        _obstacleManager = GetComponentInChildren<ObstacleManager>();
+        Debug.Assert(_obstacleManager != null, "ObstacleManager is null. Ensure there is a child with the ObstacleManager component attached.");
+
+        _collectibleManager = GetComponentInChildren<CollectibleManager>();
+        Debug.Assert(_collectibleManager != null, "Collectible Manager is null. Ensure there is a child with the CollectibleManager component attached.");
+
+        _healthPotionManager = GetComponentInChildren<HealthPotionManager>();
+        Debug.Assert(_healthPotionManager != null, "HealthPotionManager is null. Ensure there is a child with the HealthPotionManager component attached.");
     }
 
     private void generatePlayerPosition(MLAgent pAgent)
@@ -61,6 +81,16 @@ public class EnvironmentManager : MonoBehaviour
 
         Vector3 position = _agentSpawnArea.GetRandomPosition();
         pAgent.ReceiveNewRandomPosition(position);
+    }
+
+    private void resetCollectibles(MLAgent arg0)
+    {
+        _collectibleManager.RandomizeCollectiblePositions();
+    }
+
+    private void resetHealthPotions(MLAgent arg0)
+    {
+        _healthPotionManager.RandomizePotionPositions();
     }
 
     private void handleAgentKill(MLAgent pHasBeenKilled, MLAgent pHasKilled)

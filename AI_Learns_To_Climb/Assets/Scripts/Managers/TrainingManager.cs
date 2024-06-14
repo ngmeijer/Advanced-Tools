@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
+using Unity.MLAgents;
 using UnityEngine;
 using static UnityEngine.Awaitable;
 
@@ -23,9 +24,10 @@ public class TrainingManager : MonoBehaviour
 
     private CSVWriter _writer;
     [SerializeField] private int _maxEpisodeCount = 500;
+    private int _currentEpisodeCount = 0;
 
-    private ObstacleManager _obstacleManager;
-    private CollectibleManager _collectibleManager;
+    private EnvironmentManager _mainEnvironment;
+
 
     private void Awake()
     {
@@ -45,25 +47,19 @@ public class TrainingManager : MonoBehaviour
 
     private void Start()
     {
-        if (_agents.Count == 1)
-        {
-            MLAgent agent = _agents[0];
-            agent.OnEndEpisode?.AddListener(updateCSVData);
-            agent.OnEndEpisode?.AddListener(resetCollectibles);
-            _writer.SetTestingProperties(
+        _writer.SetTestingProperties(
                 _maxEpisodeCount,
-                agent.TrainingSettings.MaxHealth, 
-                _obstacleManager.MaxItemCount, 
-                agent.TrainingSettings.ObstacleDamage, 
-                agent.TrainingSettings.ResultOnObstacleHit, 
-                _collectibleManager.MaxItemCount, 
-                agent.TrainingSettings.ResultOnCollectibleHit);
-        }
-    }
+                Agents[0].TrainingSettings.MaxHealth,
+                _mainEnvironment.ObstacleManager.MaxItemCount,
+                Agents[0].TrainingSettings.ObstacleDamage,
+                Agents[0].TrainingSettings.ResultOnObstacleHit,
+                _mainEnvironment.CollectibleManager.MaxItemCount,
+                Agents[0].TrainingSettings.ResultOnCollectibleHit);
 
-    private void resetCollectibles(MLAgent arg0)
-    {
-        _collectibleManager.RandomizeCollectiblePositions();
+        foreach (MLAgent agent in Agents)
+        {
+            agent.OnEndEpisode?.AddListener(updateCSVData);
+        }
     }
 
     private void generateEnvironments()
@@ -85,6 +81,7 @@ public class TrainingManager : MonoBehaviour
             }
         }
 
+        _mainEnvironment = environments[0].GetComponentInChildren<EnvironmentManager>();
         GameObject lastEnv = environments[environments.Count - 1];
         setCanvasToEnvironmentPosition(lastEnv);
     }
@@ -94,12 +91,6 @@ public class TrainingManager : MonoBehaviour
         EnvironmentManager envManager = pEnvironment.GetComponentInChildren<EnvironmentManager>();
         Debug.Assert(envManager != null, "Environment Manager is null. Ensure there is a child with the EnvironmentManager component attached.");
 
-        _obstacleManager = pEnvironment.GetComponentInChildren<ObstacleManager>();
-        Debug.Assert(envManager != null, "ObstacleManager is null. Ensure there is a child with the ObstacleManager component attached.");
-
-        _collectibleManager = pEnvironment.GetComponentInChildren<CollectibleManager>();
-        Debug.Assert(_collectibleManager != null, "Collectible Manager is null. Ensure there is a child with the CollectibleManager component attached.");
-
         MLAgent[] foundAgents = pEnvironment.GetComponentsInChildren<MLAgent>();
         Debug.Assert(foundAgents != null, "MLAgent is null. Ensure there is a GameObject with a class that derives from MLAgent attached.");
 
@@ -108,18 +99,16 @@ public class TrainingManager : MonoBehaviour
             _agents.Add(foundAgents[i]);
         }
         envManager.SetAgents(foundAgents);
-
-        //collectibleManager.SetListeners(foundAgents);
     }
 
     private void updateCSVData(MLAgent pAgent)
     {
-        _writer.AddData(pAgent.EpisodeID, pAgent.CumulativeReward, pAgent.CurrentEpisodeDuration, pAgent.RockHitCount, pAgent.CollectiblesFound);
+        _writer.AddData(pAgent.CumulativeReward, pAgent.CurrentEpisodeDuration, pAgent.RockHitCount, pAgent.CollectiblesFound, pAgent.HealthPotionCount);
 
-        if (pAgent.EpisodeID >= _maxEpisodeCount - 1)
-        {
+        if (_currentEpisodeCount >= _maxEpisodeCount - 1)
             UnityEditor.EditorApplication.isPlaying = false;
-        }
+        else
+            _currentEpisodeCount += 1;
     }
 
     private void setCanvasToEnvironmentPosition(GameObject pEnvironment)

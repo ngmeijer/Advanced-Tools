@@ -200,10 +200,10 @@ Camera:
     y: 0
     width: 0.5
     height: 1
-  near clip plane: 0.3
-  far clip plane: 15
-  field of view: 34.2148
-  orthographic: 1
+  near clip plane: 0.01
+  far clip plane: 12
+  field of view: 100
+  orthographic: 0
   orthographic size: 8
   m_Depth: 0
   m_CullingMask:
@@ -800,6 +800,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CombatAgent: {fileID: 0}
+  _enableWallDamage: 0
 --- !u!1001 &993319156699444833
 PrefabInstance:
   m_ObjectHideFlags: 0

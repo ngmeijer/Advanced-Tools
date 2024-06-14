@@ -8,7 +8,7 @@ public class AgentReinforcementLearningData : ScriptableObject
     [Range(1, 100)][SerializeField] private int _maxHealth;
     public int MaxHealth => _maxHealth;
 
-    [Range(1, 20)][SerializeField] private float _moveSpeed = 10;
+    [Range(1, 50)][SerializeField] private float _moveSpeed = 10;
     public float MoveSpeed => _moveSpeed;
 
     [Range(-100, 0)][SerializeField] private int _weaponDamage = 60;

@@ -36,6 +36,7 @@ public class AgentCollisionManager : MonoBehaviour
 
     private void handleHealthPotionCollision()
     {
+        CombatAgent.ModifyHealthPotionCount(1);
         CombatAgent.ModifyHealth(CombatAgent.TrainingSettings.HealthPotionValue);
     }
 

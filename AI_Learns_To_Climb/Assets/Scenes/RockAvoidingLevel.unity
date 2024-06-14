@@ -149,14 +149,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d00ebf4deee55994d80810ea0df42a6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _massTesting: 0
-  _maxTrainingEnvironments: 5
+  _massTesting: 1
+  _maxTrainingEnvironments: 19
   _environmentPrefab: {fileID: 9128361258181692215, guid: b60b247dc25d3b64bbac87240f9171bc, type: 3}
   _canvas: {fileID: 1484699177}
-  _areaSize: {x: 45, y: 0, z: 45}
-  _areaSpacing: {x: 3, y: 0, z: 3}
+  _areaSize: {x: 55, y: 0, z: 55}
+  _areaSpacing: {x: 6, y: 0, z: 6}
   _agents: []
-  _maxEpisodeCount: 500
+  _maxEpisodeCount: 1200
 --- !u!4 &765866363
 Transform:
   m_ObjectHideFlags: 0
@@ -184,7 +184,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01b35e858cd76f04fa0705adecf5b9f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _fileName: LRD-LRP-NoWallDmg-Training.csv
+  _fileName: MixedReinf-NoHP-LowPunishment-HighReward-Training
 --- !u!1001 &1484699176
 PrefabInstance:
   m_ObjectHideFlags: 0

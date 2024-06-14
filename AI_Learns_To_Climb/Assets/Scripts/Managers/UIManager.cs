@@ -33,6 +33,7 @@ public class UIManager : MonoBehaviour
         foreach (var agent in agents)
         {
             agent.OnFailedEpisode.AddListener(updateDataOnFail);
+            agent.OnEndEpisode.AddListener(updateData);
             agent.OnSucceededEpisode.AddListener(updateDataOnSuccess);
             agent.OnFoundCollectible.AddListener(updateCollectibleCount);
         }
@@ -40,21 +41,21 @@ public class UIManager : MonoBehaviour
         _maxDurationText.SetText($"{agents[0].MaxDuration}s");
     }
 
-    private void updateTotalEpisodeCount()
+    private void updateData(MLAgent pAgent = null)
     {
         _totalEpisodeCount += 1;
         _episodeCountText.SetText(_totalEpisodeCount.ToString());
+
+        calculateSuccessRatio();
+        calculateAverageDuration();
+        calculateAverageCollectibleCount();
+        calculateAverageCumulativeReward();
     }
 
     private void updateDataOnFail(float pEpisodeDuration, float pCumulativeReward)
     {
         _totalEpisodeDuration += pEpisodeDuration;
         _totalCumulativeReward += pCumulativeReward;
-        updateTotalEpisodeCount();
-        calculateSuccessRatio();
-        calculateAverageDuration();
-        calculateAverageCollectibleCount();
-        calculateAverageCumulativeReward();
     }
 
     private void updateCollectibleCount()
@@ -74,11 +75,6 @@ public class UIManager : MonoBehaviour
         _totalEpisodeDuration += pEpisodeDuration;
         _totalCumulativeReward += pCumulativeReward;
         _succesfullEpisodeCountText.SetText(_succesfullEpisodeCount.ToString());
-        updateTotalEpisodeCount();
-        calculateSuccessRatio();
-        calculateAverageDuration();
-        calculateAverageCollectibleCount();
-        calculateAverageCumulativeReward();
     }
 
     private void calculateAverageCumulativeReward()
